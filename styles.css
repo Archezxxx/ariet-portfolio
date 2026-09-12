@@ -1146,6 +1146,17 @@ body {
   cursor: pointer;
   background: #FFFFFF;
   transition: all 0.15s ease;
+  position: relative;
+  touch-action: manipulation;
+}
+
+.apple-bubble::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: -6px;
+  right: -6px;
 }
 
 .apple-bubble:hover {
@@ -1659,7 +1670,7 @@ body {
   border-radius: var(--radius-md);
   padding: 12px 16px;
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--text-primary);
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -1723,7 +1734,106 @@ body {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Responsiveness */
+/* ==========================================================================
+   MINIMAL ELEGANT ANIMATIONS (Apple Cupertino / Linear Aesthetic)
+   ========================================================================== */
+
+/* Scroll-triggered Entry Reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: 
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Subtle Breathing Pulse for Live Research Status Indicator */
+.badge-status svg {
+  animation: applePulseDot 2.4s ease-in-out infinite;
+}
+
+@keyframes applePulseDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+}
+
+/* Sticky Header Scroll Dynamic Elevation */
+.site-header {
+  transition: top 0.25s ease;
+}
+
+.site-header.is-scrolled .nav-blur-shell {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), inset 0 1px 1.5px rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+[data-theme="dark"] .site-header.is-scrolled .nav-blur-shell {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  background: rgba(24, 24, 26, 0.86);
+}
+
+/* Active Nav Link Highlight */
+.nav-item-link.nav-active {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .nav-item-link.nav-active {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Mobile Drawer Smooth Slide & Stagger Animation */
+.mobile-nav-drawer {
+  transition: 
+    opacity 0.26s cubic-bezier(0.16, 1, 0.3, 1), 
+    transform 0.26s cubic-bezier(0.34, 1.35, 0.64, 1);
+}
+
+.mobile-nav-drawer.active .mobile-nav-link {
+  animation: navDrawerItemIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.mobile-nav-drawer.active .mobile-nav-list li:nth-child(1) .mobile-nav-link { animation-delay: 30ms; }
+.mobile-nav-drawer.active .mobile-nav-list li:nth-child(2) .mobile-nav-link { animation-delay: 60ms; }
+.mobile-nav-drawer.active .mobile-nav-list li:nth-child(3) .mobile-nav-link { animation-delay: 90ms; }
+.mobile-nav-drawer.active .mobile-nav-list li:nth-child(4) .mobile-nav-link { animation-delay: 120ms; }
+.mobile-nav-drawer.active .mobile-nav-list li:nth-child(5) .mobile-nav-link { animation-delay: 150ms; }
+.mobile-nav-drawer.active .mobile-nav-list li:nth-child(6) .mobile-nav-link { animation-delay: 180ms; }
+
+@keyframes navDrawerItemIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   COMPREHENSIVE MOBILE & RESPONSIVE OPTIMIZATION
+   ========================================================================== */
+
+/* Touch manipulation on interactive items to eliminate 300ms tap delay */
+button, a, .apple-bubble, .lang-pill-btn, .btn-apple-icon {
+  touch-action: manipulation;
+}
+
+/* Tablet (1040px) */
 @media (max-width: 1040px) {
   .nav-item-link {
     padding: 5px 8px;
@@ -1731,16 +1841,7 @@ body {
   }
 }
 
-@media (max-width: 900px) {
-  .nav-menu {
-    display: none !important;
-  }
-  
-  .btn-menu-toggle {
-    display: grid !important;
-  }
-}
-
+/* Tablet & Large Mobile (1024px) */
 @media (max-width: 1024px) {
   .showcase-content-grid, .contact-apple-shell {
     grid-template-columns: 1fr;
@@ -1759,45 +1860,345 @@ body {
   }
 }
 
-@media (max-width: 680px) {
-  .metrics-strip {
-    grid-template-columns: 1fr;
+/* Nav collapse point (900px) */
+@media (max-width: 900px) {
+  .nav-menu {
+    display: none !important;
   }
   
-  .timeline-card-apple {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  
-  .contact-apple-shell {
-    padding: 32px 24px;
+  .btn-menu-toggle {
+    display: grid !important;
   }
 }
 
-@media (max-width: 480px) {
-  .brand-badge {
-    display: none;
+/* Phone Layout Breakpoint (768px) */
+@media (max-width: 768px) {
+  .apple-section {
+    padding: 56px 0;
   }
-  
-  .nav-blur-shell {
-    padding: 6px 12px;
+
+  .section-header-centered {
+    margin-bottom: 36px;
+  }
+
+  .section-title-large {
+    font-size: clamp(26px, 6.5vw, 36px);
+  }
+
+  .section-lead-text {
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+
+  .vision-banner-card {
+    padding: 28px 20px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 32px;
+  }
+
+  .vision-quote {
+    font-size: 18px;
+    line-height: 1.45;
+    margin-bottom: 20px;
+  }
+
+  .vision-author-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding-top: 18px;
+  }
+
+  .author-flags {
+    width: 100%;
+  }
+
+  .apple-bento-grid {
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .bento-box {
+    padding: 24px 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .box-title {
+    font-size: 20px;
+  }
+
+  .academic-value-callout {
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+
+  .showcase-info-side {
+    padding: 28px 20px;
+  }
+
+  .showcase-demo-side {
+    padding: 28px 16px;
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .showcase-title {
+    font-size: 23px;
+  }
+
+  .box-footer-row {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
+    padding-top: 18px;
   }
-  
-  .lang-pill-btn {
-    padding: 4px 7px;
+
+  .timeline-card-apple {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  .skill-apple-card {
+    padding: 24px 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .contact-apple-shell {
+    padding: 32px 20px;
+    border-radius: var(--radius-lg);
+    gap: 36px;
+  }
+
+  .contact-left-col h3 {
+    font-size: 26px;
+  }
+
+  .contact-left-col p {
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .contact-pill-btn {
+    padding: 14px 18px;
+    font-size: 13.5px;
+  }
+}
+
+/* Mobile Screens (640px) */
+@media (max-width: 640px) {
+  .hero-wrapper {
+    padding: 24px 0 44px;
+  }
+
+  .hero-headline {
+    font-size: clamp(28px, 8.5vw, 42px);
+    letter-spacing: -0.035em;
+    margin-bottom: 16px;
+  }
+
+  .hero-subhead {
+    font-size: 15.5px;
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .hero-buttons .btn-apple-primary,
+  .hero-buttons .btn-apple-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+  }
+
+  .admissions-pill {
+    font-size: 12px;
+    padding: 6px 14px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+
+  .metrics-strip {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .metric-pill-card {
+    padding: 18px 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .metric-num {
+    font-size: 26px;
+  }
+
+  .metric-desc {
     font-size: 10.5px;
   }
 
-  .mobile-nav-drawer {
-    left: 16px;
-    right: 16px;
+  .demo-controls-bar {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .btn-demo-run, .btn-demo-tilt {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .site-footer {
+    padding: 40px 0 32px;
+    margin-top: 56px;
+  }
+
+  .footer-content-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }
 
-/* ==========================================================================
-   ACCESSIBILITY & MOTION PREFERENCES
-   ========================================================================== */
+/* Small Phones (480px) */
+@media (max-width: 480px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .site-header {
+    top: 8px;
+    margin-bottom: 20px;
+  }
+
+  .brand-badge {
+    display: none;
+  }
+
+  .nav-blur-shell {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .brand-initial {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .brand-name {
+    font-size: 13px;
+  }
+
+  .nav-actions {
+    gap: 4px;
+  }
+
+  .btn-apple-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .btn-apple-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .lang-segmented-control {
+    padding: 2px;
+    gap: 1px;
+  }
+
+  .lang-pill-btn {
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+
+  .mobile-nav-drawer {
+    left: 12px;
+    right: 12px;
+    padding: 8px;
+    border-radius: 18px;
+  }
+
+  .mobile-nav-link {
+    padding: 12px 14px;
+    font-size: 14px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .apple-omr-paper {
+    padding: 16px 10px;
+    max-width: 100%;
+  }
+
+  .omr-sheet-top {
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+
+  .sheet-title-text {
+    font-size: 11px;
+  }
+
+  .sheet-id-text {
+    font-size: 9.5px;
+  }
+
+  .bubble-row {
+    gap: 5px;
+  }
+
+  .q-label {
+    width: 18px;
+    font-size: 11px;
+  }
+
+  .bubble-group {
+    gap: 3px;
+  }
+
+  .apple-bubble {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+
+  .contact-pill-btn {
+    padding: 13px 16px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .contact-pill-btn span:last-child {
+    font-size: 12px;
+  }
+}
+
+/* Compact Screens (360px) */
+@media (max-width: 360px) {
+  .metrics-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-name {
+    display: none;
+  }
+}
+
+/* Accessibility: Prefers Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .btn-apple-primary::after,
   .btn-apple-secondary::after,
@@ -1810,5 +2211,20 @@ body {
   .liquid-glass-ripple {
     display: none !important;
   }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .badge-status svg {
+    animation: none !important;
+  }
+
+  .mobile-nav-drawer.active .mobile-nav-link {
+    animation: none !important;
+  }
 }
+
 

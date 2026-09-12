@@ -386,7 +386,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initSoundEngine,
     initAppleOmrDemo,
     initContactActions,
-    initLiquidGlassButtons
+    initLiquidGlassButtons,
+    initScrollAnimations,
+    initHeaderScrollEffect,
+    initActiveNavScrollspy
   ];
 
   inits.forEach(fn => {
@@ -896,5 +899,144 @@ function initLiquidGlassButtons() {
       });
     });
   });
+}
+
+/* ==========================================================================
+   7. MINIMAL SCROLL REVEALS & APPLE MOTION DYNAMICS
+   ========================================================================== */
+function initScrollAnimations() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  // Select key narrative cards and headers
+  const targets = document.querySelectorAll(`
+    .section-header-centered,
+    .metric-pill-card,
+    .vision-banner-card,
+    .apple-showcase-card,
+    .bento-box,
+    .skill-apple-card,
+    .timeline-card-apple,
+    .contact-apple-shell
+  `);
+
+  if (!targets.length) return;
+
+  targets.forEach((el) => {
+    el.classList.add('reveal-on-scroll');
+  });
+
+  // Stagger delays for grid children
+  const grids = document.querySelectorAll('.metrics-strip, .apple-bento-grid, .skills-apple-grid, .timeline-apple-stack');
+  grids.forEach(grid => {
+    const children = grid.querySelectorAll('.metric-pill-card, .bento-box, .skill-apple-card, .timeline-card-apple');
+    children.forEach((child, i) => {
+      const delayClass = `reveal-delay-${(i % 4) + 1}`;
+      child.classList.add(delayClass);
+    });
+  });
+
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(el => el.classList.add('is-revealed'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -30px 0px'
+  });
+
+  targets.forEach(el => observer.observe(el));
+}
+
+/* ==========================================================================
+   8. STICKY HEADER DYNAMIC ELEVATION
+   ========================================================================== */
+function initHeaderScrollEffect() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  let ticking = false;
+  const updateHeader = () => {
+    if (window.scrollY > 20) {
+      header.classList.add('is-scrolled');
+    } else {
+      header.classList.remove('is-scrolled');
+    }
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateHeader();
+}
+
+/* ==========================================================================
+   9. ACTIVE NAVIGATION SCROLLSPY
+   ========================================================================== */
+function initActiveNavScrollspy() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-item-link');
+  const drawerLinks = document.querySelectorAll('.mobile-nav-link');
+  if (!sections.length || !navLinks.length) return;
+
+  let ticking = false;
+  const checkActiveSection = () => {
+    const scrollPos = window.scrollY + 140;
+    let currentId = '';
+
+    sections.forEach(sec => {
+      const top = sec.offsetTop;
+      const height = sec.offsetHeight;
+      if (scrollPos >= top && scrollPos < top + height) {
+        currentId = sec.getAttribute('id');
+      }
+    });
+
+    if (currentId) {
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === `#${currentId}`) {
+          link.classList.add('nav-active');
+        } else {
+          link.classList.remove('nav-active');
+        }
+      });
+
+      drawerLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === `#${currentId}`) {
+          link.style.fontWeight = '700';
+          link.style.color = 'var(--apple-blue)';
+        } else {
+          link.style.fontWeight = '500';
+          link.style.color = 'var(--text-primary)';
+        }
+      });
+    }
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(checkActiveSection);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  checkActiveSection();
 }
 
