@@ -1,0 +1,12 @@
+{
+  "name": "ariet-portfolio",
+  "version": "1.0.0",
+  "description": "Personal Engineering Portfolio of Ariet — Full-Stack & Computer Vision Engineer",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "author": "Ariet <ariet5656@gmail.com>",
+  "license": "MIT"
+}

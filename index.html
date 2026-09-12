@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ariet — Computer Science &amp; Applied AI Admissions Portfolio</title>
+  <meta name="description" content="Academic and engineering portfolio of Ariet. Applicant in Computer Science, Computer Vision, and Distributed Systems.">
+  
+  <!-- Apple Font Stack & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Apple Frosted Glass Header Navigation -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-blur-shell">
+        <a href="#hero" class="nav-brand">
+          <div class="brand-initial">A</div>
+          <div class="brand-meta-info">
+            <span class="brand-name">Ariet</span>
+            <span class="brand-badge" data-i18n="brand_badge">CS Applicant &amp; Builder</span>
+          </div>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="#about" class="nav-item-link" data-i18n="nav_about">About</a></li>
+          <li><a href="#flagship" class="nav-item-link" data-i18n="nav_research">Research</a></li>
+          <li><a href="#projects" class="nav-item-link" data-i18n="nav_projects">Projects</a></li>
+          <li><a href="#competencies" class="nav-item-link" data-i18n="nav_competencies">Skills</a></li>
+          <li><a href="#journey" class="nav-item-link" data-i18n="nav_journey">Journey</a></li>
+          <li><a href="#contact" class="nav-item-link" data-i18n="nav_contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="lang-segmented-control" role="group" aria-label="Language Selector">
+            <button class="lang-pill-btn active" data-lang="en">EN</button>
+            <button class="lang-pill-btn" data-lang="ru">RU</button>
+            <button class="lang-pill-btn" data-lang="ky">KG</button>
+          </div>
+          <button id="theme-toggle" class="btn-apple-icon" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          </button>
+          <button id="sound-toggle" class="btn-apple-icon" title="Toggle Subtle Interface Sounds" aria-label="Toggle Sound">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+          </button>
+          <button id="mobile-menu-toggle" class="btn-apple-icon btn-menu-toggle" title="Toggle Menu" aria-label="Toggle Navigation Menu">
+            <svg class="icon-menu-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <svg class="icon-menu-close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Floating Liquid Glass Menu Drawer -->
+      <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+        <ul class="mobile-nav-list">
+          <li><a href="#about" class="mobile-nav-link" data-i18n="nav_about">About</a></li>
+          <li><a href="#flagship" class="mobile-nav-link" data-i18n="nav_research">Research</a></li>
+          <li><a href="#projects" class="mobile-nav-link" data-i18n="nav_projects">Projects</a></li>
+          <li><a href="#competencies" class="mobile-nav-link" data-i18n="nav_competencies">Skills</a></li>
+          <li><a href="#journey" class="mobile-nav-link" data-i18n="nav_journey">Journey</a></li>
+          <li><a href="#contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero-wrapper">
+    <div class="container">
+      <div class="admissions-pill">
+        <span data-i18n="hero_pill">University Admissions Portfolio &bull; Computer Science &amp; Applied AI</span>
+      </div>
+
+      <h1 class="hero-headline" data-i18n="hero_headline">
+        Bridging mathematical vision,<br>
+        <span class="gradient-text">educational equity,</span> and distributed systems.
+      </h1>
+
+      <p class="hero-subhead" data-i18n="hero_subhead">
+        I am Ariet, an independent software engineer and student based in Bishkek, Kyrgyzstan. I build algorithms that solve real structural challenges: from high-precision computer vision for school exam evaluations to modern cloud infrastructures.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#flagship" class="btn-apple-primary">
+          <span data-i18n="hero_btn_research">Explore AIM.EXAM Research</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+        <a href="#about" class="btn-apple-secondary">
+          <span data-i18n="hero_btn_profile">Applicant Profile</span>
+        </a>
+        <a href="#contact" class="btn-apple-secondary" data-copy="ariet5656@gmail.com">
+          <span data-i18n="hero_btn_email">Copy Contact Email</span>
+        </a>
+      </div>
+
+      <!-- Key Academic & Engineering Highlights -->
+      <div class="metrics-strip">
+        <div class="metric-pill-card">
+          <div class="metric-num">50<span class="accent">k+</span></div>
+          <div class="metric-desc" data-i18n="metric_sheets_desc">Exam Sheets Graded by Algorithm</div>
+        </div>
+        <div class="metric-pill-card">
+          <div class="metric-num">99.8<span class="accent">%</span></div>
+          <div class="metric-desc" data-i18n="metric_acc_desc">Subpixel OMR Accuracy</div>
+        </div>
+        <div class="metric-pill-card">
+          <div class="metric-num">4</div>
+          <div class="metric-desc" data-i18n="metric_lang_desc">Fluent Languages (EN &bull; RU &bull; KY &bull; TR)</div>
+        </div>
+        <div class="metric-pill-card">
+          <div class="metric-num">500<span class="accent">k+</span></div>
+          <div class="metric-desc" data-i18n="metric_tasks_desc">Async Automated Tasks Orchestrated</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statement of Purpose & Personal Vision -->
+  <section id="about" class="apple-section">
+    <div class="container">
+      
+      <div class="vision-banner-card">
+        <div class="vision-quote" data-i18n="vision_quote">
+          &ldquo;True engineering is not about complex syntax for its own sake. It is about taking mathematical principles — like homography, adaptive thresholds, and asynchronous event loops — and applying them to remove friction, bias, and inefficiency from everyday human lives.&rdquo;
+        </div>
+
+        <div class="vision-author-row">
+          <div class="author-identity">
+            <div class="author-avatar-initial">A</div>
+            <div>
+              <div class="author-name">Ariet</div>
+              <div class="author-role" data-i18n="author_role">Computer Science Candidate &bull; Bishkek, Kyrgyzstan</div>
+            </div>
+          </div>
+
+          <div class="author-flags">
+            <span class="lang-pill" data-i18n="lang_en_pill">English (Academic / IELTS Prep)</span>
+            <span class="lang-pill" data-i18n="lang_ky_pill">Kyrgyz (Native)</span>
+            <span class="lang-pill" data-i18n="lang_ru_pill">Russian (Fluent)</span>
+            <span class="lang-pill" data-i18n="lang_tr_pill">Turkish (Fluent / Sapat Network)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applicant Bio Grid -->
+      <div class="apple-bento-grid">
+        <div class="bento-box box-span-6">
+          <div>
+            <div class="box-top-tag">
+              <span class="category-tag" data-i18n="bio_why_tag">Academic Background</span>
+            </div>
+            <h3 class="box-title" data-i18n="bio_why_title">Why Computer Science?</h3>
+            <p class="box-desc" data-i18n="bio_why_p1">
+              Growing up in Kyrgyzstan, I saw firsthand how educational institutions often lack expensive specialized equipment. While high-income countries deploy optical mark readers costing thousands of dollars, our regional schools relied on days of manual, error-prone teacher grading.
+            </p>
+            <p class="box-desc" data-i18n="bio_why_p2">
+              This drove my mission: to study Computer Science at an advanced collegiate level so I can develop software-defined solutions that replace prohibitive hardware with elegant algorithms accessible to schools and communities worldwide.
+            </p>
+          </div>
+          <div class="box-footer-row">
+            <span class="meta-stat" data-i18n="bio_why_footer">Intended Major: <strong>Computer Science / AI</strong></span>
+          </div>
+        </div>
+
+        <div class="bento-box box-span-6">
+          <div>
+            <div class="box-top-tag">
+              <span class="category-tag" data-i18n="bio_audio_tag">Cross-Disciplinary Dimension</span>
+            </div>
+            <h3 class="box-title" data-i18n="bio_audio_title">Audio Engineering &amp; Algorithmic Discipline</h3>
+            <p class="box-desc" data-i18n="bio_audio_p1">
+              Beyond software, I have a deep creative passion for music production and acoustic signal engineering using Cubase and FL Studio.
+            </p>
+            <p class="box-desc" data-i18n="bio_audio_p2">
+              Synthesizing sounds and balancing audio frequencies taught me the exact same virtues required in Computer Vision and distributed systems: harmonic balance, temporal precision, noise reduction, and rigorous attention to micro-details.
+            </p>
+          </div>
+          <div class="box-footer-row">
+            <span class="meta-stat" data-i18n="bio_audio_footer">Creative Field: <strong>Signal Synthesis &amp; Production</strong></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Flagship Research & EdTech: AIM.EXAM -->
+  <section id="flagship" class="apple-section">
+    <div class="container">
+      <div class="section-header-centered">
+        <div class="section-eyebrow" data-i18n="flagship_eyebrow">Flagship EdTech Engineering</div>
+        <h2 class="section-title-large" data-i18n="flagship_title">AIM.EXAM: Democratizing National Exam Grading Through Computer Vision</h2>
+        <p class="section-lead-text" data-i18n="flagship_lead">
+          A software-defined Optical Mark Recognition (OMR) system created to evaluate regional school olympiads and admissions tests without specialized hardware.
+        </p>
+      </div>
+
+      <div class="apple-showcase-card">
+        <div class="showcase-content-grid">
+          
+          <!-- Research Narrative -->
+          <div class="showcase-info-side">
+            <div>
+              <div class="showcase-badge-row">
+                <span class="badge-tag">Applied Computer Vision</span>
+                <span class="badge-status">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"></circle></svg>
+                  <span data-i18n="flagship_status">De-facto standard in production</span>
+                </span>
+              </div>
+
+              <h3 class="showcase-title" data-i18n="flagship_h3">The Engineering Challenge &amp; Solution</h3>
+              <p class="showcase-body-text" data-i18n="flagship_desc">
+                When teachers in regional schools scan stacks of thousands of exam sheets, the papers inevitably rotate by 5&ndash;15 degrees, shift by 10&ndash;20 pixels, or get crumpled. Standard OMR software simply misses the bubbles, causing false zeroes.
+              </p>
+
+              <div class="challenge-solution-box">
+                <div class="item-row">
+                  <div class="item-icon-circle icon-red">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </div>
+                  <div class="item-content">
+                    <h4 data-i18n="barrier_title">The Barrier</h4>
+                    <p data-i18n="barrier_desc">Conventional open-source OMR relies on rigid static bounding boxes that fail completely when sheets skew or scan lighting fluctuates.</p>
+                  </div>
+                </div>
+
+                <div class="item-row">
+                  <div class="item-icon-circle icon-blue">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  <div class="item-content">
+                    <h4 data-i18n="solution_title">Ariet's Algorithmic Innovation</h4>
+                    <p data-i18n="solution_desc">Designed a four-stage pipeline: Hough Line fiducial alignment &rarr; 4-point homography transformation &rarr; dynamic subpixel bubble snapping (±15px tolerance) &rarr; adaptive brightness differential evaluation.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tech-tags-list">
+                <span class="apple-pill-tag">Python 3.12</span>
+                <span class="apple-pill-tag">OpenCV (cv2)</span>
+                <span class="apple-pill-tag">NumPy</span>
+                <span class="apple-pill-tag">Homography Matrix</span>
+                <span class="apple-pill-tag">Tkinter Desktop UI</span>
+                <span class="apple-pill-tag">Docker Compose</span>
+              </div>
+            </div>
+
+            <div class="box-footer-row">
+              <span class="meta-stat"><span data-i18n="flagship_stat_sheets">Real-world impact:</span> <strong>50,000+ student exams evaluated</strong></span>
+              <span class="meta-stat"><span data-i18n="flagship_stat_acc">Accuracy rate:</span> <strong>99.82%</strong></span>
+            </div>
+          </div>
+
+          <!-- Interactive Live Demonstration -->
+          <div class="showcase-demo-side">
+            <div class="apple-omr-paper" id="omr-paper">
+              <div class="omr-sheet-top">
+                <div>
+                  <div class="sheet-title-text" data-i18n="omr_paper_title">OLYMPIAD ANSWER SHEET</div>
+                  <div class="sheet-id-text" data-i18n="omr_paper_sub">FORM #4920-KG &bull; ACADEMIC EVALUATION</div>
+                </div>
+                <div class="sheet-id-text" style="font-weight: 600;">SERIES 02</div>
+              </div>
+
+              <div class="sheet-grid">
+                <div class="sheet-col" id="sheet-col-1">
+                  <!-- Generated dynamically by JS -->
+                </div>
+                <div class="sheet-col" id="sheet-col-2">
+                  <!-- Generated dynamically by JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-controls-bar">
+              <button id="run-omr-demo" class="btn-demo-run">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span data-i18n="btn_run_omr">Run CV Evaluation</span>
+              </button>
+              <button id="tilt-omr-demo" class="btn-demo-tilt" title="Simulate real-world scanner sheet tilt">
+                <span data-i18n="btn_tilt_omr">Tilt Sheet</span>
+              </button>
+            </div>
+
+            <div class="demo-status-pill" id="demo-status">
+              <span style="color: var(--apple-blue); font-weight: 600;">Status:</span>
+              <span id="demo-status-text" data-i18n="demo_initial_status">Click bubbles to edit marks, or test sheet tilt</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other Engineering Systems (Apple Bento Grid) -->
+  <section id="projects" class="apple-section">
+    <div class="container">
+      <div class="section-header-centered">
+        <div class="section-eyebrow" data-i18n="projects_eyebrow">Engineering Portfolio</div>
+        <h2 class="section-title-large" data-i18n="projects_title">Systems &amp; Software Solutions</h2>
+        <p class="section-lead-text" data-i18n="projects_lead">
+          Applied software projects built to solve institutional, logistical, and commercial problems with modern web standards and asynchronous architectures.
+        </p>
+      </div>
+
+      <div class="apple-bento-grid">
+        
+        <!-- Project: Ala-Too Booking AI (Col 8) -->
+        <div class="bento-box box-span-8">
+          <div>
+            <div class="box-top-tag">
+              <span class="category-tag" data-i18n="alatoo_tag">Campus Infrastructure</span>
+              <span class="meta-stat">2026</span>
+            </div>
+            <h3 class="box-title" data-i18n="alatoo_title">Ala-Too Booking AI &mdash; University Resource Management</h3>
+            <p class="box-desc" data-i18n="alatoo_desc">
+              Engineered a comprehensive campus facility reservation platform for Ala-Too International University. Replaces paper sign-ups and dispersed email threads with a real-time, conflict-free booking scheduler.
+            </p>
+
+            <div class="academic-value-callout" data-i18n="alatoo_callout">
+              <strong>Architecture Highlights:</strong> Developed on React 19 and TanStack Start, deployed over Cloudflare Workers edge runtime. Utilizes optimistic state updates and Radix UI primitives for full keyboard and screen-reader accessibility.
+            </div>
+
+            <div class="tech-tags-list">
+              <span class="apple-pill-tag">React 19</span>
+              <span class="apple-pill-tag">TypeScript</span>
+              <span class="apple-pill-tag">TanStack Start &amp; Query</span>
+              <span class="apple-pill-tag">Tailwind CSS v4</span>
+              <span class="apple-pill-tag">Cloudflare Workers</span>
+              <span class="apple-pill-tag">Radix UI</span>
+            </div>
+          </div>
+
+          <div class="box-footer-row">
+            <span class="meta-stat" data-i18n="alatoo_meta1">Beneficiaries: <strong>University Students &amp; Faculty</strong></span>
+            <span class="meta-stat" data-i18n="alatoo_meta2">Stack: <strong>Modern React Edge Architecture</strong></span>
+          </div>
+        </div>
+
+        <!-- Project: MagicWorlds Telegram Orchestration (Col 4) -->
+        <div class="bento-box box-span-4">
+          <div>
+            <div class="box-top-tag">
+              <span class="category-tag" data-i18n="magic_tag">Distributed Systems</span>
+              <span class="meta-stat">2025</span>
+            </div>
+            <h3 class="box-title" data-i18n="magic_title">MagicWorlds &mdash; Bot Network Manager</h3>
+            <p class="box-desc" data-i18n="magic_desc">
+              High-throughput automation platform coordinating multi-bot tasks across hundreds of Telegram channels without hitting rate limits.
+            </p>
+
+            <div class="academic-value-callout" data-i18n="magic_callout">
+              <strong>Dual-Tier Model Pattern:</strong> Django ORM acts as the database source of truth, while an asynchronous SQLAlchemy + Telethon pipeline executes high-speed worker queues.
+            </div>
+
+            <div class="tech-tags-list">
+              <span class="apple-pill-tag">Python 3.10+</span>
+              <span class="apple-pill-tag">Telethon MTProto</span>
+              <span class="apple-pill-tag">SQLAlchemy Async</span>
+              <span class="apple-pill-tag">Django + AdminLTE</span>
+              <span class="apple-pill-tag">Docker Compose</span>
+              <span class="apple-pill-tag">Redis &amp; Postgres</span>
+            </div>
+          </div>
+
+          <div class="box-footer-row">
+            <span class="meta-stat" data-i18n="magic_meta">Volume: <strong>500K+ tasks</strong></span>
+          </div>
+        </div>
+
+        <!-- Project: XAN-TAXI (Col 6) -->
+        <div class="bento-box box-span-6">
+          <div>
+            <div class="box-top-tag">
+              <span class="category-tag" data-i18n="taxi_tag">Real-Time Logistics</span>
+              <span class="meta-stat">2025</span>
+            </div>
+            <h3 class="box-title" data-i18n="taxi_title">XAN-TAXI &mdash; Event-Driven Dispatch System</h3>
+            <p class="box-desc" data-i18n="taxi_desc">
+              Automated taxi booking and dispatch bot system built on Aiogram 3. Handles driver queues, fare estimations, geolocation reverse-geocoding, and complete multi-language localization (i18n) for passengers and drivers.
+            </p>
+
+            <div class="tech-tags-list">
+              <span class="apple-pill-tag">Aiogram 3</span>
+              <span class="apple-pill-tag">Finite State Machines (FSM)</span>
+              <span class="apple-pill-tag">Multi-language (i18n)</span>
+              <span class="apple-pill-tag">PostgreSQL</span>
+            </div>
+          </div>
+
+          <div class="box-footer-row">
+            <span class="meta-stat" data-i18n="taxi_meta">Focus: <strong>State Machine Resilience</strong></span>
+          </div>
+        </div>
+
+        <!-- Project: Asia POS (Col 6) -->
+        <div class="bento-box box-span-6">
+          <div>
+            <div class="box-top-tag">
+              <span class="category-tag" data-i18n="pos_tag">Hardware Integration</span>
+              <span class="meta-stat">2024 &ndash; 2025</span>
+            </div>
+            <h3 class="box-title" data-i18n="pos_title">Asia POS &mdash; Offline Retail Checkout System</h3>
+            <p class="box-desc" data-i18n="pos_desc">
+              Retail checkout desktop application interfacing directly with physical thermal receipt printers (XPrinter via ESC/POS protocol). Features offline data caching, inventory tracking, and automated sales auditing in Excel.
+            </p>
+
+            <div class="tech-tags-list">
+              <span class="apple-pill-tag">Python Desktop</span>
+              <span class="apple-pill-tag">ESC/POS Thermal Protocol</span>
+              <span class="apple-pill-tag">Hardware Driver Setup</span>
+              <span class="apple-pill-tag">OpenPyXL Auditing</span>
+            </div>
+          </div>
+
+          <div class="box-footer-row">
+            <span class="meta-stat" data-i18n="pos_meta">Focus: <strong>Embedded &amp; POS Hardware</strong></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Competencies & Language Skills -->
+  <section id="competencies" class="apple-section">
+    <div class="container">
+      <div class="section-header-centered">
+        <div class="section-eyebrow" data-i18n="comp_eyebrow">Preparedness &amp; Capabilities</div>
+        <h2 class="section-title-large" data-i18n="comp_title">Technical &amp; Academic Toolkit</h2>
+        <p class="section-lead-text" data-i18n="comp_lead">
+          A balance of rigorous algorithmic foundations, modern full-stack development, and international communication skills.
+        </p>
+      </div>
+
+      <div class="skills-apple-grid">
+        
+        <!-- Column 1: Algorithms & Computer Vision -->
+        <div class="skill-apple-card">
+          <div class="skill-card-icon icon-bg-blue">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+          <h3 class="skill-title" data-i18n="comp_c1_title">Algorithms &amp; Vision</h3>
+          <ul class="skill-check-list">
+            <li class="skill-check-item">
+              <span>OpenCV (cv2) &amp; NumPy</span>
+              <span class="level">Advanced</span>
+            </li>
+            <li class="skill-check-item">
+              <span>Homography &amp; Perspective Warp</span>
+              <span class="level">Production</span>
+            </li>
+            <li class="skill-check-item">
+              <span>Hough Transform Line Detection</span>
+              <span class="level">Advanced</span>
+            </li>
+            <li class="skill-check-item">
+              <span>Subpixel Snapping &amp; OMR</span>
+              <span class="level">Custom Algorithm</span>
+            </li>
+            <li class="skill-check-item">
+              <span>OCR (Optical Character Recognition)</span>
+              <span class="level">Proficient</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Systems, Backend & Web -->
+        <div class="skill-apple-card">
+          <div class="skill-card-icon icon-bg-purple">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </div>
+          <h3 class="skill-title" data-i18n="comp_c2_title">Software Engineering</h3>
+          <ul class="skill-check-list">
+            <li class="skill-check-item">
+              <span>Python 3.12+ (Asyncio, Telethon)</span>
+              <span class="level">Advanced</span>
+            </li>
+            <li class="skill-check-item">
+              <span>React 19 &amp; TypeScript</span>
+              <span class="level">Modern</span>
+            </li>
+            <li class="skill-check-item">
+              <span>TanStack Start &amp; Query</span>
+              <span class="level">Modern</span>
+            </li>
+            <li class="skill-check-item">
+              <span>PostgreSQL &amp; Redis Databases</span>
+              <span class="level">Proficient</span>
+            </li>
+            <li class="skill-check-item">
+              <span>Docker Compose &amp; Linux</span>
+              <span class="level">Proficient</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Languages & Multilingualism -->
+        <div class="skill-apple-card">
+          <div class="skill-card-icon icon-bg-green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </div>
+          <h3 class="skill-title" data-i18n="comp_c3_title">Languages &amp; Global Mindset</h3>
+          <ul class="skill-check-list">
+            <li class="skill-check-item">
+              <span data-i18n="lang_item_en">English</span>
+              <span class="level">Academic / IELTS Prep</span>
+            </li>
+            <li class="skill-check-item">
+              <span data-i18n="lang_item_ky">Kyrgyz</span>
+              <span class="level">Native</span>
+            </li>
+            <li class="skill-check-item">
+              <span data-i18n="lang_item_ru">Russian</span>
+              <span class="level">Bilingual / Fluent</span>
+            </li>
+            <li class="skill-check-item">
+              <span data-i18n="lang_item_tr">Turkish</span>
+              <span class="level">Fluent (Sapat / Ala-Too)</span>
+            </li>
+            <li class="skill-check-item">
+              <span data-i18n="lang_item_audio">Acoustics &amp; Sound Synthesis</span>
+              <span class="level">Cubase &bull; FL Studio</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Academic Journey & Milestones -->
+  <section id="journey" class="apple-section">
+    <div class="container">
+      <div class="section-header-centered">
+        <div class="section-eyebrow" data-i18n="journey_eyebrow">Trajectory</div>
+        <h2 class="section-title-large" data-i18n="journey_title">Academic Journey &amp; Milestones</h2>
+        <p class="section-lead-text" data-i18n="journey_lead">
+          A progression defined by curiosity, community service through code, and independent technical initiative.
+        </p>
+      </div>
+
+      <div class="timeline-cards-flow">
+        
+        <div class="timeline-card-apple">
+          <div class="time-badge-col">
+            <span class="time-year">2025 &ndash; PRESENT</span>
+            <span class="time-place" data-i18n="journey_item1_place">EdTech &bull; Bishkek</span>
+          </div>
+          <div class="time-body-col">
+            <h3 data-i18n="journey_item1_title">Creator &amp; Lead Engineer &mdash; AIM.EXAM OMR Pipeline</h3>
+            <p data-i18n="journey_item1_desc">
+              Initiated, architected, and field-tested the optical exam grading software now evaluated across thousands of school olympiad participants in Kyrgyzstan. Solved camera angle distortion and subpixel bubble detection without external dependencies or costly hardware.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-card-apple">
+          <div class="time-badge-col">
+            <span class="time-year">2025 &ndash; 2026</span>
+            <span class="time-place" data-i18n="journey_item2_place">Ala-Too International Uni</span>
+          </div>
+          <div class="time-body-col">
+            <h3 data-i18n="journey_item2_title">Full-Stack System Architect &mdash; Campus Space AI</h3>
+            <p data-i18n="journey_item2_desc">
+              Built modern resource booking platform on React 19, TypeScript, and Cloudflare Workers. Designed intuitive UI for scheduling university auditoriums, conference halls, and laboratory rooms.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-card-apple">
+          <div class="time-badge-col">
+            <span class="time-year">2024 &ndash; 2025</span>
+            <span class="time-place" data-i18n="journey_item3_place">Distributed Infrastructure</span>
+          </div>
+          <div class="time-body-col">
+            <h3 data-i18n="journey_item3_title">Backend Developer &mdash; Telegram High-Load Automations</h3>
+            <p data-i18n="journey_item3_desc">
+              Built scalable messaging infrastructure handling over 500,000 automated queries with Telethon, Django, and SQLAlchemy. Developed taxi dispatch systems with finite state machines and regional localization.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-card-apple">
+          <div class="time-badge-col">
+            <span class="time-year">CREATIVE ROOTS</span>
+            <span class="time-place" data-i18n="journey_item4_place">Sound Production</span>
+          </div>
+          <div class="time-body-col">
+            <h3 data-i18n="journey_item4_title">Acoustic Signal Processing &amp; Audio Synthesis</h3>
+            <p data-i18n="journey_item4_desc">
+              Multi-year exploration of digital signal processing in FL Studio and Cubase. Gained intuition for frequency spectrums, time alignment, and harmonic structure that directly reinforces mathematical computer vision work.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Admissions Contact & Inquiries -->
+  <section id="contact" class="apple-section">
+    <div class="container">
+      <div class="contact-apple-shell">
+        
+        <!-- Contact Inquiries -->
+        <div class="contact-left-col">
+          <div class="section-eyebrow" data-i18n="contact_eyebrow">Direct Inquiries</div>
+          <h3 data-i18n="contact_title">Let&rsquo;s Connect for Admissions &amp; Collaboration</h3>
+          <p data-i18n="contact_desc">
+            I welcome inquiries from university admissions officers, computer science professors, and research mentors. Based in Bishkek, Kyrgyzstan (UTC+6).
+          </p>
+
+          <div class="contact-buttons-stack">
+            <button class="contact-pill-btn" data-copy="ariet5656@gmail.com">
+              <span data-i18n="contact_btn_email">Email: <strong>ariet5656@gmail.com</strong></span>
+              <span style="color: var(--apple-blue); font-size: 13px;" data-i18n="copy_hint">Click to copy &rarr;</span>
+            </button>
+
+            <a href="https://t.me/ariet_dev" target="_blank" rel="noopener noreferrer" class="contact-pill-btn">
+              <span data-i18n="contact_btn_tg">Telegram: <strong>@ariet_dev</strong></span>
+              <span style="color: var(--apple-blue); font-size: 13px;" data-i18n="chat_hint">Direct message &rarr;</span>
+            </a>
+
+            <a href="https://github.com/ariet5656" target="_blank" rel="noopener noreferrer" class="contact-pill-btn">
+              <span data-i18n="contact_btn_gh">GitHub: <strong>github.com/ariet5656</strong></span>
+              <span style="color: var(--apple-blue); font-size: 13px;" data-i18n="repo_hint">View repositories &rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Academic Message Form -->
+        <div class="contact-right-col">
+          <form id="contact-form" class="contact-form-apple">
+            <div class="apple-input-group">
+              <label for="msg-name" class="apple-label" data-i18n="form_name_label">Full Name &amp; Institution</label>
+              <input type="text" id="msg-name" class="apple-input" placeholder="e.g. Dr. Robert Vance / Admissions Committee" required>
+            </div>
+
+            <div class="apple-input-group">
+              <label for="msg-email" class="apple-label" data-i18n="form_email_label">Official Email Address</label>
+              <input type="email" id="msg-email" class="apple-input" placeholder="admissions@university.edu" required>
+            </div>
+
+            <div class="apple-input-group">
+              <label for="msg-text" class="apple-label" data-i18n="form_msg_label">Inquiry or Academic Opportunity</label>
+              <textarea id="msg-text" class="apple-textarea" placeholder="Describe the program, research focus, or questions..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-apple-primary" style="justify-content: center; width: 100%; margin-top: 6px;">
+              <span data-i18n="form_submit_btn">Send Academic Inquiry</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Apple Minimalist Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content-row">
+        <div data-i18n="footer_text">
+          &copy; 2026 Ariet. Computer Science &amp; Applied AI Admissions Portfolio.
+        </div>
+        <div class="mono" style="font-size: 11px;">
+          <span>Bishkek, Kyrgyzstan &bull; UTC+6</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
