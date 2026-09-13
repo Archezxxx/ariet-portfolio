@@ -782,9 +782,9 @@ body {
 /* Key Metrics Strip */
 .metrics-strip {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  max-width: 1020px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  max-width: 1140px;
   margin: 0 auto;
 }
 
@@ -792,26 +792,30 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 24px 20px;
+  padding: 22px 14px;
   box-shadow: var(--shadow-card);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.2s ease;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .metric-pill-card:hover {
   transform: translateY(-2px);
+  border-color: var(--apple-blue);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .metric-num {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text-primary);
   line-height: 1.1;
   margin-bottom: 6px;
+  white-space: nowrap;
 }
 
 .metric-num span.accent {
@@ -819,11 +823,12 @@ body {
 }
 
 .metric-desc {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tertiary);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+  line-height: 1.35;
 }
 
 /* ==========================================================================
@@ -1851,10 +1856,6 @@ button, a, .apple-bubble, .lang-pill-btn, .btn-apple-icon {
     grid-column: span 12;
   }
   
-  .metrics-strip {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
   .skills-apple-grid {
     grid-template-columns: 1fr;
   }
@@ -2030,6 +2031,10 @@ button, a, .apple-bubble, .lang-pill-btn, .btn-apple-icon {
   .metrics-strip {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+  }
+
+  .metric-pill-card:last-child {
+    grid-column: span 2;
   }
 
   .metric-pill-card {
