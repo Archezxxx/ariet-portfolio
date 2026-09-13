@@ -1,7 +1,7 @@
 {
   "name": "ariet-portfolio",
   "version": "1.0.0",
-  "description": "Personal Engineering Portfolio of Ariet — Full-Stack & Computer Vision Engineer",
+  "description": "Personal Portfolio of Ariet — AI & Automation Developer",
   "private": true,
   "scripts": {
     "start": "npx serve .",

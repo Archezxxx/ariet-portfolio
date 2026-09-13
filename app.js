@@ -1,5 +1,5 @@
 /**
- * ARIET // UNIVERSITY ADMISSIONS PORTFOLIO
+ * ARIET // PERSONAL ENGINEERING & ENTREPRENEURSHIP PORTFOLIO
  * Apple Cupertino Aesthetic - Interaction & Multi-Language Engine
  * Supported Languages: English (en), Русский (ru), Кыргызча (ky)
  */
@@ -21,6 +21,7 @@ function safeSetStorage(key, value) {
       window.localStorage.setItem(key, value);
     }
   } catch (e) {}
+  return fallbackStorage = value;
 }
 
 let currentLang = 'en';
@@ -30,348 +31,579 @@ let currentLang = 'en';
    ========================================================================== */
 const i18n = {
   en: {
-    brand_badge: "CS Applicant & Builder",
+    brand_badge: "AI & Automation Developer",
     nav_about: "About",
-    nav_research: "Research",
+    nav_ocr: "AIM OCR",
+    nav_anticheat: "Exam Platform",
     nav_projects: "Projects",
+    nav_ai_tools: "AI Workflow",
     nav_competencies: "Skills",
     nav_journey: "Journey",
     nav_contact: "Contact",
-    hero_pill: "University Admissions Portfolio • Computer Science & Applied AI",
-    hero_headline: 'Bridging mathematical vision,<br><span class="gradient-text">educational equity,</span> and distributed systems.',
-    hero_subhead: "I am Ariet, an independent software engineer and student based in Bishkek, Kyrgyzstan. I build algorithms that solve real structural challenges: from high-precision computer vision for school exam evaluations to modern cloud infrastructures.",
-    hero_btn_research: "Explore AIM.EXAM Research",
-    hero_btn_profile: "Applicant Profile",
+
+    // Hero
+    hero_pill: "11th-Grade Student • Developer • Entrepreneur",
+    hero_headline: 'Building real-world products with<br><span class="gradient-text">AI, automation,</span> and software.',
+    hero_subhead: "I am Ariet, an 11th-grade developer and entrepreneur based in Bishkek, Kyrgyzstan. Since 2023, I have been building software systems, AI-powered automations, and practical products that solve real-world problems for education, logistics, and businesses.",
+    hero_btn_ocr: "Explore AIM OCR System",
+    hero_btn_projects: "View All Projects",
     hero_btn_email: "Copy Contact Email",
-    metric_sheets_desc: "Exam Sheets Graded by Algorithm",
-    metric_acc_desc: "Subpixel OMR Accuracy",
-    metric_lang_desc: "Fluent Languages (EN • RU • KY • TR)",
-    metric_tasks_desc: "Async Automated Tasks Orchestrated",
-    vision_quote: "“True engineering is not about complex syntax for its own sake. It is about taking mathematical principles — like homography, adaptive thresholds, and asynchronous event loops — and applying them to remove friction, bias, and inefficiency from everyday human lives.”",
-    author_role: "Computer Science Candidate • Bishkek, Kyrgyzstan",
-    lang_en_pill: "English (Academic / IELTS Prep)",
+    metric_years_desc: "Programming & Software Development",
+    metric_sheets_desc: "Exam Sheets Automated in AALAM Schools",
+    metric_schools_desc: "AALAM School Campuses Served",
+    metric_cargo_desc: "Packages Delivered from China (AIM Cargo)",
+    metric_founders_desc: "Founders in Cosmic Team (Restaurant POS)",
+
+    // Vision & About
+    vision_quote: "“I don't see AI only as a technology to study. I use modern AI tools as part of my daily development workflow to prototype, build, debug, and improve real products faster — combining hands-on programming with high-impact automation.”",
+    author_role: "11th-Grade Student • AI & Automation Developer • Bishkek, Kyrgyzstan",
+    lang_en_pill: "English",
     lang_ky_pill: "Kyrgyz (Native)",
     lang_ru_pill: "Russian (Fluent)",
-    lang_tr_pill: "Turkish (Fluent / Sapat Network)",
-    bio_why_tag: "Academic Background",
-    bio_why_title: "Why Computer Science?",
-    bio_why_p1: "Growing up in Kyrgyzstan, I saw firsthand how educational institutions often lack expensive specialized equipment. While high-income countries deploy optical mark readers costing thousands of dollars, our regional schools relied on days of manual, error-prone teacher grading.",
-    bio_why_p2: "This drove my mission: to study Computer Science at an advanced collegiate level so I can develop software-defined solutions that replace prohibitive hardware with elegant algorithms accessible to schools and communities worldwide.",
-    bio_why_footer: "Intended Major: <strong>Computer Science / AI</strong>",
-    bio_audio_tag: "Cross-Disciplinary Dimension",
-    bio_audio_title: "Audio Engineering & Algorithmic Discipline",
-    bio_audio_p1: "Beyond software, I have a deep creative passion for music production and acoustic signal engineering using Cubase and FL Studio.",
-    bio_audio_p2: "Synthesizing sounds and balancing audio frequencies taught me the exact same virtues required in Computer Vision and distributed systems: harmonic balance, temporal precision, noise reduction, and rigorous attention to micro-details.",
-    bio_audio_footer: "Creative Field: <strong>Signal Synthesis & Production</strong>",
-    flagship_eyebrow: "Flagship EdTech Engineering",
-    flagship_title: "AIM.EXAM: Democratizing National Exam Grading Through Computer Vision",
-    flagship_lead: "A software-defined Optical Mark Recognition (OMR) system created to evaluate regional school olympiads and admissions tests without specialized hardware.",
-    flagship_status: "De-facto standard in production",
-    flagship_h3: "The Engineering Challenge & Solution",
-    flagship_desc: "When teachers in regional schools scan stacks of thousands of exam sheets, the papers inevitably rotate by 5–15 degrees, shift by 10–20 pixels, or get crumpled. Standard OMR software simply misses the bubbles, causing false zeroes.",
-    barrier_title: "The Barrier",
-    barrier_desc: "Conventional open-source OMR relies on rigid static bounding boxes that fail completely when sheets skew or scan lighting fluctuates.",
-    solution_title: "Ariet's Algorithmic Innovation",
-    solution_desc: "Designed a four-stage pipeline: Hough Line fiducial alignment → 4-point homography transformation → dynamic subpixel bubble snapping (±15px tolerance) → adaptive brightness differential evaluation.",
-    flagship_stat_sheets: "Real-world impact:",
-    flagship_stat_acc: "Accuracy rate:",
-    omr_paper_title: "OLYMPIAD ANSWER SHEET",
-    omr_paper_sub: "FORM #4920-KG • ACADEMIC EVALUATION",
+    bio_tag: "About Me",
+    bio_title: "Developer & Entrepreneur",
+    bio_p1: "I am an 11th-grade student with big ambitions and a strong interest in Artificial Intelligence, software development, automation, and entrepreneurship.",
+    bio_p2: "I have been programming since 2023 and have around 3 years of experience building software projects. My long-term goal is to study at university, continue sharpening my technical and entrepreneurial skills, and make a meaningful contribution to the technological development of Kyrgyzstan.",
+    bio_footer: "Focus: <strong>Building practical products people actually use</strong>",
+
+    // Philosophy
+    phil_tag: "Development Philosophy",
+    phil_title: "The 5-Question Product Framework",
+    phil_desc: "I am interested not only in writing code, but in understanding real problems and creating useful solutions. When I work on any project, I evaluate it through five critical questions:",
+    phil_q1: "What is the problem?",
+    phil_q2: "Who experiences it?",
+    phil_q3: "Can tech make it easier?",
+    phil_q4: "Can it be automated?",
+    phil_q5: "Can it be a real product?",
+    phil_synergy: "Synergy: <strong>Technology + AI + Business + Entrepreneurship</strong>",
+
+    // Flagship 1: AIM OCR
+    ocr_eyebrow: "Flagship EdTech Automation",
+    ocr_title: "AIM — EXAM OCR SYSTEM",
+    ocr_lead: "Automated examination checking system developed for the AALAM school network (6 schools) in Kyrgyzstan to evaluate 20,000+ offline entrance examination sheets.",
+    ocr_cap_badge: "AIM Exam OCR Production Workflow",
+    ocr_cap_text: "Scanned Sheet → Subpixel Computer Vision Snapping → Instant Excel Output",
+    ocr_flow_title: "End-to-End 6-Step Automated Workflow",
+    ocr_flow_subtitle: "How AIM Exam OCR transforms physical paper tests into verified Excel results in seconds",
+    ocr_team_badge: "Developed by Team of 2 • Ariet (Software & Automation)",
+    ocr_s1_title: "Collect Sheets",
+    ocr_s1_desc: "Physical examination answer sheets are collected from entrance test halls across 6 AALAM schools.",
+    ocr_s2_title: "High-Speed Scan",
+    ocr_s2_desc: "Batches of answer sheets are fed through high-speed sheetfed document scanners.",
+    ocr_s3_title: "Image Transfer",
+    ocr_s3_desc: "Scanned images are transferred directly to the processing computer running the AIM software.",
+    ocr_s4_title: "CV Processing",
+    ocr_s4_desc: "Hough alignment, homography rectification, and subpixel bubble snapping dynamically detect marked choices.",
+    ocr_s5_title: "Auto Scoring",
+    ocr_s5_desc: "Answers are scored against the official answer keys, generating scores and candidate IDs automatically.",
+    ocr_s6_title: "Excel Export",
+    ocr_s6_desc: "Final ranking, scores, and analytics are exported cleanly into a formatted Excel file for the school administration.",
+    ocr_tag: "Applied Computer Vision",
+    ocr_status: "In Production for AALAM",
+    ocr_h3: "The Problem & The Automation Solution",
+    ocr_desc: "AALAM schools conduct offline entrance examinations using physical paper answer sheets. More than 20,000 examination sheets needed to be evaluated. Checking such a vast volume manually would demand countless hours of tedious teacher labor with inevitable grading mistakes.",
+    barrier_title: "The Problem",
+    barrier_desc: "20,000+ paper answer sheets across 6 schools. Manual grading caused severe delays, teacher burnout, and error susceptibility.",
+    solution_title: "The Engineering Solution",
+    solution_desc: "Our 2-person team developed a custom desktop CV pipeline that digests scanner feeds, rectifies sheet tilt via homography, dynamically snaps to bubbles, and exports to Excel in real-time.",
+    ocr_stat1_label: "Scale:",
+    ocr_stat2_label: "Deployment:",
+    omr_paper_title: "AALAM ENTRANCE EXAM SHEET",
+    omr_paper_sub: "FORM #AALAM-2025 • OMR EVALUATION",
     btn_run_omr: "Run CV Evaluation",
     btn_tilt_omr: "Tilt Sheet",
     demo_initial_status: "Click bubbles to edit marks, or test sheet tilt",
-    projects_eyebrow: "Engineering Portfolio",
-    projects_title: "Systems & Software Solutions",
-    projects_lead: "Applied software projects built to solve institutional, logistical, and commercial problems with modern web standards and asynchronous architectures.",
-    alatoo_tag: "Campus Infrastructure",
-    alatoo_title: "Ala-Too Booking AI — University Resource Management",
-    alatoo_desc: "Engineered a comprehensive campus facility reservation platform for Ala-Too International University. Replaces paper sign-ups and dispersed email threads with a real-time, conflict-free booking scheduler.",
-    alatoo_callout: "<strong>Architecture Highlights:</strong> Developed on React 19 and TanStack Start, deployed over Cloudflare Workers edge runtime. Utilizes optimistic state updates and Radix UI primitives for full keyboard and screen-reader accessibility.",
-    alatoo_meta1: "Beneficiaries: <strong>University Students & Faculty</strong>",
-    alatoo_meta2: "Stack: <strong>Modern React Edge Architecture</strong>",
-    magic_tag: "Distributed Systems",
-    magic_title: "MagicWorlds — Bot Network Manager",
-    magic_desc: "High-throughput automation platform coordinating multi-bot tasks across hundreds of Telegram channels without hitting rate limits.",
-    magic_callout: "<strong>Dual-Tier Model Pattern:</strong> Django ORM acts as the database source of truth, while an asynchronous SQLAlchemy + Telethon pipeline executes high-speed worker queues.",
-    magic_meta: "Volume: <strong>500K+ tasks</strong>",
-    taxi_tag: "Real-Time Logistics",
-    taxi_title: "XAN-TAXI — Event-Driven Dispatch System",
-    taxi_desc: "Automated taxi booking and dispatch bot system built on Aiogram 3. Handles driver queues, fare estimations, geolocation reverse-geocoding, and complete multi-language localization (i18n) for passengers and drivers.",
-    taxi_meta: "Focus: <strong>State Machine Resilience</strong>",
-    pos_tag: "Hardware Integration",
-    pos_title: "Asia POS — Offline Retail Checkout System",
-    pos_desc: "Retail checkout desktop application interfacing directly with physical thermal receipt printers (XPrinter via ESC/POS protocol). Features offline data caching, inventory tracking, and automated sales auditing in Excel.",
-    pos_meta: "Focus: <strong>Embedded & POS Hardware</strong>",
-    comp_eyebrow: "Preparedness & Capabilities",
-    comp_title: "Technical & Academic Toolkit",
-    comp_lead: "A balance of rigorous algorithmic foundations, modern full-stack development, and international communication skills.",
-    comp_c1_title: "Algorithms & Vision",
-    comp_c2_title: "Software Engineering",
-    comp_c3_title: "Languages & Global Mindset",
-    lang_item_en: "English",
-    lang_item_ky: "Kyrgyz",
-    lang_item_ru: "Russian",
-    lang_item_tr: "Turkish",
-    lang_item_audio: "Acoustics & Sound Synthesis",
-    journey_eyebrow: "Trajectory",
-    journey_title: "Academic Journey & Milestones",
-    journey_lead: "A progression defined by curiosity, community service through code, and independent technical initiative.",
-    journey_item1_place: "EdTech • Bishkek",
-    journey_item1_title: "Creator & Lead Engineer — AIM.EXAM OMR Pipeline",
-    journey_item1_desc: "Initiated, architected, and field-tested the optical exam grading software now evaluated across thousands of school olympiad participants in Kyrgyzstan. Solved camera angle distortion and subpixel bubble detection without external dependencies or costly hardware.",
-    journey_item2_place: "Ala-Too International Uni",
-    journey_item2_title: "Full-Stack System Architect — Campus Space AI",
-    journey_item2_desc: "Built modern resource booking platform on React 19, TypeScript, and Cloudflare Workers. Designed intuitive UI for scheduling university auditoriums, conference halls, and laboratory rooms.",
-    journey_item3_place: "Distributed Infrastructure",
-    journey_item3_title: "Backend Developer — Telegram High-Load Automations",
-    journey_item3_desc: "Built scalable messaging infrastructure handling over 500,000 automated queries with Telethon, Django, and SQLAlchemy. Developed taxi dispatch systems with finite state machines and regional localization.",
-    journey_item4_place: "Sound Production",
-    journey_item4_title: "Acoustic Signal Processing & Audio Synthesis",
-    journey_item4_desc: "Multi-year exploration of digital signal processing in FL Studio and Cubase. Gained intuition for frequency spectrums, time alignment, and harmonic structure that directly reinforces mathematical computer vision work.",
-    contact_eyebrow: "Direct Inquiries",
-    contact_title: "Let’s Connect for Admissions & Collaboration",
-    contact_desc: "I welcome inquiries from university admissions officers, computer science professors, and research mentors. Based in Bishkek, Kyrgyzstan (UTC+6).",
+
+    // Flagship 2: AIM Exam Website
+    anticheat_eyebrow: "Online Examination Platform",
+    anticheat_title: "AIM — EXAM WEBSITE",
+    anticheat_lead: "Online entrance examination platform for AALAM schools featuring anti-cheating mechanisms, tab-switch monitoring, and AI-powered multi-person camera tracking.",
+    anticheat_cap_badge: "AIM Exam Platform Proctoring",
+    anticheat_cap_text: "Live Anti Tab-Switch Detection + AI Camera Face Tracking HUD",
+    feat_tab_title: "Anti Tab-Switch Monitoring",
+    feat_tab_desc: "The platform continuously monitors window blur and tab switching. If a candidate leaves the exam page, an amber modal warning is recorded. If repeated violations occur, the system can automatically disqualify the candidate.",
+    feat_cam_title: "Camera Monitoring & Multi-Person AI",
+    feat_cam_desc: "With camera permissions enabled, the platform streams the feed through client-side computer vision. If more than one person appears in the frame or the student looks away, an alert is triggered instantly.",
+    sim_box_title: "Try Anti-Cheat Simulation:",
+    sim_box_desc: "Test how the platform handles tab violations and camera events in real-time",
+    sim_btn_tab: "Simulate Tab Switch",
+    sim_btn_cam: "Simulate Multi-Person",
+
+    // Projects Grid
+    projects_eyebrow: "Practical Portfolio",
+    projects_title: "Websites, Logistics & POS Systems",
+    projects_lead: "Real projects solving real problems — from educational consulting web portals to cross-border China-Kyrgyzstan logistics and restaurant automation.",
+    consult_tag: "Web Development & Consulting",
+    consult_title: "CONSULTTEAM — Study Abroad Platform",
+    consult_desc: "Developed a modern landing website for an educational consulting company helping students with applications and admission to universities abroad. Focused on clean presentation, university partner showcases, and conversion-oriented student consultation scheduling.",
+    consult_meta1: "Domain: <strong>consulteam.edu.kg</strong>",
+    consult_meta2: "Role: <strong>Full-Stack Web Developer</strong>",
+    cargo_tag: "Logistics & Entrepreneurship",
+    cargo_title: "AIM CARGO — Cross-Border Logistics Venture",
+    cargo_desc: "Founded and operated a small logistics business delivering packages from Chinese marketplaces (Taobao, 1688, Pinduoduo) to customers in Kyrgyzstan. Transported over 500 kg of parcels over one year of operations.",
+    cargo_callout: "<strong>Practical Business Experience:</strong> Sourcing with Chinese suppliers, customer service, customs clearance, package tracking, pricing strategy, and registering an individual business (ИП) in Kyrgyzstan.",
+    cargo_meta1: "Duration: <strong>~1 Year Operation</strong>",
+    cargo_meta2: "Volume: <strong>500+ kg Cargo Delivered</strong>",
+    cosmic_tag: "B2B Restaurant Technology",
+    cosmic_title: "COSMIC TEAM — Restaurant POS Software & Installation",
+    cosmic_desc: "Cosmic Team was founded by me together with two friends to deliver modern technology solutions for restaurants in Kyrgyzstan, with a core focus on POS software.",
+    cosmic_desc2: "Our work includes developing point-of-sale software, configuring dining room table mappings, integrating ESC/POS thermal printers, and installing turn-key solutions directly inside restaurants across Kyrgyzstan. Cosmic Team marks my transition from solo coding to building a tech company with real enterprise clients.",
+    cosmic_meta1: "Founders: <strong>3 Team Members</strong>",
+    cosmic_meta2: "Market: <strong>Restaurants across Kyrgyzstan</strong>",
+
+    // AI Tools
+    ai_eyebrow: "Next-Gen Development Workflow",
+    ai_title: "AI-Assisted Development",
+    ai_lead: "Modern AI tools are an integral part of my engineering toolkit — multiplying velocity, automating repetitive tasks, and accelerating real-world product delivery.",
+    ai_antigravity_role: "Autonomous Engineering & Multi-file Systems",
+    ai_antigravity_desc: "Leveraged for comprehensive codebase planning, architecture refactors, test verification, and automated paired development.",
+    ai_claude_role: "Terminal-First Scripting & Refactoring",
+    ai_claude_desc: "Used for rapid terminal debugging, deep reasoning across large codebases, and iterative backend script enhancements.",
+    ai_codex_role: "Code Generation & Algorithm Optimization",
+    ai_codex_desc: "Accelerates boilerplate drafting, API client structuring, and computer vision algorithmic transformations.",
+    ai_n8n_role: "Workflow Automation & API Orchestration",
+    ai_n8n_desc: "Connects business databases, customer alerts, webhook pipelines, and automatic data synchronization for operations.",
+    ai_philosophy_quote: "“My approach is to combine my own programming and problem-solving skills with AI tools rather than treating AI as a replacement for understanding technology.”",
+    chip1: "Prototype ideas in hours",
+    chip2: "Write & improve code",
+    chip3: "Debug complex issues",
+    chip4: "Automate repetitive tasks",
+    chip5: "Experiment with new tech",
+    chip6: "Build products faster",
+    chip7: "Integrate AI into real apps",
+
+    // Skills
+    comp_eyebrow: "Capabilities & Skills",
+    comp_title: "Engineering & Business Toolkit",
+    comp_lead: "Combining foundational programming languages, computer vision, AI-assisted development, and practical entrepreneurial execution.",
+    comp_c1_title: "Programming Languages",
+    comp_c2_title: "Development & Systems",
+    comp_c3_title: "AI & Entrepreneurship",
+
+    // Journey
+    journey_eyebrow: "Milestones",
+    journey_title: "My Journey (2023 – 2026)",
+    journey_lead: "From first lines of code to building automated examination systems and co-founding real B2B tech businesses.",
+    j_item5_place: "Bishkek • Restaurants",
+    j_item5_title: "Co-Founder — Cosmic Team (Restaurant POS Solutions)",
+    j_item5_desc: "Founded Cosmic Team together with two friends. Developing and installing turn-key POS software solutions for restaurants across Kyrgyzstan, transitioning from solo programming to leading a business-facing technology team.",
+    j_item4_place: "China → Kyrgyzstan",
+    j_item4_title: "Founder — AIM Cargo Logistics",
+    j_item4_desc: "Created and operated a cross-border logistics business delivering packages from Chinese marketplaces to Kyrgyzstan. Transported over 500 kg of parcels and registered an individual business (ИП), acquiring invaluable hands-on entrepreneurship experience.",
+    j_item3_place: "AALAM Schools • Bishkek",
+    j_item3_title: "Software Engineer — AIM Exam OCR System & Website",
+    j_item3_desc: "Co-developed automated examination checking for 6 AALAM schools, automating 20,000+ answer sheets. Created the AIM Exam Website with anti-tab switch detection and camera monitoring to ensure exam integrity.",
+    j_item2_place: "Kyrgyzstan",
+    j_item2_title: "Building Practical Projects & Exploring AI",
+    j_item2_desc: "Started creating practical projects, experimenting with various technologies, backend tools, APIs, and modern AI-assisted development workflows.",
+    j_item1_place: "Starting Out",
+    j_item1_title: "Beginning the Programming Journey",
+    j_item1_desc: "Started learning programming and exploring software development fundamentals with Python, web technologies, and computational problem solving.",
+
+    // Vision
+    future_quote: "“I want to become a strong technology professional and entrepreneur. My goal is not simply to write code. I want to identify meaningful problems, create technology-based solutions, and build products that people actually use — making a meaningful contribution to the technological development of Kyrgyzstan.”",
+    future_name: "Ariet",
+    future_role: "Building today. Learning every day. Thinking bigger about the future.",
+
+    // Contact & Footer
+    contact_eyebrow: "Get in Touch",
+    contact_title: "Let’s Connect for Admissions, Projects & Collaboration",
+    contact_desc: "I welcome inquiries from university admissions officers, mentors, collaborators, and tech partners. Based in Bishkek, Kyrgyzstan (UTC+6).",
     contact_btn_email: "Email: <strong>ariet5656@gmail.com</strong>",
     copy_hint: "Click to copy →",
     contact_btn_tg: "Telegram: <strong>@thearchhe</strong>",
     chat_hint: "Direct message →",
     contact_btn_gh: "GitHub: <strong>github.com/Archezxxx</strong>",
-    repo_hint: "View repositories →",
-    form_name_label: "Full Name & Institution",
-    form_email_label: "Official Email Address",
-    form_msg_label: "Inquiry or Academic Opportunity",
-    form_submit_btn: "Send Academic Inquiry",
-    footer_text: "© 2026 Ariet. Computer Science & Applied AI Admissions Portfolio."
+    repo_hint: "View code →",
+    form_name_label: "Full Name & Organization",
+    form_email_label: "Email Address",
+    form_msg_label: "Message or Project Inquiry",
+    form_submit_btn: "Send Message",
+    footer_text: "© 2026 Ariet. AI & Automation Developer • Building real-world products."
   },
 
   ru: {
-    brand_badge: "Абитуриент CS & Инженер",
+    brand_badge: "AI & Automation Developer",
     nav_about: "Обо мне",
-    nav_research: "Исследования",
+    nav_ocr: "AIM OCR",
+    nav_anticheat: "Экзамены онлайн",
     nav_projects: "Проекты",
+    nav_ai_tools: "ИИ-разработка",
     nav_competencies: "Навыки",
     nav_journey: "Траектория",
     nav_contact: "Контакты",
-    hero_pill: "Портфолио для поступления в университет • Computer Science & Прикладной ИИ",
-    hero_headline: 'На стыке компьютерного зрения,<br><span class="gradient-text">доступного образования</span> и распределенных систем.',
-    hero_subhead: "Меня зовут Ариет. Я независимый инженер-разработчик и абитуриент из Бишкека, Кыргызстан. Создаю алгоритмы, решающие реальные задачи: от компьютерного зрения высокой точности для проверки школьных олимпиад до современных облачных платформ.",
-    hero_btn_research: "Исследование AIM.EXAM",
-    hero_btn_profile: "Профиль абитуриента",
+
+    // Hero
+    hero_pill: "Ученик 11 класса • Разработчик • Предприниматель",
+    hero_headline: 'Создаю реальные продукты с помощью<br><span class="gradient-text">ИИ, автоматизации</span> и программных решений.',
+    hero_subhead: "Меня зовут Ариет. Я разработчик и предприниматель из Бишкека, ученик 11 класса. Программирую с 2023 года (~3 года опыта). Создаю полезные программные решения — от автоматической проверки экзаменов для школ Кыргызстана до POS-систем для ресторанов и международной логистики.",
+    hero_btn_ocr: "Система AIM OCR",
+    hero_btn_projects: "Все проекты",
     hero_btn_email: "Скопировать Email",
-    metric_sheets_desc: "Проверено экзаменационных бланков",
-    metric_acc_desc: "Точность субпиксельного OMR",
-    metric_lang_desc: "Языка (EN • RU • KY • TR)",
-    metric_tasks_desc: "Обработано асинхронных задач",
-    vision_quote: "«Настоящая инженерия заключается не в сложности кода ради сложности. Она в том, чтобы взять фундаментальные математические принципы — гомографию, адаптивные пороги, асинхронные очереди — и применить их для устранения субъективности, неравенства и рутины в жизни людей.»",
-    author_role: "Кандидат в бакалавриат/магистратуру CS • Бишкек, Кыргызстан",
-    lang_en_pill: "Английский (Академический / IELTS)",
-    lang_ky_pill: "Кыргызский (Родной)",
+    metric_years_desc: "В программировании и разработке софта",
+    metric_sheets_desc: "Бланков автоматизировано в сети «ААЛАМ»",
+    metric_schools_desc: "Школ сети «ААЛАМ» используют систему",
+    metric_cargo_desc: "Грузов доставлено из Китая (AIM Cargo)",
+    metric_founders_desc: "Основателя в Cosmic Team (POS для ресторанов)",
+
+    // Vision & About
+    vision_quote: "«Я не рассматриваю искусственный интеллект просто как абстрактную технологию для изучения. Я использую современные ИИ-инструменты как часть ежедневного процесса разработки, чтобы быстрее прототипировать, писать код, находить ошибки и улучшать реальные продукты.»",
+    author_role: "Ученик 11 класса • AI & Automation Developer • Бишкек, Кыргызстан",
+    lang_en_pill: "English",
+    lang_ky_pill: "Кыргызча (Эне тил)",
     lang_ru_pill: "Русский (Свободный)",
-    lang_tr_pill: "Турецкий (Свободный / Сеть «Сапат»)",
-    bio_why_tag: "Академический бэкграунд",
-    bio_why_title: "Почему Computer Science?",
-    bio_why_p1: "В Кыргызстане я лично наблюдал, как образовательные учреждения сталкиваются с нехваткой дорогостоящего специализированного оборудования. В то время как развитые страны используют аппаратные оптические сканеры за тысячи долларов, региональные школы неделями вручную проверяли бланки с неизбежными человеческими ошибками.",
-    bio_why_p2: "Это сформировало мою цель: получить фундаментальное университетское образование в области Computer Science, чтобы создавать программные алгоритмические решения, которые заменяют дорогое железо доступными и честными технологиями для школ и людей во всем мире.",
-    bio_why_footer: "Целевое направление: <strong>Computer Science / ИИ</strong>",
-    bio_audio_tag: "Межпредметные навыки",
-    bio_audio_title: "Звукорежиссура и алгоритмическая дисциплина",
-    bio_audio_p1: "Помимо программирования, я глубоко увлечен созданием музыки и обработкой акустических сигналов в Cubase и FL Studio.",
-    bio_audio_p2: "Синтез звуков и эквализация частот развили во мне навыки, напрямую необходимые в компьютерном зрении и распределенных системах: гармонический баланс, строгую временную точность, фильтрацию шума и исключительное внимание к микродеталям.",
-    bio_audio_footer: "Творческая сфера: <strong>Синтез сигналов и продакшн</strong>",
-    flagship_eyebrow: "Флагманский EdTech-проект",
-    flagship_title: "AIM.EXAM: Проверка национальных экзаменов и олимпиад через компьютерное зрение",
-    flagship_lead: "Программная система оптического распознавания отметок (OMR), созданная для автоматической проверки школьных олимпиад и вступительных тестов на обычных сканерах.",
-    flagship_status: "Проверено на практике в школах",
-    flagship_h3: "Инженерная задача и ее решение",
-    flagship_desc: "Когда в школах сканируют пачки из тысяч экзаменационных бланков, листы неизбежно перекашиваются на 5–15 градусов, смещаются на 10–20 пикселей или мнутся. Стандартные программы с фиксированной сеткой промахиваются мимо кружков и выдают ложные нули.",
-    barrier_title: "Технический барьер",
-    barrier_desc: "Существующий открытый софт полагается на жесткие статические координаты, которые дают сбой при малейшем перекосе или перепаде освещения.",
-    solution_title: "Алгоритмическая инновация Ариета",
-    solution_desc: "Разработал 4-этапный конвейер: поиск меток через преобразование Хафа → гомографическое выравнивание перспективы → динамический субпиксельный захват отметок (допуск ±15px) → адаптивная оценка контрастности заливки.",
-    flagship_stat_sheets: "Реальный масштаб:",
-    flagship_stat_acc: "Точность распознавания:",
-    omr_paper_title: "ОЛИМПИАДНЫЙ БЛАНК ОТВЕТОВ",
-    omr_paper_sub: "ФОРМА №4920-KG • АКАДЕМИЧЕСКАЯ ОЦЕНКА",
+    bio_tag: "Обо мне",
+    bio_title: "Разработчик и предприниматель",
+    bio_p1: "Я ученик 11 класса с большими амбициями и глубоким интересом к искусственному интеллекту, разработке программного обеспечения, автоматизации и предпринимательству.",
+    bio_p2: "Программирую с 2023 года, накопил около 3 лет опыта создания практических проектов. Моя долгосрочная цель — поступить в университет, продолжать развивать технические и предпринимательские навыки и внести значимый вклад в технологическое развитие Кыргызстана.",
+    bio_footer: "Фокус: <strong>Создавать продукты, которыми реально пользуются люди</strong>",
+
+    // Philosophy
+    phil_tag: "Философия разработки",
+    phil_title: "Продуктовый фреймворк из 5 вопросов",
+    phil_desc: "Мне интересно не просто писать строки кода, а понимать реальную проблему и создавать полезное решение. Работая над любым проектом, я задаю себе 5 ключевых вопросов:",
+    phil_q1: "В чем проблема?",
+    phil_q2: "Кто с ней сталкивается?",
+    phil_q3: "Поможет ли технология?",
+    phil_q4: "Можно ли автоматизировать?",
+    phil_q5: "Может ли стать продуктом?",
+    phil_synergy: "Формула: <strong>Технологии + ИИ + Бизнес + Предпринимательство</strong>",
+
+    // Flagship 1: AIM OCR
+    ocr_eyebrow: "Флагманская автоматизация в EdTech",
+    ocr_title: "AIM — EXAM OCR SYSTEM",
+    ocr_lead: "Автоматизированная система проверки вступительных экзаменов для сети из 6 школ «ААЛАМ» в Кыргызстане (обработано 20,000+ бумажных бланков).",
+    ocr_cap_badge: "Рабочий процесс AIM Exam OCR в школах",
+    ocr_cap_text: "Сканирование бланков → Субпиксельный захват отметок → Мгновенный отчет в Excel",
+    ocr_flow_title: "Полный автоматизированный конвейер из 6 этапов",
+    ocr_flow_subtitle: "Как AIM Exam OCR превращает стопки бумажных экзаменов в проверенную ведомость за секунды",
+    ocr_team_badge: "Разработано командой из 2 человек • Ариет (ПО и автоматизация)",
+    ocr_s1_title: "Сбор бланков",
+    ocr_s1_desc: "Физические экзаменационные листы собираются после проведения тестов в 6 школах «ААЛАМ».",
+    ocr_s2_title: "Сканирование",
+    ocr_s2_desc: "Пачки бланков пропускаются через скоростной поточный документ-сканер.",
+    ocr_s3_title: "Передача в ПК",
+    ocr_s3_desc: "Отсканированные изображения мгновенно передаются на компьютер с установленной программой.",
+    ocr_s4_title: "Компьютерное зрение",
+    ocr_s4_desc: "Алгоритм выравнивает лист по гомографии и динамически захватывает закрашенные кружки (допуск ±15px).",
+    ocr_s5_title: "Подсчет баллов",
+    ocr_s5_desc: "Ответы автоматически сверяются с ключами, рассчитываются первичные баллы и проценты.",
+    ocr_s6_title: "Экспорт в Excel",
+    ocr_s6_desc: "Итоговая ведомость с рейтингом учеников и ID автоматически формируется в файле Excel для руководства.",
+    ocr_tag: "Прикладное компьютерное зрение",
+    ocr_status: "Внедрено в сети школ «ААЛАМ»",
+    ocr_h3: "Проблема и ее инженерное решение",
+    ocr_desc: "Школы «ААЛАМ» проводят очные вступительные экзамены на бумажных листах ответов. Требовалось проверить свыше 20,000 бланков. Проверка такого объема вручную отняла бы у учителей колоссальное количество времени и неизбежно привела бы к ошибкам от переутомления.",
+    barrier_title: "Проблема",
+    barrier_desc: "20,000+ бланков в 6 школах. Ручная проверка занимала недели и требовала огромных усилий учителей.",
+    solution_title: "Инженерное решение",
+    solution_desc: "Наша команда из 2 человек разработала программу, которая обрабатывает сканы, выравнивает перекосы и мгновенно выгружает баллы в Excel.",
+    ocr_stat1_label: "Масштаб:",
+    ocr_stat2_label: "Внедрение:",
+    omr_paper_title: "ВСТУПИТЕЛЬНЫЙ БЛАНК ШКОЛЫ «ААЛАМ»",
+    omr_paper_sub: "ФОРМА №AALAM-2025 • ПРОВЕРКА OMR",
     btn_run_omr: "Запустить проверку алгоритмом",
     btn_tilt_omr: "Наклонить бланк",
     demo_initial_status: "Кликайте по кружкам для изменения отметок или наклоните бланк",
-    projects_eyebrow: "Инженерное портфолио",
-    projects_title: "Разработанные системы и платформы",
-    projects_lead: "Прикладные программные проекты, созданные для решения институциональных, логистических и практических задач на современных веб-стандартах.",
-    alatoo_tag: "Университетская инфраструктура",
-    alatoo_title: "Ala-Too Booking AI — Управление аудиториями кампуса",
-    alatoo_desc: "Разработал платформу бронирования университетских ресурсов для Международного университета «Ала-Тоо». Заменяет бумажные журналы и почтовую переписку единым онлайн-графиком без конфликтов расписания.",
-    alatoo_callout: "<strong>Архитектура:</strong> Стек React 19 и TanStack Start с развертыванием на Cloudflare Workers (edge computing). Оптимистичные обновления интерфейса и компоненты Radix UI для полной доступности (a11y).",
-    alatoo_meta1: "Пользователи: <strong>Студенты и преподаватели</strong>",
-    alatoo_meta2: "Стек: <strong>Modern React Edge Architecture</strong>",
-    magic_tag: "Распределенные системы",
-    magic_title: "MagicWorlds — Менеджер сети Telegram-ботов",
-    magic_desc: "Высоконагруженная платформа автоматизации, координирующая работу десятков ботов в сотнях каналов с соблюдением жестких лимитов Telegram API.",
-    magic_callout: "<strong>Двухуровневая архитектура:</strong> Django ORM служит источником истины для структуры БД и миграций, а асинхронный конвейер SQLAlchemy + Telethon выполняет задачи в фоне.",
-    magic_meta: "Объем: <strong>500K+ задач</strong>",
-    taxi_tag: "Логистика реального времени",
-    taxi_title: "XAN-TAXI — Диспетчерская система вызова такси",
-    taxi_desc: "Телеграм-система заказа такси на базе Aiogram 3. Управляет очередями водителей, расчетом стоимости, геокодированием адресов и мультиязычным интерфейсом (i18n).",
-    taxi_meta: "Фокус: <strong>Конечные автоматы (FSM)</strong>",
-    pos_tag: "Интеграция оборудования",
-    pos_title: "Asia POS — Автономная кассовая система",
-    pos_desc: "Десктопное приложение для торговых точек с прямым управлением термопринтерами чеков (XPrinter по протоколу ESC/POS). Поддерживает автономный режим и экспорт отчетов в Excel.",
-    pos_meta: "Фокус: <strong>Кассовое оборудование</strong>",
-    comp_eyebrow: "Навыки и подготовка",
-    comp_title: "Технический и академический арсенал",
-    comp_lead: "Баланс строгой алгоритмической подготовки, современной веб-разработки и международных языковых навыков.",
-    comp_c1_title: "Алгоритмы и зрение",
-    comp_c2_title: "Программная инженерия",
-    comp_c3_title: "Языки и коммуникация",
-    lang_item_en: "Английский",
-    lang_item_ky: "Кыргызский",
-    lang_item_ru: "Русский",
-    lang_item_tr: "Турецкий",
-    lang_item_audio: "Акустика и синтез звука",
-    journey_eyebrow: "Траектория",
-    journey_title: "Академический путь и этапы развития",
-    journey_lead: "Путь, определяемый любознательностью, пользой обществу через код и самостоятельной инженерной инициативой.",
-    journey_item1_place: "EdTech • Бишкек",
-    journey_item1_title: "Создатель и ведущий разработчик — OMR-система AIM.EXAM",
-    journey_item1_desc: "Спроектировал и успешно внедрил программный комплекс проверки бланков для олимпиадников Кыргызстана. Решил задачу компенсации наклона камеры и субпиксельного захвата отметок без сторонних платных сервисов.",
-    journey_item2_place: "Международный университет «Ала-Тоо»",
-    journey_item2_title: "Архитектор веб-системы — Campus Space AI",
-    journey_item2_desc: "Построил современную систему бронирования на React 19, TypeScript и Cloudflare Workers для аудиторий, конференц-залов и университетских лабораторий.",
-    journey_item3_place: "Распределенная инфраструктура",
-    journey_item3_title: "Backend-разработчик — Высоконагруженная инфраструктура ботов",
-    journey_item3_desc: "Создал масштабируемую систему на Telethon, Django и SQLAlchemy, обработавшую свыше 500,000 запросов. Разработал систему заказа такси с конечными автоматами и локализацией.",
-    journey_item4_place: "Звукорежиссура",
-    journey_item4_title: "Обработка акустических сигналов и синтез звука",
-    journey_item4_desc: "Многолетняя работа с обработкой цифровых сигналов в FL Studio и Cubase. Выработала интуитивное понимание спектров частот, временной синхронизации и подавления шумов, что усиливает работу в компьютерном зрении.",
-    contact_eyebrow: "Прямая связь",
-    contact_title: "Контакты для приемных комиссий и сотрудничества",
-    contact_desc: "Буду рад вопросам от представителей приемных комиссий университетов, профессоров и академических наставников. Нахожусь в Бишкеке, Кыргызстан (UTC+6).",
+
+    // Flagship 2: AIM Exam Website
+    anticheat_eyebrow: "Онлайн-платформа тестирования",
+    anticheat_title: "AIM — EXAM WEBSITE",
+    anticheat_lead: "Онлайн-платформа для вступительных экзаменов сети «ААЛАМ» со встроенной защитой от списывания, мониторингом вкладок и распознаванием лиц по веб-камере.",
+    anticheat_cap_badge: "Интерфейс прокторинга AIM Exam Platform",
+    anticheat_cap_text: "Детекция смены вкладок + ИИ-отслеживание посторонних лиц в кадре",
+    feat_tab_title: "Защита от смены вкладок (Anti Tab-Switch)",
+    feat_tab_desc: "Система фиксирует потерю фокуса и переход на другие вкладки браузера. Ученик получает предупреждение, а при повторных нарушениях система может автоматически снять кандидата с экзамена.",
+    feat_cam_title: "Контроль камеры и детекция посторонних",
+    feat_cam_desc: "Платформа анализирует видеопоток с камеры ученика через компьютерное зрение. Если в кадре появляется второй человек или ученик покидает место, система выдает предупреждение.",
+    sim_box_title: "Симуляция защиты от списывания:",
+    sim_box_desc: "Проверьте, как система реагирует на смену вкладок и события камеры в реальном времени",
+    sim_btn_tab: "Симулировать смену вкладки",
+    sim_btn_cam: "Симулировать постороннего",
+
+    // Projects Grid
+    projects_eyebrow: "Прикладные проекты",
+    projects_title: "Веб-сервисы, логистика и автоматизация",
+    projects_lead: "Реальные проекты для решения практических задач — от образовательного консалтинга до логистики из Китая и кассовых систем для ресторанов.",
+    consult_tag: "Веб-разработка и консалтинг",
+    consult_title: "CONSULTTEAM — Образовательный консалтинг",
+    consult_desc: "Разработал современный сайт для образовательной консалтинговой компании, помогающей студентам с поступлением в зарубежные университеты. Презентация услуг компании через современный веб-интерфейс.",
+    consult_meta1: "Домен: <strong>consulteam.edu.kg</strong>",
+    consult_meta2: "Роль: <strong>Full-Stack веб-разработчик</strong>",
+    cargo_tag: "Логистика и бизнес",
+    cargo_title: "AIM CARGO — Доставка товаров из Китая",
+    cargo_desc: "Создал и развивал малый логистический бизнес по доставке посылок с китайских маркетплейсов (Taobao, 1688, Pinduoduo) клиентам в Кыргызстан. За год работы перевезено свыше 500 кг посылок.",
+    cargo_callout: "<strong>Практический бизнес-опыт:</strong> Работа с поставщиками из Китая, общение с клиентами, таможня, расчет цен, операционные процессы и регистрация индивидуального предпринимателя (ИП).",
+    cargo_meta1: "Срок: <strong>Около 1 года работы</strong>",
+    cargo_meta2: "Объем: <strong>500+ кг доставленных грузов</strong>",
+    cosmic_tag: "B2B ресторанные технологии",
+    cosmic_title: "COSMIC TEAM — ПО для автоматизации ресторанов (POS)",
+    cosmic_desc: "Команда, основанная мной вместе с двумя друзьями. Мы разрабатываем и внедряем технологические решения для ресторанов Кыргызстана с фокусом на POS-софте.",
+    cosmic_desc2: "Наша работа включает разработку кассового ПО, схему столов зала, интеграцию термопринтеров чеков (ESC/POS) и внедрение готовых решений в ресторанах. Cosmic Team — это шаг от индивидуального программирования к построению команды и работе с реальным B2B-бизнесом.",
+    cosmic_meta1: "Основатели: <strong>3 участника команды</strong>",
+    cosmic_meta2: "Рынок: <strong>Рестораны по всему Кыргызстану</strong>",
+
+    // AI Tools
+    ai_eyebrow: "Инструменты разработки нового поколения",
+    ai_title: "AI-Assisted Development",
+    ai_lead: "Современные ИИ-инструменты стали важнейшей частью моего процесса разработки — ускоряют создание продуктов, автоматизируют рутину и помогают создавать софт быстрее.",
+    ai_antigravity_role: "Агентная разработка и сложные системы",
+    ai_antigravity_desc: "Планирование архитектуры, глубокий рефакторинг кодовой базы, верификация и автономное парное программирование.",
+    ai_claude_role: "Терминальный агент и скрипты",
+    ai_claude_desc: "Быстрая отладка из терминала, глубокий анализ логики и доработка серверных скриптов.",
+    ai_codex_role: "Генерация кода и алгоритмов",
+    ai_codex_desc: "Быстрое прототипирование шаблонного кода, структуры API и вспомогательных алгоритмов компьютерного зрения.",
+    ai_n8n_role: "Оркестрация процессов и API",
+    ai_n8n_desc: "Визуальная автоматизация процессов, интеграция вебхуков, баз данных и оповещений клиентов.",
+    ai_philosophy_quote: "«Мой подход заключается в том, чтобы объединять собственные навыки программирования и решения задач с инструментами ИИ, а не заменять искусственным интеллектом понимание технологий.»",
+    chip1: "Прототипирование идей",
+    chip2: "Написание и улучшение кода",
+    chip3: "Отладка проектов",
+    chip4: "Автоматизация рутины",
+    chip5: "Эксперименты с технологиями",
+    chip6: "Быстрый вывод продуктов",
+    chip7: "Интеграция ИИ в реальные задачи",
+
+    // Skills
+    comp_eyebrow: "Навыки и компетенции",
+    comp_title: "Технический и предпринимательский арсенал",
+    comp_lead: "Синтез базовых языков программирования, прикладного компьютерного зрения, ИИ-инструментов и опыта запуска бизнеса.",
+    comp_c1_title: "Языки программирования",
+    comp_c2_title: "Разработка и системы",
+    comp_c3_title: "ИИ и бизнес",
+
+    // Journey
+    journey_eyebrow: "Этапы развития",
+    journey_title: "Мой путь (2023 – 2026)",
+    journey_lead: "От первых строк кода до создания школьных автоматизированных комплексов и запуска технологических компаний.",
+    j_item5_place: "Бишкек • Ресторанный бизнес",
+    j_item5_title: "Сооснователь — Cosmic Team (POS-решения для ресторанов)",
+    j_item5_desc: "Основал команду вместе с двумя друзьями. Разрабатываем и устанавливаем POS-софт для ресторанов по всему Кыргызстану, перейдя к работе с реальными B2B-клиентами.",
+    j_item4_place: "Китай → Кыргызстан",
+    j_item4_title: "Основатель — Логистика AIM Cargo",
+    j_item4_desc: "Создал логистический проект по доставке посылок с китайских маркетплейсов в Кыргызстан. Перевезли более 500 кг грузов, зарегистрировал ИП и получил ценный опыт предпринимательства.",
+    j_item3_place: "Школы «ААЛАМ» • Бишкек",
+    j_item3_title: "Инженер-разработчик — Система AIM Exam OCR и сайт экзаменов",
+    j_item3_desc: "В команде из 2 человек создал систему проверки 20,000+ бланков для 6 школ «ААЛАМ». Разработал онлайн-платформу тестирования с защитой от списывания и контролем камеры.",
+    j_item2_place: "Кыргызстан",
+    j_item2_title: "Создание проектов и освоение ИИ",
+    j_item2_desc: "Начал создавать практические проекты, экспериментировать с технологиями, бэкендом, API и подходами к ИИ-ассистированной разработке.",
+    j_item1_place: "Старт",
+    j_item1_title: "Начало пути в программировании",
+    j_item1_desc: "Начал изучать программирование, фундаментальные основы разработки софта на Python, веб-технологии и решение алгоритмических задач.",
+
+    // Vision
+    future_quote: "«Я хочу стать сильным техническим специалистом и предпринимателем. Моя цель — не просто писать код. Я хочу находить значимые проблемы, создавать технологические решения и строить продукты, которыми реально пользуются люди. И в будущем внести вклад в развитие Кыргызстана.»",
+    future_name: "Ариет",
+    future_role: "Создаю сегодня. Учусь каждый день. Мыслю масштабно о будущем.",
+
+    // Contact & Footer
+    contact_eyebrow: "Связь и сотрудничество",
+    contact_title: "Контакты для университетов, проектов и сотрудничества",
+    contact_desc: "Буду рад вопросам от представителей приемных комиссий университетов, наставников и потенциальных партнеров. Нахожусь в Бишкеке, Кыргызстан (UTC+6).",
     contact_btn_email: "Email: <strong>ariet5656@gmail.com</strong>",
     copy_hint: "Скопировать →",
     contact_btn_tg: "Telegram: <strong>@thearchhe</strong>",
     chat_hint: "Написать сообщение →",
     contact_btn_gh: "GitHub: <strong>github.com/Archezxxx</strong>",
     repo_hint: "Открыть репозитории →",
-    form_name_label: "Ваше имя и учебное заведение",
-    form_email_label: "Официальный рабочий Email",
-    form_msg_label: "Тема обращения или академическая программа",
-    form_submit_btn: "Отправить запрос",
-    footer_text: "© 2026 Ариет. Портфолио для поступления на Computer Science & Прикладной ИИ."
+    form_name_label: "Ваше имя и организация",
+    form_email_label: "Электронная почта",
+    form_msg_label: "Сообщение или предложение",
+    form_submit_btn: "Отправить сообщение",
+    footer_text: "© 2026 Ариет. AI & Automation Developer • Создание реальных продуктов."
   },
 
   ky: {
-    brand_badge: "CS боюнча талапкер & Инженер",
+    brand_badge: "AI & Automation Developer",
     nav_about: "Мен жөнүндө",
-    nav_research: "Изилдөө",
+    nav_ocr: "AIM OCR",
+    nav_anticheat: "Онлайн сынак",
     nav_projects: "Долбоорлор",
+    nav_ai_tools: "ЖИ-өнүктүрүү",
     nav_competencies: "Көндүмдөр",
-    nav_journey: "Билим жолу",
+    nav_journey: "Басып өткөн жол",
     nav_contact: "Байланыш",
-    hero_pill: "ЖОЖго тапшыруу портфолиосу • Компьютердик илимдер жана Колдонмо Жасалма интеллект",
-    hero_headline: 'Математикалык көрүү,<br><span class="gradient-text">билим берүүдөгү теңчилик</span> жана бөлүштүрүлгөн системалар.',
-    hero_subhead: "Менин атым Ариет, Бишкектеги көз карандысыз инженер-программист жана студентмин. Мектеп олимпиадаларын текшерүүчү так компьютердик көрүү алгоритмдеринен баштап заманбап булут платформаларына чейин реалдуу көйгөйлөрдү чечкен системаларды түзөм.",
-    hero_btn_research: "AIM.EXAM изилдөөсү",
-    hero_btn_profile: "Талапкердин профили",
+
+    // Hero
+    hero_pill: "11-класстын окуучусу • Программист • Ишкер",
+    hero_headline: 'Жасалма интеллект, автоматташтыруу жана<br><span class="gradient-text">программалоо аркылуу</span> реалдуу өнүмдөрдү түзөм.',
+    hero_subhead: "Менин атым Ариет. Бишкектеги 11-класстын окуучусу, программист жана ишкермин. 2023-жылдан бери программалоо менен алектенем (~3 жыл тажрыйба). Кыргызстандагы мектептердин кирүү сынактарын текшерүүдөн тартып ресторандык POS-системаларга жана эл аралык логистикага чейин чыныгы көйгөйлөрдү чечкен системаларды курам.",
+    hero_btn_ocr: "AIM OCR системасы",
+    hero_btn_projects: "Бардык долбоорлор",
     hero_btn_email: "Email көчүрүү",
-    metric_sheets_desc: "Алгоритм текшерген баракчалар",
-    metric_acc_desc: "Субпикселдик OMR тактыгы",
-    metric_lang_desc: "Тилде эркин сүйлөө (EN • RU • KY • TR)",
-    metric_tasks_desc: "Асинхрондук тапшырмалар аткарылды",
-    vision_quote: "«Чыныгы инженерия жөн гана татаал код жазууда эмес. Ал фундаменталдык математикалык эрежелерди — гомографияны, адаптивдик чектерди жана асинхрондук процесстерди — адамдардын жашоосундагы субъективдүүлүктү жана адилетсиздикти жоюуга багыттоодо жатат.»",
-    author_role: "Компьютердик илимдер боюнча талапкер • Бишкек, Кыргызстан",
-    lang_en_pill: "Англис тили (Академиялык / IELTS)",
-    lang_ky_pill: "Кыргыз тили (Эне тил)",
+    metric_years_desc: "Программалоо жана софт түзүү тажрыйбасы",
+    metric_sheets_desc: "«ААЛАМ» мектептеринде автоматташтырылган баракча",
+    metric_schools_desc: "«ААЛАМ» тармагынын мектептери системаны колдонот",
+    metric_cargo_desc: "Кытайдан Кыргызстанга жеткирилген жүктөр (AIM Cargo)",
+    metric_founders_desc: "Cosmic Team командасынын негиздөөчүлөрү (POS)",
+
+    // Vision & About
+    vision_quote: "«Мен жасалма интеллектти жөн гана окуй турган технология катары көрбөйм. Заманбап ЖИ куралдарын идеяларды тезирээк сынап көрүү, код жазуу, каталарды табуу жана реалдуу өнүмдөрдү жакшыртуу үчүн күнүмдүк ишимде активдүү колдоном.»",
+    author_role: "11-класстын окуучусу • AI & Automation Developer • Бишкек, Кыргызстан",
+    lang_en_pill: "English",
+    lang_ky_pill: "Кыргызча (Эне тил)",
     lang_ru_pill: "Орус тили (Эркин)",
-    lang_tr_pill: "Түрк тили («Сапат» билим тармагы)",
-    bio_why_tag: "Академиялык багыт",
-    bio_why_title: "Эмне үчүн Computer Science?",
-    bio_why_p1: "Кыргызстанда окуп жүрүп, мектептерде кымбат баалуу атайын жабдуулардын жетишсиздигин өз көзүм менен көрдүм. Өнүккөн өлкөлөр миңдеген долларлык оптикалык сканерлерди колдонушса, биздин аймактык мектептерде мугалимдер тесттерди кол менен күндөп-түндөп текшерип, ката кетирүү ыктымалдыгы жогору болчу.",
-    bio_why_p2: "Бул менин максатымды аныктады: университеттен Компьютердик илимдерди терең өздөштүрүп, кымбат техниканы жөнөкөй жана жеткиликтүү алгоритмдер менен алмаштырган технологияларды бүткүл дүйнөдөгү мектептерге жеткирүү.",
-    bio_why_footer: "Максаттуу багыт: <strong>Компьютердик илимдер / Жасалма интеллект</strong>",
-    bio_audio_tag: "Предметтер аралык көндүмдөр",
-    bio_audio_title: "Үн инженериясы жана алгоритмдик тартип",
-    bio_audio_p1: "Программалоодон тышкары, мен Cubase жана FL Studio аркылуу музыка жаратууга жана акустикалык сигналдарды иштетүүгө терең кызыгам.",
-    bio_audio_p2: "Үндөрдү синтездөө жана жыштыктарды теңдөө мага компьютердик көрүүдө жана тармактык системаларда зарыл болгон сапаттарды үйрөттү: гармониялык баланс, убакыттын тактыгы, ызы-чууну чыпкалоо жана майда деталдарга терең көңүл буруу.",
-    bio_audio_footer: "Чыгармачыл багыт: <strong>Сигналдарды синтездөө жана продакшн</strong>",
-    flagship_eyebrow: "Негизги EdTech долбоору",
-    flagship_title: "AIM.EXAM: Компьютердик көрүү аркылуу мектеп олимпиадаларын автоматтык баалоо",
-    flagship_lead: "Аймактык мектеп олимпиадаларын жана сынактарды атайын кымбат жабдуусуз текшерүү үчүн түзүлгөн оптикалык белгилерди таануу (OMR) системасы.",
-    flagship_status: "Мектептерде текшерилген",
-    flagship_h3: "Инженердик көйгөй жана чечим",
-    flagship_desc: "Мектептерде миңдеген баракчаларды сканерден өткөргөндө кагаздар сөзсүз 5–15 градуска кыйшайып, 10–20 пикселге жылып же бүктөлүп калат. Туруктуу координаталуу жөнөкөй программалар тегерекчелерди таба албай, ката баалап коёт.",
-    barrier_title: "Техникалык тоскоолдук",
-    barrier_desc: "Ачык булактагы OMR системалары кагаздын кичине эле кыйшайышында же жарыктын өзгөрүшүндө толугу менен жараксыз болуп калат.",
-    solution_title: "Ариеттин алгоритмдик чечими",
-    solution_desc: "4 баскычтуу система түздүм: Хаф алгоритми менен бурчтук белгилерди табуу → 4 чекиттүү гомография менен баракты түздөө → субпикселдик тегерекчелерди кармоо (±15px чегинде) → контрасттык айырманы эсептөө.",
-    flagship_stat_sheets: "Практикалык масштаб:",
-    flagship_stat_acc: "Таануу тактыгы:",
-    omr_paper_title: "ОЛИМПИАДАЛЫК ЖООП БАРАКЧАСЫ",
-    omr_paper_sub: "ФОРМА №4920-KG • АКАДЕМИЯЛЫК БААЛОО",
+    bio_tag: "Мен жөнүндө",
+    bio_title: "Программист жана ишкер",
+    bio_p1: "Мен жасалма интеллектке, программалык камсыздоого, автоматташтырууга жана ишкердикке чоң кызыгуусу жана амбициясы бар 11-класстын окуучусумун.",
+    bio_p2: "2023-жылдан бери программалоо менен алектенип келем. Менин негизги максатым — жогорку окуу жайына тапшырып, техникалык жана ишкердик жөндөмдөрүмдү өнүктүрүү жана Кыргызстандын технологиялык өнүгүүсүнө салым кошуу.",
+    bio_footer: "Багыт: <strong>Адамдар чындыгында колдонгон пайдалуу өнүмдөрдү жаратуу</strong>",
+
+    // Philosophy
+    phil_tag: "Өнүктүрүү философиясы",
+    phil_title: "5 суроодон турган өнүмдүк ыкма",
+    phil_desc: "Мага жөн гана код жазуу эмес, реалдуу көйгөйдү түшүнүп, пайдалуу чечим табуу маанилүү. Ар бир долбоордо мен өзүмө 5 суроо берем:",
+    phil_q1: "Көйгөй эмнеде?",
+    phil_q2: "Ким бул көйгөйгө туш болот?",
+    phil_q3: "Технология жеңилдете алабы?",
+    phil_q4: "Автоматташтырууга болобу?",
+    phil_q5: "Чыныгы өнүм боло алабы?",
+    phil_synergy: "Формула: <strong>Технология + ЖИ + Бизнес + Ишкердик</strong>",
+
+    // Flagship 1: AIM OCR
+    ocr_eyebrow: "EdTech багытындагы негизги автоматташтыруу",
+    ocr_title: "AIM — EXAM OCR SYSTEM",
+    ocr_lead: "Кыргызстандагы «ААЛАМ» мектептер тармагынын 6 мектеби үчүн 20,000ден ашык кирүү сынак баракчаларын автоматтык түрдө текшерүүчү программалык система.",
+    ocr_cap_badge: "AIM Exam OCR иштөө процесси",
+    ocr_cap_text: "Баракты сканерлөө → Компьютердик көрүү менен тегерекчелерди табуу → Excel'ге дароо чыгаруу",
+    ocr_flow_title: "6 баскычтуу автоматташтырылган конвейер",
+    ocr_flow_subtitle: "AIM Exam OCR кагаз сынактарды секунданын ичинде такталган Excel жыйынтыктарына кантип айландырат",
+    ocr_team_badge: "2 адамдан турган команда түзгөн • Ариет (Программа жана автоматташтыруу)",
+    ocr_s1_title: "Барактарды чогултуу",
+    ocr_s1_desc: "«ААЛАМ» тармагындагы 6 мектептен бүткөн тест баракчалары чогултулат.",
+    ocr_s2_title: "Ыкчам сканерлөө",
+    ocr_s2_desc: "Жооп баракчалары ылдам документ-сканер аркылуу санариптештирилет.",
+    ocr_s3_title: "Компьютерге өткөрүү",
+    ocr_s3_desc: "Сканерленген сүрөттөр AIM программасы орнотулган компьютерге өткөрүлөт.",
+    ocr_s4_title: "Компьютердик көрүү",
+    ocr_s4_desc: "Алгоритм барактын кыйшаюусун түздөп, боёлгон тегерекчелерди субпикселдик тактык менен кармайт (±15px).",
+    ocr_s5_title: "Баллды эсептөө",
+    ocr_s5_desc: "Жооптор туура ачкычтар менен салыштырылып, упайлар автоматтык түрдө эсептелет.",
+    ocr_s6_title: "Excel'ге экспорттоо",
+    ocr_s6_desc: "Акыркы баалар жана окуучулардын рейтинги мектеп жетекчилиги үчүн даяр Excel файлына чыгарылат.",
+    ocr_tag: "Колдонмо компьютердик көрүү",
+    ocr_status: "«ААЛАМ» мектептеринде колдонулууда",
+    ocr_h3: "Көйгөй жана инженердик чечим",
+    ocr_desc: "«ААЛАМ» мектептери кирүү сынактарын кагаз баракчаларында өткөрөт. 20,000ден ашык баракты текшерүү керек болгон. Мынчалык көп баракты кол менен текшерүү мугалимдердин көп убактысын алып, чарчоодон улам каталарга алып келмек.",
+    barrier_title: "Көйгөй",
+    barrier_desc: "6 мектепте 20,000ден ашуун баракча. Кол менен текшерүү жумаларды талап кылып, ката кетирүү коркунучу жогору эле.",
+    solution_title: "Инженердик чечим",
+    solution_desc: "Биздин 2 адамдан турган команда сканерден өткөн сүрөттөрдү түздөп, белгилерди таап, жыйынтыкты Excel'ге чыгарган программаны иштеп чыкты.",
+    ocr_stat1_label: "Масштаб:",
+    ocr_stat2_label: "Ишке киргизүү:",
+    omr_paper_title: "«ААЛАМ» МЕКТЕБИНИН КИРҮҮ СЫНАК БАРАКЧАСЫ",
+    omr_paper_sub: "ФОРМА №AALAM-2025 • OMR ТЕКШЕРҮҮ",
     btn_run_omr: "Алгоритмди текшерүү",
     btn_tilt_omr: "Баракты кыйшайтуу",
     demo_initial_status: "Жоопторду белгилөө үчүн тегерекчелерди басыңыз же баракты кыйшайтыңыз",
-    projects_eyebrow: "Инженердик портфолио",
-    projects_title: "Иштелип чыккан системалар жана платформалар",
-    projects_lead: "Заманбап веб-стандарттар жана асинхрондук архитектура менен университеттик жана практикалык маселелерди чечкен системалар.",
-    alatoo_tag: "Университеттик инфраструктура",
-    alatoo_title: "Ала-Тоо Booking AI — Университет ресурстарын башкаруу",
-    alatoo_desc: "Ала-Тоо эл аралык университети үчүн аудиторияларды жана залдарды онлайн ээлөө платформасын иштеп чыктым. Кагаз жазууларды жана графиктердин кагылышуусун толук жойду.",
-    alatoo_callout: "<strong>Архитектура:</strong> React 19 жана TanStack Start технологиялары Cloudflare Workers булутунда иштетилет. Тез жаңылануучу интерфейс жана Radix UI компоненттери.",
-    alatoo_meta1: "Колдонуучулар: <strong>Студенттер жана окутуучулар</strong>",
-    alatoo_meta2: "Стек: <strong>Modern React Edge Architecture</strong>",
-    magic_tag: "Бөлүштүрүлгөн системалар",
-    magic_title: "MagicWorlds — Телеграм боттор тармагынын менеджери",
-    magic_desc: "Жүздөгөн каналдарда боттордун ишин координациялаган жана Telegram чектөөлөрүнөн ашпаган жогорку ылдамдыктагы платформа.",
-    magic_callout: "<strong>Эки деңгээлдүү архитектура:</strong> Django ORM маалыматтар базасынын түзүмүн сактайт, ал эми асинхрондук SQLAlchemy + Telethon тапшырмаларды тез аткарат.",
-    magic_meta: "Көлөм: <strong>500K+ тапшырма</strong>",
-    taxi_tag: "Ыкчам логистика",
-    taxi_title: "XAN-TAXI — Такси чакыруу диспетчердик системасы",
-    taxi_desc: "Aiogram 3 базасында такси чакыруу бот-системасы. Айдоочулардын кезегин, бааны эсептөөнү, даректерди аныктоону жана көп тилдүү интерфейсти (i18n) камсыздайт.",
-    taxi_meta: "Фокус: <strong>Абалды башкаруу (FSM)</strong>",
-    pos_tag: "Жабдууларды интеграциялоо",
-    pos_title: "Asia POS — Чек басып чыгаруучу автономдуу касса",
-    pos_desc: "Дүкөндөр үчүн термопринтерлерге (ESC/POS протоколу) чекти түз басып чыгаруучу программа. Интернетсиз иштөөнү жана отчетторду Excel'ге чыгарууну колдойт.",
-    pos_meta: "Фокус: <strong>Кассалык жабдуулар</strong>",
-    comp_eyebrow: "Даярдык жана жөндөмдөр",
-    comp_title: "Техникалык жана академиялык куралдар",
-    comp_lead: "Алгоритмдик фундаменталдуу даярдыктын, заманбап программалоонун жана эл аралык тилдерди билүүнүн айкалышы.",
-    comp_c1_title: "Алгоритмдер жана көрүү",
-    comp_c2_title: "Программалык инженерия",
-    comp_c3_title: "Тилдер жана коммуникация",
-    lang_item_en: "Англис тили",
-    lang_item_ky: "Кыргыз тили",
-    lang_item_ru: "Орус тили",
-    lang_item_tr: "Түрк тили",
-    lang_item_audio: "Акустика жана үн синтези",
-    journey_eyebrow: "Басып өткөн жол",
-    journey_title: "Билим жолу жана негизги этаптар",
-    journey_lead: "Билимге умтулуу, программалоо аркылуу коомго пайда келтирүү жана көз карандысыз инженердик демилге.",
-    journey_item1_place: "EdTech • Бишкек",
-    journey_item1_title: "Түзүүчү жана башкы инженер — AIM.EXAM OMR системасы",
-    journey_item1_desc: "Кыргызстандагы миңдеген олимпиада катышуучуларынын тесттерин текшерүүчү программаны башынан баштап түзүп, ийгиликтүү ишке киргиздим. Кагаздын кыйшаюусун жана бүктөлүшүн түздөө маселесин өзүм иштеп чыккан алгоритм менен чечтим.",
-    journey_item2_place: "Ала-Тоо эл аралык университети",
-    journey_item2_title: "Веб-системанын архитектору — Campus Space AI",
-    journey_item2_desc: "React 19, TypeScript жана Cloudflare Workers аркылуу университеттин аудиторияларын, лабораторияларын жана залдарын онлайн ээлөө системасын курдум.",
-    journey_item3_place: "Бөлүштүрүлгөн инфраструктура",
-    journey_item3_title: "Backend программист — Жогорку ылдамдыктагы боттор инфраструктурасы",
-    journey_item3_desc: "Telethon, Django жана SQLAlchemy аркылуу 500,000ден ашык суроо-талапты иштеткен масштабдуу инфраструктура түздүм. Локализацияланган такси системасын иштеп чыктым.",
-    journey_item4_place: "Үн продакшн",
-    journey_item4_title: "Акустикалык сигналдарды иштетүү жана үн синтези",
-    journey_item4_desc: "FL Studio жана Cubase программаларында санариптик сигналдарды иштетүү боюнча көп жылдык тажрыйба. Бул тажрыйба компьютердик көрүүдөгү математикалык алгоритмдерди жана сигналдарды чыпкалоону терең түшүнүүгө чоң салым кошот.",
-    contact_eyebrow: "Түз байланыш",
-    contact_title: "ЖОЖго тапшыруу жана кызматташуу боюнча байланыш",
-    contact_desc: "Университеттердин кабыл алуу комиссияларынын өкүлдөрүнөн, профессорлордон жана илимий жетекчилерден келген суроолорду кубануу менен кабыл алам. Бишкек шаарындамын (UTC+6).",
+
+    // Flagship 2: AIM Exam Website
+    anticheat_eyebrow: "Онлайн сынак платформасы",
+    anticheat_title: "AIM — EXAM WEBSITE",
+    anticheat_lead: "«ААЛАМ» мектептери үчүн көчүрүүгө каршы коргоосу, браузер өтмөктөрүн көзөмөлдөө жана камера аркылуу бөтөн адамдарды аныктоо функциялары бар онлайн платформа.",
+    anticheat_cap_badge: "AIM Exam онлайн прокторинг интерфейси",
+    anticheat_cap_text: "Браузер өтмөгүн алмаштырууну көзөмөлдөө + Камера аркылуу адамдарды таануу",
+    feat_tab_title: "Өтмөктү алмаштыруудан коргоо (Anti Tab-Switch)",
+    feat_tab_desc: "Система окуучунун тест барагынан башка өтмөккө өтүшүн дароо каттайт. Эскертүү берилет, ал эми эреже бир нече жолу бузулса, система окуучуну сынактан чыгарып коё алат.",
+    feat_cam_title: "Камера көзөмөлү жана ЖИ аркылуу таануу",
+    feat_cam_desc: "Платформа камерадагы видеону компьютердик көрүү аркылуу текшерет. Эгерде кадрда экинчи адам пайда болсо, окуучуга дароо эскертүү берилет.",
+    sim_box_title: "Көчүрүүгө каршы симуляцияны байкап көрүңүз:",
+    sim_box_desc: "Өтмөк алмашканда же камерада бөтөн адам пайда болгондо система кандай иштээрин көрүңүз",
+    sim_btn_tab: "Өтмөк алмаштырууну симуляциялоо",
+    sim_btn_cam: "Экинчи адамды симуляциялоо",
+
+    // Projects Grid
+    projects_eyebrow: "Практикалык долбоорлор",
+    projects_title: "Веб-сайттар, логистика жана POS системалар",
+    projects_lead: "Чыныгы көйгөйлөрдү чечкен долбоорлор — билим берүү консалтингинен Кытай логистикасына жана ресторандарды автоматташтырууга чейин.",
+    consult_tag: "Веб-иштеп чыгуу жана консалтинг",
+    consult_title: "CONSULTTEAM — Чет өлкөдө билим алуу платформасы",
+    consult_desc: "Чет өлкөлүк ЖОЖдорго тапшырууга көмөктөшкөн билим берүү консалтинг компаниясы үчүн заманбап лендинг сайт иштеп чыктым. Компаниянын кызматтарын жана өнөктөш университеттерин заманбап интерфейс аркылуу тааныштырат.",
+    consult_meta1: "Домен: <strong>consulteam.edu.kg</strong>",
+    consult_meta2: "Ролу: <strong>Full-Stack веб-программист</strong>",
+    cargo_tag: "Логистика жана ишкердик",
+    cargo_title: "AIM CARGO — Кытайдан жүк жеткирүү бизнеси",
+    cargo_desc: "Кытай маркетплейстеринен (Taobao, 1688, Pinduoduo) Кыргызстандагы кардарларга посылкаларды жеткирүүчү чакан логистикалык бизнести негиздеп, иштеттим. Бир жылдын ичинде 500 кг ашык жүк ташылды.",
+    cargo_callout: "<strong>Практикалык бизнес тажрыйба:</strong> Кытайлык жеткирүүчүлөр менен иштөө, кардарлар менен баарлашуу, бажы, баа коюу, логистикалык процесстер жана жеке ишкердикти (ИП) каттоо.",
+    cargo_meta1: "Мөөнөт: <strong>1 жылдай иштеди</strong>",
+    cargo_meta2: "Көлөм: <strong>500+ кг жеткирилген жүк</strong>",
+    cosmic_tag: "B2B ресторандык технологиялар",
+    cosmic_title: "COSMIC TEAM — Ресторандар үчүн POS программалары",
+    cosmic_desc: "Эки досум менен биргеликте түзгөн команда. Биз Кыргызстандагы ресторандар үчүн POS программаларын иштеп чыгуу жана орнотуу боюнча технологиялык чечимдерди сунуштайбыз.",
+    cosmic_desc2: "Биздин иш кассалык программаны жазууну, залдагы үстөлдөрдүн схемасын түзүүнү, термопринтерлерди (ESC/POS) кошууну жана даяр чечимдерди ресторандарга орнотууну камтыйт. Cosmic Team — жеке программалоодон команда курууга жана чыныгы бизнес менен иштешүүгө карай чоң кадам.",
+    cosmic_meta1: "Негиздөөчүлөр: <strong>3 команда мүчөсү</strong>",
+    cosmic_meta2: "Базар: <strong>Кыргызстан боюнча ресторандар</strong>",
+
+    // AI Tools
+    ai_eyebrow: "Жаңы муундагы иштеп чыгуу куралдары",
+    ai_title: "AI-Assisted Development",
+    ai_lead: "Заманбап ЖИ куралдары менин күнүмдүк ишимдин маанилүү бөлүгү — өнүмдөрдү тезирээк чыгарууга, рутинаны автоматташтырууга жана софтту тез курууга шарт түзөт.",
+    ai_antigravity_role: "Агенттик өнүктүрүү жана татаал системалар",
+    ai_antigravity_desc: "Архитектураны пландаштыруу, кодду комплекстүү рефакторинг кылуу жана автоматташтырылган жупташып иштөө.",
+    ai_claude_role: "Терминалдык агент жана скрипттер",
+    ai_claude_desc: "Терминалдан тез оңдоо, логиканы терең талдоо жана сервердик скрипттерди өркүндөтүү.",
+    ai_codex_role: "Код жана алгоритм генерациясы",
+    ai_codex_desc: "Шаблондуу коддорду, API түзүмдөрүн жана компьютердик көрүү алгоритмдерин тез жазуу.",
+    ai_n8n_role: "Процесстерди жана API'лерди байланыштыруу",
+    ai_n8n_desc: "Визуалдык автоматташтыруу, вебхуктар, маалымат базалары жана кардарларга билдирүү жөнөтүү.",
+    ai_philosophy_quote: "«Менин мамилем — ЖИ менен технологияны түшүнүүнү алмаштыруу эмес, өзүмдүн программалоо жана ойлонуу жөндөмүмдү ЖИ куралдары менен күчөтүү.»",
+    chip1: "Идеяларды тез сынап көрүү",
+    chip2: "Кодду жазуу жана жакшыртуу",
+    chip3: "Каталарды табуу жана оңдоо",
+    chip4: "Бир өңчөй ишти автоматташтыруу",
+    chip5: "Жаңы технологияларды өздөштүрүү",
+    chip6: "Өнүмдөрдү тезирээк ишке киргизүү",
+    chip7: "ЖИни реалдуу ишке кошуу",
+
+    // Skills
+    comp_eyebrow: "Жөндөмдөр жана даярдык",
+    comp_title: "Техникалык жана ишкердик арсенал",
+    comp_lead: "Программалоо тилдеринин, компьютердик көрүүнүн, заманбап ЖИ куралдарынын жана бизнес ачуу тажрыйбасынын айкалышы.",
+    comp_c1_title: "Программалоо тилдери",
+    comp_c2_title: "Өнүктүрүү жана системалар",
+    comp_c3_title: "ЖИ жана ишкердик",
+
+    // Journey
+    journey_eyebrow: "Негизги этаптар",
+    journey_title: "Менин жолум (2023 – 2026)",
+    journey_lead: "Алгачкы коддон баштап мектептердин автоматташтырылган системаларына жана жеке компанияларды негиздөөгө чейин.",
+    j_item5_place: "Бишкек • Ресторандар",
+    j_item5_title: "Тең-негиздөөчү — Cosmic Team (Ресторандар үчүн POS)",
+    j_item5_desc: "Эки досум менен бирге түзгөн команда. Кыргызстан боюнча ресторандарга POS программаларын иштеп чыгып орнотуудабыз. Чыныгы B2B кардарлар менен иштешүү тажрыйбасы.",
+    j_item4_place: "Кытай → Кыргызстан",
+    j_item4_title: "Негиздөөчү — AIM Cargo логистикасы",
+    j_item4_desc: "Кытай маркетплейстеринен Кыргызстанга жүк жеткирүү бизнесин ачтым. 500 кг ашык жүктөрдү ташып, жеке ишкердикти каттап, чоң бизнес тажрыйбасына ээ болдум.",
+    j_item3_place: "«ААЛАМ» мектептери • Бишкек",
+    j_item3_title: "Инженер-программист — AIM Exam OCR системасы жана веб-платформасы",
+    j_item3_desc: "2 адамдан турган командада 6 «ААЛАМ» мектеби үчүн 20,000ден ашык баракты автоматтык текшерүү системасын жана көчүрүүгө каршы корголгон онлайн сынак сайтын түздүм.",
+    j_item2_place: "Кыргызстан",
+    j_item2_title: "Долбоорлорду куруу жана ЖИ куралдарын өздөштүрүү",
+    j_item2_desc: "Практикалык долбоорлорду жаратып, ар кандай технологиялар, бэкенд, API жана ЖИ-өнүктүрүү ыкмалары менен тажрыйба жүргүздүм.",
+    j_item1_place: "Башталышы",
+    j_item1_title: "Программалоо дүйнөсүнө кадам",
+    j_item1_desc: "Python тилин, веб-технологияларды жана алгоритмдерди үйрөнүп, программалоонун пайдубалын түптөдүм.",
+
+    // Vision
+    future_quote: "«Мен күчтүү технологиялык адис жана ишкер болгум келет. Менин максатым жөн гана код жазуу эмес. Чыныгы маанилүү көйгөйлөрдү таап, технологиялык чечимдерди түзүп, адамдар чындыгында колдонгон өнүмдөрдү кургум келет. Ал эми келечекте Кыргызстандын өнүгүүсүнө өз салымымды кошууну каалайм.»",
+    future_name: "Ариет",
+    future_role: "Бүгүн жаратып, күн сайын үйрөнүп, келечекке масштабдуу карайм.",
+
+    // Contact & Footer
+    contact_eyebrow: "Байланышуу",
+    contact_title: "ЖОЖго тапшыруу, долбоорлор жана кызматташуу боюнча байланыш",
+    contact_desc: "Университеттердин кабыл алуу өкүлдөрүнүн, насаатчылардын жана өнөктөштөрдүн суроолорун кубануу менен кабыл алам. Бишкек шаарындамын (UTC+6).",
     contact_btn_email: "Email: <strong>ariet5656@gmail.com</strong>",
     copy_hint: "Көчүрүү →",
     contact_btn_tg: "Telegram: <strong>@thearchhe</strong>",
     chat_hint: "Билдирүү жазуу →",
     contact_btn_gh: "GitHub: <strong>github.com/Archezxxx</strong>",
-    repo_hint: "Репозиторийлерди көрүү →",
-    form_name_label: "Толук аты-жөнүңүз жана мекемеңиз",
-    form_email_label: "Расмий жумушчу Email дарегиңиз",
-    form_msg_label: "Суроо-талап же академиялык программа тууралуу",
-    form_submit_btn: "Суроо-талап жөнөтүү",
-    footer_text: "© 2026 Ариет. Компьютердик илимдер жана Колдонмо Жасалма интеллект боюнча ЖОЖго тапшыруу портфолиосу."
+    repo_hint: "Коддорду көрүү →",
+    form_name_label: "Аты-жөнүңүз жана мекемеңиз",
+    form_email_label: "Электрондук дарегиңиз",
+    form_msg_label: "Билдирүү же сунуш",
+    form_submit_btn: "Билдирүү жөнөтүү",
+    footer_text: "© 2026 Ариет. AI & Automation Developer • Чыныгы өнүмдөрдү түзүү."
   }
 };
 
@@ -385,6 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme,
     initSoundEngine,
     initAppleOmrDemo,
+    initAntiCheatSimulation,
     initContactActions,
     initLiquidGlassButtons,
     initScrollAnimations,
@@ -480,21 +713,18 @@ function initMobileNav() {
     playTastefulClick(isOpen ? 440 : 520);
   });
 
-  // Close when clicking any nav link
   drawer.querySelectorAll('.mobile-nav-link').forEach(link => {
     link.addEventListener('click', () => {
       setDrawerState(false);
     });
   });
 
-  // Close when clicking outside
   document.addEventListener('click', (e) => {
     if (drawer.classList.contains('active') && !drawer.contains(e.target) && !toggle.contains(e.target)) {
       setDrawerState(false);
     }
   });
 
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('active')) {
       setDrawerState(false);
@@ -684,7 +914,7 @@ function initAppleOmrDemo() {
       } else if (currentLang === 'ru') {
         statusText.textContent = `Бланк наклонен на ${currentAngle > 0 ? '+' : ''}${currentAngle}° (Имитация перекоса сканера)`;
       } else {
-        statusText.textContent = `Sheet tilted by ${currentAngle > 0 ? '+' : ''}${currentAngle}° (Simulating hand scan distortion)`;
+        statusText.textContent = `Sheet tilted by ${currentAngle > 0 ? '+' : ''}${currentAngle}° (Simulating scanner tilt)`;
       }
     }
     playTastefulClick(380);
@@ -696,8 +926,8 @@ function initAppleOmrDemo() {
     isEvaluating = true;
     runBtn.disabled = true;
 
-    const msgStep1 = currentLang === 'ky' ? '1/3-баскыч: Хаф алгоритми менен бурчтук белгилерди табуу...' : (currentLang === 'ru' ? 'Этап 1/3: Преобразование Хафа и поиск меток...' : 'Step 1/3: Hough Transform fiducial angle detection...');
-    const msgStep2 = currentLang === 'ky' ? '2/3-баскыч: 4 чекиттүү гомография менен баракты түздөө...' : (currentLang === 'ru' ? 'Этап 2/3: 4-точечная гомография и выравнивание листа...' : 'Step 2/3: Applying 4-point homography & perspective warping...');
+    const msgStep1 = currentLang === 'ky' ? '1/3-баскыч: Хаф алгоритми менен бурчтук белгилерди табуу...' : (currentLang === 'ru' ? 'Этап 1/3: Преобразование Хафа и поиск меток...' : 'Step 1/3: Hough Transform fiducial detection...');
+    const msgStep2 = currentLang === 'ky' ? '2/3-баскыч: 4 чекиттүү гомография менен баракты түздөө...' : (currentLang === 'ru' ? 'Этап 2/3: 4-точечная гомография и выравнивание листа...' : 'Step 2/3: Applying 4-point homography rectification...');
     const msgStep3 = currentLang === 'ky' ? '3/3-баскыч: Субпикселдик тегерекчелерди кармоо (±15px)...' : (currentLang === 'ru' ? 'Этап 3/3: Динамический субпиксельный захват отметок (±15px)...' : 'Step 3/3: Dynamic subpixel bubble snapping (±15px)...');
 
     statusText.textContent = msgStep1;
@@ -714,14 +944,12 @@ function initAppleOmrDemo() {
 
         setTimeout(() => {
           let score = 0;
-          let answered = 0;
 
           for (let q = 1; q <= 10; q++) {
             const userChoice = userAnswers[q - 1];
             const correctChoice = answerKey[q - 1];
 
             if (userChoice) {
-              answered++;
               const bubbleEl = document.querySelector(`.apple-bubble[data-q="${q}"][data-val="${userChoice}"]`);
               if (userChoice === correctChoice) {
                 score++;
@@ -733,11 +961,11 @@ function initAppleOmrDemo() {
           }
 
           if (currentLang === 'ky') {
-            statusText.innerHTML = `<strong>Жыйынтык:</strong> ${score}/10 туура (${score * 10}%). Барак ${currentAngle}° кыйшаюудан түзөлдү. Тактыгы: 99.82%.`;
+            statusText.innerHTML = `<strong>Жыйынтык:</strong> ${score}/10 туура (${score * 10}%). Кыйшаюу ${currentAngle}° түздөлдү. Excel'ге даяр.`;
           } else if (currentLang === 'ru') {
-            statusText.innerHTML = `<strong>Результат:</strong> ${score}/10 верно (${score * 10}%). Перекос ${currentAngle}° выровнен. Точность: 99.82%.`;
+            statusText.innerHTML = `<strong>Результат:</strong> ${score}/10 верно (${score * 10}%). Перекос ${currentAngle}° выровнен. Готово к выгрузке в Excel.`;
           } else {
-            statusText.innerHTML = `<strong>Result:</strong> ${score}/10 correct (${score * 10}%). Orientation rectified from ${currentAngle}°. Accuracy: 99.82%.`;
+            statusText.innerHTML = `<strong>Result:</strong> ${score}/10 correct (${score * 10}%). Rectified from ${currentAngle}°. Ready for Excel export.`;
           }
 
           runBtn.disabled = false;
@@ -746,6 +974,98 @@ function initAppleOmrDemo() {
         }, 400);
       }, 400);
     }, 400);
+  });
+}
+
+/* ==========================================================================
+   4.1 ANTI-CHEAT SIMULATION SANDBOX
+   ========================================================================== */
+function initAntiCheatSimulation() {
+  const btnTab = document.getElementById('btn-sim-tab');
+  const btnCam = document.getElementById('btn-sim-cam');
+
+  if (btnTab) {
+    btnTab.addEventListener('click', () => {
+      playTastefulClick(320);
+      showSecurityModal(
+        currentLang === 'ky' ? 'Өтмөк алмаштыруу эскертүүсү (1/3)' : (currentLang === 'ru' ? 'Предупреждение: Смена вкладки (1/3)' : 'Anti Tab-Switch Warning (1/3)'),
+        currentLang === 'ky' ? 'Сиз сынак барагынан башка терезеге өттүңүз. Прокторинг сервери бул аракетти каттады. Кайталанса сынак автоматтык түрдө токтотулат.' : (currentLang === 'ru' ? 'Зафиксирован уход с экзаменационной страницы. Сервер прокторинга зафиксировал нарушение. Повторные попытки приведут к снятию с экзамена.' : 'Candidate navigated away from the active examination window. Tab switching is logged on the proctor server. Further violations will trigger automatic disqualification.'),
+        '#FF9500'
+      );
+    });
+  }
+
+  if (btnCam) {
+    btnCam.addEventListener('click', () => {
+      playTastefulClick(300);
+      showSecurityModal(
+        currentLang === 'ky' ? 'Камера көзөмөлү: Бөтөн адам аныкталды' : (currentLang === 'ru' ? 'Контроль камеры: Обнаружен второй человек' : 'Camera Proctored Alert: Multiple Persons Detected'),
+        currentLang === 'ky' ? 'Камера кадрында бирден көп адам аныкталды. Сынактын таза өтүшү үчүн бөлмөдө жалгыз болушуңуз зарыл.' : (currentLang === 'ru' ? 'Система компьютерного зрения обнаружила более одного лица в кадре веб-камеры. Пожалуйста, убедитесь, что вы одни в комнате.' : 'The client-side computer vision detected more than 1 face in the camera frame. Please ensure you are alone in the room to maintain exam integrity.'),
+        '#FF3B30'
+      );
+    });
+  }
+}
+
+function showSecurityModal(title, message, accentColor = '#0071E3') {
+  const existing = document.getElementById('security-sim-modal');
+  if (existing) existing.remove();
+
+  const backdrop = document.createElement('div');
+  backdrop.id = 'security-sim-modal';
+  backdrop.style.cssText = `
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeInModal 0.2s ease forwards;
+  `;
+
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    background: var(--bg-card);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    max-width: 440px;
+    width: 100%;
+    padding: 28px;
+    text-align: center;
+    position: relative;
+    transform: scale(0.95);
+    animation: scaleUpModal 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  `;
+
+  modal.innerHTML = `
+    <div style="width: 48px; height: 48px; border-radius: 50%; background: ${accentColor}1A; color: ${accentColor}; margin: 0 auto 16px; display: grid; place-items: center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+    </div>
+    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary);">${escapeHtml(title)}</h3>
+    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">${escapeHtml(message)}</p>
+    <button id="close-sec-modal" class="btn-apple-primary" style="width: 100%; justify-content: center;">
+      <span>${currentLang === 'ky' ? 'Түшүндүм, сынакка кайтуу' : (currentLang === 'ru' ? 'Понятно, вернуться к экзамену' : 'Acknowledge & Return')}</span>
+    </button>
+  `;
+
+  backdrop.appendChild(modal);
+  document.body.appendChild(backdrop);
+
+  const closeBtn = modal.querySelector('#close-sec-modal');
+  closeBtn.addEventListener('click', () => {
+    backdrop.remove();
+    playTastefulClick(560);
+  });
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) {
+      backdrop.remove();
+    }
   });
 }
 
@@ -803,7 +1123,7 @@ function initContactActions() {
         return;
       }
 
-      const mailto = `mailto:ariet5656@gmail.com?subject=University Admissions Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(text + '\n\nFrom: ' + email)}`;
+      const mailto = `mailto:ariet5656@gmail.com?subject=Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(text + '\n\nFrom: ' + email)}`;
       window.location.href = mailto;
       const openMsg = currentLang === 'ky' ? 'Почта программасы ачылууда...' : (currentLang === 'ru' ? 'Открытие почтовой программы...' : 'Opening email client for dispatch...');
       showAppleToast(openMsg);
@@ -857,6 +1177,7 @@ function initLiquidGlassButtons() {
     '.btn-apple-icon',
     '.btn-demo-run',
     '.btn-demo-tilt',
+    '.sim-btn-trigger',
     '.contact-pill-btn',
     '.lang-pill-btn'
   ];
@@ -864,7 +1185,6 @@ function initLiquidGlassButtons() {
   const buttons = document.querySelectorAll(liquidSelectors.join(', '));
 
   buttons.forEach(btn => {
-    // Dynamic interactive lens reflection following cursor coordinates
     btn.addEventListener('pointermove', (e) => {
       const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -879,7 +1199,6 @@ function initLiquidGlassButtons() {
       btn.style.setProperty('--glare-opacity', '0');
     });
 
-    // Fluid liquid ripple wave burst upon click/tap
     btn.addEventListener('pointerdown', (e) => {
       if (btn.disabled) return;
 
@@ -909,12 +1228,15 @@ function initScrollAnimations() {
     return;
   }
 
-  // Select key narrative cards and headers
   const targets = document.querySelectorAll(`
     .section-header-centered,
     .metric-pill-card,
     .vision-banner-card,
     .apple-showcase-card,
+    .ocr-workflow-wrapper,
+    .anticheat-feature-card,
+    .ai-tool-card,
+    .ai-philosophy-banner,
     .bento-box,
     .skill-apple-card,
     .timeline-card-apple,
@@ -927,10 +1249,9 @@ function initScrollAnimations() {
     el.classList.add('reveal-on-scroll');
   });
 
-  // Stagger delays for grid children
-  const grids = document.querySelectorAll('.metrics-strip, .apple-bento-grid, .skills-apple-grid, .timeline-apple-stack');
+  const grids = document.querySelectorAll('.metrics-strip, .ocr-steps-grid, .apple-bento-grid, .skills-apple-grid, .ai-workflow-grid');
   grids.forEach(grid => {
-    const children = grid.querySelectorAll('.metric-pill-card, .bento-box, .skill-apple-card, .timeline-card-apple');
+    const children = grid.querySelectorAll('.metric-pill-card, .ocr-step-card, .bento-box, .skill-apple-card, .ai-tool-card');
     children.forEach((child, i) => {
       const delayClass = `reveal-delay-${(i % 4) + 1}`;
       child.classList.add(delayClass);
@@ -1039,4 +1360,3 @@ function initActiveNavScrollspy() {
 
   checkActiveSection();
 }
-
