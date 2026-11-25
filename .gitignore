@@ -4,7 +4,13 @@
 
 # Node
 node_modules/
+dist/
+*.tsbuildinfo
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Local review artifacts
+.taste-skill/
+.impeccable/

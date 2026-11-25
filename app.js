@@ -1,1362 +1,1069 @@
-/**
- * ARIET // PERSONAL ENGINEERING & ENTREPRENEURSHIP PORTFOLIO
- * Apple Cupertino Aesthetic - Interaction & Multi-Language Engine
- * Supported Languages: English (en), Русский (ru), Кыргызча (ky)
- */
-
-// Safe Storage Helpers
-function safeGetStorage(key, fallback = null) {
-  try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const val = window.localStorage.getItem(key);
-      return val !== null ? val : fallback;
-    }
-  } catch (e) {}
-  return fallback;
-}
-
-function safeSetStorage(key, value) {
-  try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.setItem(key, value);
-    }
-  } catch (e) {}
-  return fallbackStorage = value;
-}
-
-let currentLang = 'en';
-
-/* ==========================================================================
-   MULTI-LANGUAGE LOCALIZATION DICTIONARY (EN, RU, KY)
-   ========================================================================== */
-const i18n = {
-  en: {
-    brand_badge: "AI & Automation Developer",
-    nav_about: "About",
-    nav_ocr: "AIM OCR",
-    nav_anticheat: "Exam Platform",
-    nav_projects: "Projects",
-    nav_ai_tools: "AI Workflow",
-    nav_competencies: "Skills",
-    nav_journey: "Journey",
-    nav_contact: "Contact",
-
-    // Hero
-    hero_pill: "11th-Grade Student • Developer • Entrepreneur",
-    hero_headline: 'Building real-world products with<br><span class="gradient-text">AI, automation,</span> and software.',
-    hero_subhead: "I am Ariet, an 11th-grade developer and entrepreneur based in Bishkek, Kyrgyzstan. Since 2023, I have been building software systems, AI-powered automations, and practical products that solve real-world problems for education, logistics, and businesses.",
-    hero_btn_ocr: "Explore AIM OCR System",
-    hero_btn_projects: "View All Projects",
-    hero_btn_email: "Copy Contact Email",
-    metric_years_desc: "Programming & Software Development",
-    metric_sheets_desc: "Exam Sheets Automated in AALAM Schools",
-    metric_schools_desc: "AALAM School Campuses Served",
-    metric_cargo_desc: "Packages Delivered from China (AIM Cargo)",
-    metric_founders_desc: "Founders in Cosmic Team (Restaurant POS)",
-
-    // Vision & About
-    vision_quote: "“I don't see AI only as a technology to study. I use modern AI tools as part of my daily development workflow to prototype, build, debug, and improve real products faster — combining hands-on programming with high-impact automation.”",
-    author_role: "11th-Grade Student • AI & Automation Developer • Bishkek, Kyrgyzstan",
-    lang_en_pill: "English",
-    lang_ky_pill: "Kyrgyz (Native)",
-    lang_ru_pill: "Russian (Fluent)",
-    bio_tag: "About Me",
-    bio_title: "Developer & Entrepreneur",
-    bio_p1: "I am an 11th-grade student with big ambitions and a strong interest in Artificial Intelligence, software development, automation, and entrepreneurship.",
-    bio_p2: "I have been programming since 2023 and have around 3 years of experience building software projects. My long-term goal is to study at university, continue sharpening my technical and entrepreneurial skills, and make a meaningful contribution to the technological development of Kyrgyzstan.",
-    bio_footer: "Focus: <strong>Building practical products people actually use</strong>",
-
-    // Philosophy
-    phil_tag: "Development Philosophy",
-    phil_title: "The 5-Question Product Framework",
-    phil_desc: "I am interested not only in writing code, but in understanding real problems and creating useful solutions. When I work on any project, I evaluate it through five critical questions:",
-    phil_q1: "What is the problem?",
-    phil_q2: "Who experiences it?",
-    phil_q3: "Can tech make it easier?",
-    phil_q4: "Can it be automated?",
-    phil_q5: "Can it be a real product?",
-    phil_synergy: "Synergy: <strong>Technology + AI + Business + Entrepreneurship</strong>",
-
-    // Flagship 1: AIM OCR
-    ocr_eyebrow: "Flagship EdTech Automation",
-    ocr_title: "AIM — EXAM OCR SYSTEM",
-    ocr_lead: "Automated examination checking system developed for the AALAM school network (6 schools) in Kyrgyzstan to evaluate 20,000+ offline entrance examination sheets.",
-    ocr_cap_badge: "AIM Exam OCR Production Workflow",
-    ocr_cap_text: "Scanned Sheet → Subpixel Computer Vision Snapping → Instant Excel Output",
-    ocr_flow_title: "End-to-End 6-Step Automated Workflow",
-    ocr_flow_subtitle: "How AIM Exam OCR transforms physical paper tests into verified Excel results in seconds",
-    ocr_team_badge: "Developed by Team of 2 • Ariet (Software & Automation)",
-    ocr_s1_title: "Collect Sheets",
-    ocr_s1_desc: "Physical examination answer sheets are collected from entrance test halls across 6 AALAM schools.",
-    ocr_s2_title: "High-Speed Scan",
-    ocr_s2_desc: "Batches of answer sheets are fed through high-speed sheetfed document scanners.",
-    ocr_s3_title: "Image Transfer",
-    ocr_s3_desc: "Scanned images are transferred directly to the processing computer running the AIM software.",
-    ocr_s4_title: "CV Processing",
-    ocr_s4_desc: "Hough alignment, homography rectification, and subpixel bubble snapping dynamically detect marked choices.",
-    ocr_s5_title: "Auto Scoring",
-    ocr_s5_desc: "Answers are scored against the official answer keys, generating scores and candidate IDs automatically.",
-    ocr_s6_title: "Excel Export",
-    ocr_s6_desc: "Final ranking, scores, and analytics are exported cleanly into a formatted Excel file for the school administration.",
-    ocr_tag: "Applied Computer Vision",
-    ocr_status: "In Production for AALAM",
-    ocr_h3: "The Problem & The Automation Solution",
-    ocr_desc: "AALAM schools conduct offline entrance examinations using physical paper answer sheets. More than 20,000 examination sheets needed to be evaluated. Checking such a vast volume manually would demand countless hours of tedious teacher labor with inevitable grading mistakes.",
-    barrier_title: "The Problem",
-    barrier_desc: "20,000+ paper answer sheets across 6 schools. Manual grading caused severe delays, teacher burnout, and error susceptibility.",
-    solution_title: "The Engineering Solution",
-    solution_desc: "Our 2-person team developed a custom desktop CV pipeline that digests scanner feeds, rectifies sheet tilt via homography, dynamically snaps to bubbles, and exports to Excel in real-time.",
-    ocr_stat1_label: "Scale:",
-    ocr_stat2_label: "Deployment:",
-    omr_paper_title: "AALAM ENTRANCE EXAM SHEET",
-    omr_paper_sub: "FORM #AALAM-2025 • OMR EVALUATION",
-    btn_run_omr: "Run CV Evaluation",
-    btn_tilt_omr: "Tilt Sheet",
-    demo_initial_status: "Click bubbles to edit marks, or test sheet tilt",
-
-    // Flagship 2: AIM Exam Website
-    anticheat_eyebrow: "Online Examination Platform",
-    anticheat_title: "AIM — EXAM WEBSITE",
-    anticheat_lead: "Online entrance examination platform for AALAM schools featuring anti-cheating mechanisms, tab-switch monitoring, and AI-powered multi-person camera tracking.",
-    anticheat_cap_badge: "AIM Exam Platform Proctoring",
-    anticheat_cap_text: "Live Anti Tab-Switch Detection + AI Camera Face Tracking HUD",
-    feat_tab_title: "Anti Tab-Switch Monitoring",
-    feat_tab_desc: "The platform continuously monitors window blur and tab switching. If a candidate leaves the exam page, an amber modal warning is recorded. If repeated violations occur, the system can automatically disqualify the candidate.",
-    feat_cam_title: "Camera Monitoring & Multi-Person AI",
-    feat_cam_desc: "With camera permissions enabled, the platform streams the feed through client-side computer vision. If more than one person appears in the frame or the student looks away, an alert is triggered instantly.",
-    sim_box_title: "Try Anti-Cheat Simulation:",
-    sim_box_desc: "Test how the platform handles tab violations and camera events in real-time",
-    sim_btn_tab: "Simulate Tab Switch",
-    sim_btn_cam: "Simulate Multi-Person",
-
-    // Projects Grid
-    projects_eyebrow: "Practical Portfolio",
-    projects_title: "Websites, Logistics & POS Systems",
-    projects_lead: "Real projects solving real problems — from educational consulting web portals to cross-border China-Kyrgyzstan logistics and restaurant automation.",
-    consult_tag: "Web Development & Consulting",
-    consult_title: "CONSULTTEAM — Study Abroad Platform",
-    consult_desc: "Developed a modern landing website for an educational consulting company helping students with applications and admission to universities abroad. Focused on clean presentation, university partner showcases, and conversion-oriented student consultation scheduling.",
-    consult_meta1: "Domain: <strong>consulteam.edu.kg</strong>",
-    consult_meta2: "Role: <strong>Full-Stack Web Developer</strong>",
-    cargo_tag: "Logistics & Entrepreneurship",
-    cargo_title: "AIM CARGO — Cross-Border Logistics Venture",
-    cargo_desc: "Founded and operated a small logistics business delivering packages from Chinese marketplaces (Taobao, 1688, Pinduoduo) to customers in Kyrgyzstan. Transported over 500 kg of parcels over one year of operations.",
-    cargo_callout: "<strong>Practical Business Experience:</strong> Sourcing with Chinese suppliers, customer service, customs clearance, package tracking, pricing strategy, and registering an individual business (ИП) in Kyrgyzstan.",
-    cargo_meta1: "Duration: <strong>~1 Year Operation</strong>",
-    cargo_meta2: "Volume: <strong>500+ kg Cargo Delivered</strong>",
-    cosmic_tag: "B2B Restaurant Technology",
-    cosmic_title: "COSMIC TEAM — Restaurant POS Software & Installation",
-    cosmic_desc: "Cosmic Team was founded by me together with two friends to deliver modern technology solutions for restaurants in Kyrgyzstan, with a core focus on POS software.",
-    cosmic_desc2: "Our work includes developing point-of-sale software, configuring dining room table mappings, integrating ESC/POS thermal printers, and installing turn-key solutions directly inside restaurants across Kyrgyzstan. Cosmic Team marks my transition from solo coding to building a tech company with real enterprise clients.",
-    cosmic_meta1: "Founders: <strong>3 Team Members</strong>",
-    cosmic_meta2: "Market: <strong>Restaurants across Kyrgyzstan</strong>",
-
-    // AI Tools
-    ai_eyebrow: "Next-Gen Development Workflow",
-    ai_title: "AI-Assisted Development",
-    ai_lead: "Modern AI tools are an integral part of my engineering toolkit — multiplying velocity, automating repetitive tasks, and accelerating real-world product delivery.",
-    ai_antigravity_role: "Autonomous Engineering & Multi-file Systems",
-    ai_antigravity_desc: "Leveraged for comprehensive codebase planning, architecture refactors, test verification, and automated paired development.",
-    ai_claude_role: "Terminal-First Scripting & Refactoring",
-    ai_claude_desc: "Used for rapid terminal debugging, deep reasoning across large codebases, and iterative backend script enhancements.",
-    ai_codex_role: "Code Generation & Algorithm Optimization",
-    ai_codex_desc: "Accelerates boilerplate drafting, API client structuring, and computer vision algorithmic transformations.",
-    ai_n8n_role: "Workflow Automation & API Orchestration",
-    ai_n8n_desc: "Connects business databases, customer alerts, webhook pipelines, and automatic data synchronization for operations.",
-    ai_philosophy_quote: "“My approach is to combine my own programming and problem-solving skills with AI tools rather than treating AI as a replacement for understanding technology.”",
-    chip1: "Prototype ideas in hours",
-    chip2: "Write & improve code",
-    chip3: "Debug complex issues",
-    chip4: "Automate repetitive tasks",
-    chip5: "Experiment with new tech",
-    chip6: "Build products faster",
-    chip7: "Integrate AI into real apps",
-
-    // Skills
-    comp_eyebrow: "Capabilities & Skills",
-    comp_title: "Engineering & Business Toolkit",
-    comp_lead: "Combining foundational programming languages, computer vision, AI-assisted development, and practical entrepreneurial execution.",
-    comp_c1_title: "Programming Languages",
-    comp_c2_title: "Development & Systems",
-    comp_c3_title: "AI & Entrepreneurship",
-
-    // Journey
-    journey_eyebrow: "Milestones",
-    journey_title: "My Journey (2023 – 2026)",
-    journey_lead: "From first lines of code to building automated examination systems and co-founding real B2B tech businesses.",
-    j_item5_place: "Bishkek • Restaurants",
-    j_item5_title: "Co-Founder — Cosmic Team (Restaurant POS Solutions)",
-    j_item5_desc: "Founded Cosmic Team together with two friends. Developing and installing turn-key POS software solutions for restaurants across Kyrgyzstan, transitioning from solo programming to leading a business-facing technology team.",
-    j_item4_place: "China → Kyrgyzstan",
-    j_item4_title: "Founder — AIM Cargo Logistics",
-    j_item4_desc: "Created and operated a cross-border logistics business delivering packages from Chinese marketplaces to Kyrgyzstan. Transported over 500 kg of parcels and registered an individual business (ИП), acquiring invaluable hands-on entrepreneurship experience.",
-    j_item3_place: "AALAM Schools • Bishkek",
-    j_item3_title: "Software Engineer — AIM Exam OCR System & Website",
-    j_item3_desc: "Co-developed automated examination checking for 6 AALAM schools, automating 20,000+ answer sheets. Created the AIM Exam Website with anti-tab switch detection and camera monitoring to ensure exam integrity.",
-    j_item2_place: "Kyrgyzstan",
-    j_item2_title: "Building Practical Projects & Exploring AI",
-    j_item2_desc: "Started creating practical projects, experimenting with various technologies, backend tools, APIs, and modern AI-assisted development workflows.",
-    j_item1_place: "Starting Out",
-    j_item1_title: "Beginning the Programming Journey",
-    j_item1_desc: "Started learning programming and exploring software development fundamentals with Python, web technologies, and computational problem solving.",
-
-    // Vision
-    future_quote: "“I want to become a strong technology professional and entrepreneur. My goal is not simply to write code. I want to identify meaningful problems, create technology-based solutions, and build products that people actually use — making a meaningful contribution to the technological development of Kyrgyzstan.”",
-    future_name: "Ariet",
-    future_role: "Building today. Learning every day. Thinking bigger about the future.",
-
-    // Contact & Footer
-    contact_eyebrow: "Get in Touch",
-    contact_title: "Let’s Connect for Admissions, Projects & Collaboration",
-    contact_desc: "I welcome inquiries from university admissions officers, mentors, collaborators, and tech partners. Based in Bishkek, Kyrgyzstan (UTC+6).",
-    contact_btn_email: "Email: <strong>ariet5656@gmail.com</strong>",
-    copy_hint: "Click to copy →",
-    contact_btn_tg: "Telegram: <strong>@thearchhe</strong>",
-    chat_hint: "Direct message →",
-    contact_btn_gh: "GitHub: <strong>github.com/Archezxxx</strong>",
-    repo_hint: "View code →",
-    form_name_label: "Full Name & Organization",
-    form_email_label: "Email Address",
-    form_msg_label: "Message or Project Inquiry",
-    form_submit_btn: "Send Message",
-    footer_text: "© 2026 Ariet. AI & Automation Developer • Building real-world products."
-  },
-
+"use strict";
+// Owner-supplied case-study translations remain in locales.js.
+const additions = {
   ru: {
-    brand_badge: "AI & Automation Developer",
-    nav_about: "Обо мне",
-    nav_ocr: "AIM OCR",
-    nav_anticheat: "Экзамены онлайн",
-    nav_projects: "Проекты",
-    nav_ai_tools: "ИИ-разработка",
-    nav_competencies: "Навыки",
-    nav_journey: "Траектория",
-    nav_contact: "Контакты",
-
-    // Hero
-    hero_pill: "Ученик 11 класса • Разработчик • Предприниматель",
-    hero_headline: 'Создаю реальные продукты с помощью<br><span class="gradient-text">ИИ, автоматизации</span> и программных решений.',
-    hero_subhead: "Меня зовут Ариет. Я разработчик и предприниматель из Бишкека, ученик 11 класса. Программирую с 2023 года (~3 года опыта). Создаю полезные программные решения — от автоматической проверки экзаменов для школ Кыргызстана до POS-систем для ресторанов и международной логистики.",
-    hero_btn_ocr: "Система AIM OCR",
-    hero_btn_projects: "Все проекты",
-    hero_btn_email: "Скопировать Email",
-    metric_years_desc: "В программировании и разработке софта",
-    metric_sheets_desc: "Бланков автоматизировано в сети «ААЛАМ»",
-    metric_schools_desc: "Школ сети «ААЛАМ» используют систему",
-    metric_cargo_desc: "Грузов доставлено из Китая (AIM Cargo)",
-    metric_founders_desc: "Основателя в Cosmic Team (POS для ресторанов)",
-
-    // Vision & About
-    vision_quote: "«Я не рассматриваю искусственный интеллект просто как абстрактную технологию для изучения. Я использую современные ИИ-инструменты как часть ежедневного процесса разработки, чтобы быстрее прототипировать, писать код, находить ошибки и улучшать реальные продукты.»",
-    author_role: "Ученик 11 класса • AI & Automation Developer • Бишкек, Кыргызстан",
-    lang_en_pill: "English",
-    lang_ky_pill: "Кыргызча (Эне тил)",
-    lang_ru_pill: "Русский (Свободный)",
-    bio_tag: "Обо мне",
-    bio_title: "Разработчик и предприниматель",
-    bio_p1: "Я ученик 11 класса с большими амбициями и глубоким интересом к искусственному интеллекту, разработке программного обеспечения, автоматизации и предпринимательству.",
-    bio_p2: "Программирую с 2023 года, накопил около 3 лет опыта создания практических проектов. Моя долгосрочная цель — поступить в университет, продолжать развивать технические и предпринимательские навыки и внести значимый вклад в технологическое развитие Кыргызстана.",
-    bio_footer: "Фокус: <strong>Создавать продукты, которыми реально пользуются люди</strong>",
-
-    // Philosophy
-    phil_tag: "Философия разработки",
-    phil_title: "Продуктовый фреймворк из 5 вопросов",
-    phil_desc: "Мне интересно не просто писать строки кода, а понимать реальную проблему и создавать полезное решение. Работая над любым проектом, я задаю себе 5 ключевых вопросов:",
-    phil_q1: "В чем проблема?",
-    phil_q2: "Кто с ней сталкивается?",
-    phil_q3: "Поможет ли технология?",
-    phil_q4: "Можно ли автоматизировать?",
-    phil_q5: "Может ли стать продуктом?",
-    phil_synergy: "Формула: <strong>Технологии + ИИ + Бизнес + Предпринимательство</strong>",
-
-    // Flagship 1: AIM OCR
-    ocr_eyebrow: "Флагманская автоматизация в EdTech",
-    ocr_title: "AIM — EXAM OCR SYSTEM",
-    ocr_lead: "Автоматизированная система проверки вступительных экзаменов для сети из 6 школ «ААЛАМ» в Кыргызстане (обработано 20,000+ бумажных бланков).",
-    ocr_cap_badge: "Рабочий процесс AIM Exam OCR в школах",
-    ocr_cap_text: "Сканирование бланков → Субпиксельный захват отметок → Мгновенный отчет в Excel",
-    ocr_flow_title: "Полный автоматизированный конвейер из 6 этапов",
-    ocr_flow_subtitle: "Как AIM Exam OCR превращает стопки бумажных экзаменов в проверенную ведомость за секунды",
-    ocr_team_badge: "Разработано командой из 2 человек • Ариет (ПО и автоматизация)",
-    ocr_s1_title: "Сбор бланков",
-    ocr_s1_desc: "Физические экзаменационные листы собираются после проведения тестов в 6 школах «ААЛАМ».",
-    ocr_s2_title: "Сканирование",
-    ocr_s2_desc: "Пачки бланков пропускаются через скоростной поточный документ-сканер.",
-    ocr_s3_title: "Передача в ПК",
-    ocr_s3_desc: "Отсканированные изображения мгновенно передаются на компьютер с установленной программой.",
-    ocr_s4_title: "Компьютерное зрение",
-    ocr_s4_desc: "Алгоритм выравнивает лист по гомографии и динамически захватывает закрашенные кружки (допуск ±15px).",
-    ocr_s5_title: "Подсчет баллов",
-    ocr_s5_desc: "Ответы автоматически сверяются с ключами, рассчитываются первичные баллы и проценты.",
-    ocr_s6_title: "Экспорт в Excel",
-    ocr_s6_desc: "Итоговая ведомость с рейтингом учеников и ID автоматически формируется в файле Excel для руководства.",
-    ocr_tag: "Прикладное компьютерное зрение",
-    ocr_status: "Внедрено в сети школ «ААЛАМ»",
-    ocr_h3: "Проблема и ее инженерное решение",
-    ocr_desc: "Школы «ААЛАМ» проводят очные вступительные экзамены на бумажных листах ответов. Требовалось проверить свыше 20,000 бланков. Проверка такого объема вручную отняла бы у учителей колоссальное количество времени и неизбежно привела бы к ошибкам от переутомления.",
-    barrier_title: "Проблема",
-    barrier_desc: "20,000+ бланков в 6 школах. Ручная проверка занимала недели и требовала огромных усилий учителей.",
-    solution_title: "Инженерное решение",
-    solution_desc: "Наша команда из 2 человек разработала программу, которая обрабатывает сканы, выравнивает перекосы и мгновенно выгружает баллы в Excel.",
-    ocr_stat1_label: "Масштаб:",
-    ocr_stat2_label: "Внедрение:",
-    omr_paper_title: "ВСТУПИТЕЛЬНЫЙ БЛАНК ШКОЛЫ «ААЛАМ»",
-    omr_paper_sub: "ФОРМА №AALAM-2025 • ПРОВЕРКА OMR",
-    btn_run_omr: "Запустить проверку алгоритмом",
-    btn_tilt_omr: "Наклонить бланк",
-    demo_initial_status: "Кликайте по кружкам для изменения отметок или наклоните бланк",
-
-    // Flagship 2: AIM Exam Website
-    anticheat_eyebrow: "Онлайн-платформа тестирования",
-    anticheat_title: "AIM — EXAM WEBSITE",
-    anticheat_lead: "Онлайн-платформа для вступительных экзаменов сети «ААЛАМ» со встроенной защитой от списывания, мониторингом вкладок и распознаванием лиц по веб-камере.",
-    anticheat_cap_badge: "Интерфейс прокторинга AIM Exam Platform",
-    anticheat_cap_text: "Детекция смены вкладок + ИИ-отслеживание посторонних лиц в кадре",
-    feat_tab_title: "Защита от смены вкладок (Anti Tab-Switch)",
-    feat_tab_desc: "Система фиксирует потерю фокуса и переход на другие вкладки браузера. Ученик получает предупреждение, а при повторных нарушениях система может автоматически снять кандидата с экзамена.",
-    feat_cam_title: "Контроль камеры и детекция посторонних",
-    feat_cam_desc: "Платформа анализирует видеопоток с камеры ученика через компьютерное зрение. Если в кадре появляется второй человек или ученик покидает место, система выдает предупреждение.",
-    sim_box_title: "Симуляция защиты от списывания:",
-    sim_box_desc: "Проверьте, как система реагирует на смену вкладок и события камеры в реальном времени",
-    sim_btn_tab: "Симулировать смену вкладки",
-    sim_btn_cam: "Симулировать постороннего",
-
-    // Projects Grid
-    projects_eyebrow: "Прикладные проекты",
-    projects_title: "Веб-сервисы, логистика и автоматизация",
-    projects_lead: "Реальные проекты для решения практических задач — от образовательного консалтинга до логистики из Китая и кассовых систем для ресторанов.",
-    consult_tag: "Веб-разработка и консалтинг",
-    consult_title: "CONSULTTEAM — Образовательный консалтинг",
-    consult_desc: "Разработал современный сайт для образовательной консалтинговой компании, помогающей студентам с поступлением в зарубежные университеты. Презентация услуг компании через современный веб-интерфейс.",
-    consult_meta1: "Домен: <strong>consulteam.edu.kg</strong>",
-    consult_meta2: "Роль: <strong>Full-Stack веб-разработчик</strong>",
-    cargo_tag: "Логистика и бизнес",
-    cargo_title: "AIM CARGO — Доставка товаров из Китая",
-    cargo_desc: "Создал и развивал малый логистический бизнес по доставке посылок с китайских маркетплейсов (Taobao, 1688, Pinduoduo) клиентам в Кыргызстан. За год работы перевезено свыше 500 кг посылок.",
-    cargo_callout: "<strong>Практический бизнес-опыт:</strong> Работа с поставщиками из Китая, общение с клиентами, таможня, расчет цен, операционные процессы и регистрация индивидуального предпринимателя (ИП).",
-    cargo_meta1: "Срок: <strong>Около 1 года работы</strong>",
-    cargo_meta2: "Объем: <strong>500+ кг доставленных грузов</strong>",
-    cosmic_tag: "B2B ресторанные технологии",
-    cosmic_title: "COSMIC TEAM — ПО для автоматизации ресторанов (POS)",
-    cosmic_desc: "Команда, основанная мной вместе с двумя друзьями. Мы разрабатываем и внедряем технологические решения для ресторанов Кыргызстана с фокусом на POS-софте.",
-    cosmic_desc2: "Наша работа включает разработку кассового ПО, схему столов зала, интеграцию термопринтеров чеков (ESC/POS) и внедрение готовых решений в ресторанах. Cosmic Team — это шаг от индивидуального программирования к построению команды и работе с реальным B2B-бизнесом.",
-    cosmic_meta1: "Основатели: <strong>3 участника команды</strong>",
-    cosmic_meta2: "Рынок: <strong>Рестораны по всему Кыргызстану</strong>",
-
-    // AI Tools
-    ai_eyebrow: "Инструменты разработки нового поколения",
-    ai_title: "AI-Assisted Development",
-    ai_lead: "Современные ИИ-инструменты стали важнейшей частью моего процесса разработки — ускоряют создание продуктов, автоматизируют рутину и помогают создавать софт быстрее.",
-    ai_antigravity_role: "Агентная разработка и сложные системы",
-    ai_antigravity_desc: "Планирование архитектуры, глубокий рефакторинг кодовой базы, верификация и автономное парное программирование.",
-    ai_claude_role: "Терминальный агент и скрипты",
-    ai_claude_desc: "Быстрая отладка из терминала, глубокий анализ логики и доработка серверных скриптов.",
-    ai_codex_role: "Генерация кода и алгоритмов",
-    ai_codex_desc: "Быстрое прототипирование шаблонного кода, структуры API и вспомогательных алгоритмов компьютерного зрения.",
-    ai_n8n_role: "Оркестрация процессов и API",
-    ai_n8n_desc: "Визуальная автоматизация процессов, интеграция вебхуков, баз данных и оповещений клиентов.",
-    ai_philosophy_quote: "«Мой подход заключается в том, чтобы объединять собственные навыки программирования и решения задач с инструментами ИИ, а не заменять искусственным интеллектом понимание технологий.»",
-    chip1: "Прототипирование идей",
-    chip2: "Написание и улучшение кода",
-    chip3: "Отладка проектов",
-    chip4: "Автоматизация рутины",
-    chip5: "Эксперименты с технологиями",
-    chip6: "Быстрый вывод продуктов",
-    chip7: "Интеграция ИИ в реальные задачи",
-
-    // Skills
-    comp_eyebrow: "Навыки и компетенции",
-    comp_title: "Технический и предпринимательский арсенал",
-    comp_lead: "Синтез базовых языков программирования, прикладного компьютерного зрения, ИИ-инструментов и опыта запуска бизнеса.",
-    comp_c1_title: "Языки программирования",
-    comp_c2_title: "Разработка и системы",
-    comp_c3_title: "ИИ и бизнес",
-
-    // Journey
-    journey_eyebrow: "Этапы развития",
-    journey_title: "Мой путь (2023 – 2026)",
-    journey_lead: "От первых строк кода до создания школьных автоматизированных комплексов и запуска технологических компаний.",
-    j_item5_place: "Бишкек • Ресторанный бизнес",
-    j_item5_title: "Сооснователь — Cosmic Team (POS-решения для ресторанов)",
-    j_item5_desc: "Основал команду вместе с двумя друзьями. Разрабатываем и устанавливаем POS-софт для ресторанов по всему Кыргызстану, перейдя к работе с реальными B2B-клиентами.",
-    j_item4_place: "Китай → Кыргызстан",
-    j_item4_title: "Основатель — Логистика AIM Cargo",
-    j_item4_desc: "Создал логистический проект по доставке посылок с китайских маркетплейсов в Кыргызстан. Перевезли более 500 кг грузов, зарегистрировал ИП и получил ценный опыт предпринимательства.",
-    j_item3_place: "Школы «ААЛАМ» • Бишкек",
-    j_item3_title: "Инженер-разработчик — Система AIM Exam OCR и сайт экзаменов",
-    j_item3_desc: "В команде из 2 человек создал систему проверки 20,000+ бланков для 6 школ «ААЛАМ». Разработал онлайн-платформу тестирования с защитой от списывания и контролем камеры.",
-    j_item2_place: "Кыргызстан",
-    j_item2_title: "Создание проектов и освоение ИИ",
-    j_item2_desc: "Начал создавать практические проекты, экспериментировать с технологиями, бэкендом, API и подходами к ИИ-ассистированной разработке.",
-    j_item1_place: "Старт",
-    j_item1_title: "Начало пути в программировании",
-    j_item1_desc: "Начал изучать программирование, фундаментальные основы разработки софта на Python, веб-технологии и решение алгоритмических задач.",
-
-    // Vision
-    future_quote: "«Я хочу стать сильным техническим специалистом и предпринимателем. Моя цель — не просто писать код. Я хочу находить значимые проблемы, создавать технологические решения и строить продукты, которыми реально пользуются люди. И в будущем внести вклад в развитие Кыргызстана.»",
-    future_name: "Ариет",
-    future_role: "Создаю сегодня. Учусь каждый день. Мыслю масштабно о будущем.",
-
-    // Contact & Footer
-    contact_eyebrow: "Связь и сотрудничество",
-    contact_title: "Контакты для университетов, проектов и сотрудничества",
-    contact_desc: "Буду рад вопросам от представителей приемных комиссий университетов, наставников и потенциальных партнеров. Нахожусь в Бишкеке, Кыргызстан (UTC+6).",
-    contact_btn_email: "Email: <strong>ariet5656@gmail.com</strong>",
-    copy_hint: "Скопировать →",
-    contact_btn_tg: "Telegram: <strong>@thearchhe</strong>",
-    chat_hint: "Написать сообщение →",
-    contact_btn_gh: "GitHub: <strong>github.com/Archezxxx</strong>",
-    repo_hint: "Открыть репозитории →",
-    form_name_label: "Ваше имя и организация",
-    form_email_label: "Электронная почта",
-    form_msg_label: "Сообщение или предложение",
-    form_submit_btn: "Отправить сообщение",
-    footer_text: "© 2026 Ариет. AI & Automation Developer • Создание реальных продуктов."
+    skip: "К проектам",
+    language: "Язык",
+    nav_work: "Работы",
+    nav_process: "Как работаю",
+    write: "Написать",
+    intro:
+      'Разработчик из Бишкека. Превращаю сложные задачи<br class="desktop-break"> в работающие сайты, системы и автоматизацию.',
+    view_work: "Смотреть работы",
+    hero_location: "Бишкек, Кыргызстан",
+    pause_motion: "Пауза движения",
+    resume_motion: "Включить движение",
+    work_title: "Мои работы",
+    work_note: "От школьных экзаменов<br> до собственного бизнеса.",
+    processed: "Обработано",
+    sheets: "экзаменационных бланков",
+    six_schools: "6 школ",
+    try_demo: "Попробовать демо",
+    see_project: "О проекте",
+    ocr_category: "Автоматизация · Образование",
+    ocr_short:
+      "20 000+ бланков. 6 школ. Проверка экзаменов, которая больше не отнимает время учителей.",
+    exam_category: "Веб-разработка · Образование",
+    exam_short:
+      "Онлайн-экзамены с контролем переключения вкладок и мониторингом камеры.",
+    exam_question: "Что определяет сложность алгоритма?",
+    one_person: "1 человек в кадре",
+    exam_session: "Защищённая сессия",
+    cosmic_short: "POS-системы для ресторанов",
+    consult_short: "Сайт образовательного консалтинга",
+    cargo_short: "Логистика из Китая в Кыргызстан",
+    cargo_cover: "От идеи до доставки",
+    lab_title: "От бланка<br> к результату.",
+    lab_intro:
+      "Для сети школ AALAM мы вдвоём создали систему, которая превращает бумажные экзамены в готовые результаты Excel.",
+    lab_note:
+      "Здесь — интерактивная модель: поменяй ответы в бланке и запусти проверку.",
+    case_details: "Как устроен проект",
+    aalam_schools: "школ AALAM",
+    interactive_model: "Интерактивная модель",
+    answer_sheet: "Бланк ответов",
+    question: "Вопрос",
+    evaluate: "Проверить бланк",
+    tilt: "Наклонить",
+    export: "Скачать CSV",
+    lab_ready: "Отметь ответы и запусти проверку.",
+    lab_scanning: "Выравниваем бланк и распознаём отметки…",
+    lab_result: "Верных ответов: {score} из 10. Результат готов к выгрузке.",
+    answer_label: "Вопрос {n}, ответ {choice}",
+    about_title: "Привет,<br> я Ариет.",
+    about_location: "Бишкек, Кыргызстан<br> Программирую с 2023 года",
+    about_lead:
+      "Учусь в 11 классе, пишу код и строю продукты, которыми пользуются в реальной жизни.",
+    about_body:
+      "Мне интересно пройти весь путь: найти проблему, разобраться в ней, собрать решение и довести его до людей. Так появились школьная автоматизация, логистический бизнес и команда, создающая системы для ресторанов.",
+    about_future:
+      "Дальше — университет, новые продукты и вклад в развитие технологий Кыргызстана.",
+    development: "Разработка",
+    ai_workflow: "ИИ в работе",
+    ai_note:
+      "От прототипа до отладки. Решения проверяю в коде и на реальных задачах.",
+    beyond_code: "За пределами кода",
+    business_skills:
+      "Предпринимательство, B2B, логистика, внедрение и работа в команде.",
+    languages: "Языки",
+    spoken_languages:
+      "Кыргызский — родной<br> Русский — свободно<br> Английский",
+    journey_summary: "Мой путь с 2023 года",
+    journey_2023: "Первые строки кода",
+    journey_2024: "Первые полезные продукты",
+    process_title: "Как я работаю",
+    process_note: "Начинаю с задачи.<br> Заканчиваю работающим решением.",
+    p1_title: "Разбираюсь",
+    p1: "Кому нужен продукт, что сейчас мешает и какой результат будет полезен.",
+    p2_title: "Собираю прототип",
+    p2: "Проверяю ключевую идею на небольшом работающем решении.",
+    p3_title: "Разрабатываю",
+    p3: "Делаю систему, тестирую на реальных сценариях и дорабатываю детали.",
+    p4_title: "Внедряю",
+    p4: "Помогаю запустить продукт, разобраться в нём и использовать в работе.",
+    contact_title: "Есть идея?",
+    contact_intro:
+      "Проект, сотрудничество или разговор о будущем.<br> Буду рад познакомиться.",
+    telegram_write: "Написать в Telegram",
+    light_theme: "Светлая тема",
+    dark_theme: "Тёмная тема",
+    copied: "Почта скопирована",
+    copy_failed: "Не удалось скопировать. Почта: ariet5656@gmail.com",
+    close: "Закрыть проект",
+    open_menu: "Открыть меню",
+    close_menu: "Закрыть меню",
+    copy_email: "Скопировать почту",
+    stack: "Технологии",
+    role: "Моя роль",
+    pipeline: "От бумаги до результата",
+    model_explanation:
+      "В этом браузерном демо ответы сравниваются с заданным ключом. В рабочем проекте сканы обрабатываются Python и OpenCV: выравнивание по меткам, гомография, распознавание отметок и экспорт в Excel.",
+    demo_link: "Перейти к демо",
+    open_site: "Открыть сайт",
+    security_title: "Попробовать сценарий",
+    security_note:
+      "Модель поведения платформы. Камера и реальный экзамен здесь не используются.",
+    tab_test: "Смена вкладки",
+    camera_test: "Второй человек",
+    reset: "Сбросить",
+    security_ready: "Выбери сценарий, чтобы увидеть реакцию платформы.",
+    tab_warning: "Зафиксирована смена вкладки. Предупреждение {count} из 3.",
+    tab_blocked: "Третье нарушение: в этой модели экзамен завершён.",
+    camera_warning:
+      "В кадре обнаружен второй человек. Платформа показывает предупреждение.",
+    cosmic_facts: "3 сооснователя · Кыргызстан",
+    cargo_facts: "500+ кг · около 1 года",
+    consult_role: "Разработка сайта",
+    export_question: "Вопрос",
+    export_answer: "Ответ",
+    export_key: "Правильный ответ",
+    export_correct: "Верно",
   },
-
+  en: {
+    skip: "Skip to work",
+    language: "Language",
+    nav_work: "Work",
+    nav_process: "My process",
+    write: "Let’s talk",
+    intro:
+      'Developer from Bishkek. Turning complex problems<br class="desktop-break"> into working websites, systems, and automation.',
+    view_work: "Explore my work",
+    hero_location: "Bishkek, Kyrgyzstan",
+    pause_motion: "Pause motion",
+    resume_motion: "Enable motion",
+    work_title: "Selected work",
+    work_note: "From school examinations<br> to building a business.",
+    processed: "Processed",
+    sheets: "exam answer sheets",
+    six_schools: "6 schools",
+    try_demo: "Try the demo",
+    see_project: "Explore project",
+    ocr_category: "Automation · Education",
+    ocr_short:
+      "20,000+ sheets. 6 schools. Exam grading that gives teachers their time back.",
+    exam_category: "Web development · Education",
+    exam_short:
+      "Online examinations with tab-switch detection and camera monitoring.",
+    exam_question: "What determines algorithm complexity?",
+    one_person: "1 person detected",
+    exam_session: "Protected session",
+    cosmic_short: "Restaurant POS systems",
+    consult_short: "Education consulting website",
+    cargo_short: "China–Kyrgyzstan logistics",
+    cargo_cover: "From an idea to delivery",
+    lab_title: "From paper<br> to results.",
+    lab_intro:
+      "For the AALAM school network, our two-person team built a system that turns paper examinations into ready-to-use Excel results.",
+    lab_note:
+      "An interactive model: change the answers on the sheet, then run the evaluation.",
+    case_details: "Inside the project",
+    aalam_schools: "AALAM schools",
+    interactive_model: "Interactive model",
+    answer_sheet: "Answer sheet",
+    question: "Question",
+    evaluate: "Evaluate sheet",
+    tilt: "Tilt sheet",
+    export: "Download CSV",
+    lab_ready: "Choose your answers, then evaluate the sheet.",
+    lab_scanning: "Aligning the sheet and reading the marks…",
+    lab_result:
+      "Correct answers: {score} out of 10. Your results are ready to export.",
+    answer_label: "Question {n}, answer {choice}",
+    about_title: "Hi,<br> I’m Ariet.",
+    about_location: "Bishkek, Kyrgyzstan<br> Programming since 2023",
+    about_lead:
+      "An 11th-grade student building software and products that people use in real life.",
+    about_body:
+      "I enjoy the entire journey: finding a problem, understanding it, building a solution, and getting it into people’s hands. That led to school automation, a logistics business, and a team creating restaurant systems.",
+    about_future:
+      "Next: university, new products, and contributing to Kyrgyzstan’s technology community.",
+    development: "Development",
+    ai_workflow: "AI in my workflow",
+    ai_note:
+      "From prototypes to debugging. I verify decisions in code and against real tasks.",
+    beyond_code: "Beyond code",
+    business_skills:
+      "Entrepreneurship, B2B, logistics, deployment, and teamwork.",
+    languages: "Languages",
+    spoken_languages: "Kyrgyz — native<br> Russian — fluent<br> English",
+    journey_summary: "My journey since 2023",
+    journey_2023: "First lines of code",
+    journey_2024: "First practical products",
+    process_title: "How I work",
+    process_note: "Start with the problem.<br> Finish with a working solution.",
+    p1_title: "Understand",
+    p1: "Who needs this, what is getting in their way, and what result would help?",
+    p2_title: "Prototype",
+    p2: "Test the core idea with a small, working solution.",
+    p3_title: "Develop",
+    p3: "Build the system, test real scenarios, and work through the details.",
+    p4_title: "Put it to work",
+    p4: "Help launch the product, explain how it works, and get it into daily use.",
+    contact_title: "Have an idea?",
+    contact_intro:
+      "A project, a collaboration, or a conversation about the future.<br> I’d love to hear from you.",
+    telegram_write: "Message on Telegram",
+    light_theme: "Light theme",
+    dark_theme: "Dark theme",
+    copied: "Email copied",
+    copy_failed: "Copy failed. Email: ariet5656@gmail.com",
+    close: "Close project",
+    open_menu: "Open menu",
+    close_menu: "Close menu",
+    copy_email: "Copy email",
+    stack: "Technologies",
+    role: "My role",
+    pipeline: "From paper to results",
+    model_explanation:
+      "This browser demo compares selected answers with a fixed key. The production project processes scans with Python and OpenCV: fiducial alignment, homography, mark recognition, and Excel export.",
+    demo_link: "Try the demo",
+    open_site: "Visit website",
+    security_title: "Try a scenario",
+    security_note:
+      "A model of the platform’s behavior. No camera or real examination is used here.",
+    tab_test: "Switch tab",
+    camera_test: "Second person",
+    reset: "Reset",
+    security_ready: "Choose a scenario to see how the platform responds.",
+    tab_warning: "Tab switch detected. Warning {count} of 3.",
+    tab_blocked: "Third violation: this model has ended the examination.",
+    camera_warning:
+      "A second person was detected. The platform shows a warning.",
+    cosmic_facts: "3 cofounders · Kyrgyzstan",
+    cargo_facts: "500+ kg · about 1 year",
+    consult_role: "Website development",
+    export_question: "Question",
+    export_answer: "Answer",
+    export_key: "Correct answer",
+    export_correct: "Correct",
+  },
   ky: {
-    brand_badge: "AI & Automation Developer",
-    nav_about: "Мен жөнүндө",
-    nav_ocr: "AIM OCR",
-    nav_anticheat: "Онлайн сынак",
-    nav_projects: "Долбоорлор",
-    nav_ai_tools: "ЖИ-өнүктүрүү",
-    nav_competencies: "Көндүмдөр",
-    nav_journey: "Басып өткөн жол",
-    nav_contact: "Байланыш",
-
-    // Hero
-    hero_pill: "11-класстын окуучусу • Программист • Ишкер",
-    hero_headline: 'Жасалма интеллект, автоматташтыруу жана<br><span class="gradient-text">программалоо аркылуу</span> реалдуу өнүмдөрдү түзөм.',
-    hero_subhead: "Менин атым Ариет. Бишкектеги 11-класстын окуучусу, программист жана ишкермин. 2023-жылдан бери программалоо менен алектенем (~3 жыл тажрыйба). Кыргызстандагы мектептердин кирүү сынактарын текшерүүдөн тартып ресторандык POS-системаларга жана эл аралык логистикага чейин чыныгы көйгөйлөрдү чечкен системаларды курам.",
-    hero_btn_ocr: "AIM OCR системасы",
-    hero_btn_projects: "Бардык долбоорлор",
-    hero_btn_email: "Email көчүрүү",
-    metric_years_desc: "Программалоо жана софт түзүү тажрыйбасы",
-    metric_sheets_desc: "«ААЛАМ» мектептеринде автоматташтырылган баракча",
-    metric_schools_desc: "«ААЛАМ» тармагынын мектептери системаны колдонот",
-    metric_cargo_desc: "Кытайдан Кыргызстанга жеткирилген жүктөр (AIM Cargo)",
-    metric_founders_desc: "Cosmic Team командасынын негиздөөчүлөрү (POS)",
-
-    // Vision & About
-    vision_quote: "«Мен жасалма интеллектти жөн гана окуй турган технология катары көрбөйм. Заманбап ЖИ куралдарын идеяларды тезирээк сынап көрүү, код жазуу, каталарды табуу жана реалдуу өнүмдөрдү жакшыртуу үчүн күнүмдүк ишимде активдүү колдоном.»",
-    author_role: "11-класстын окуучусу • AI & Automation Developer • Бишкек, Кыргызстан",
-    lang_en_pill: "English",
-    lang_ky_pill: "Кыргызча (Эне тил)",
-    lang_ru_pill: "Орус тили (Эркин)",
-    bio_tag: "Мен жөнүндө",
-    bio_title: "Программист жана ишкер",
-    bio_p1: "Мен жасалма интеллектке, программалык камсыздоого, автоматташтырууга жана ишкердикке чоң кызыгуусу жана амбициясы бар 11-класстын окуучусумун.",
-    bio_p2: "2023-жылдан бери программалоо менен алектенип келем. Менин негизги максатым — жогорку окуу жайына тапшырып, техникалык жана ишкердик жөндөмдөрүмдү өнүктүрүү жана Кыргызстандын технологиялык өнүгүүсүнө салым кошуу.",
-    bio_footer: "Багыт: <strong>Адамдар чындыгында колдонгон пайдалуу өнүмдөрдү жаратуу</strong>",
-
-    // Philosophy
-    phil_tag: "Өнүктүрүү философиясы",
-    phil_title: "5 суроодон турган өнүмдүк ыкма",
-    phil_desc: "Мага жөн гана код жазуу эмес, реалдуу көйгөйдү түшүнүп, пайдалуу чечим табуу маанилүү. Ар бир долбоордо мен өзүмө 5 суроо берем:",
-    phil_q1: "Көйгөй эмнеде?",
-    phil_q2: "Ким бул көйгөйгө туш болот?",
-    phil_q3: "Технология жеңилдете алабы?",
-    phil_q4: "Автоматташтырууга болобу?",
-    phil_q5: "Чыныгы өнүм боло алабы?",
-    phil_synergy: "Формула: <strong>Технология + ЖИ + Бизнес + Ишкердик</strong>",
-
-    // Flagship 1: AIM OCR
-    ocr_eyebrow: "EdTech багытындагы негизги автоматташтыруу",
-    ocr_title: "AIM — EXAM OCR SYSTEM",
-    ocr_lead: "Кыргызстандагы «ААЛАМ» мектептер тармагынын 6 мектеби үчүн 20,000ден ашык кирүү сынак баракчаларын автоматтык түрдө текшерүүчү программалык система.",
-    ocr_cap_badge: "AIM Exam OCR иштөө процесси",
-    ocr_cap_text: "Баракты сканерлөө → Компьютердик көрүү менен тегерекчелерди табуу → Excel'ге дароо чыгаруу",
-    ocr_flow_title: "6 баскычтуу автоматташтырылган конвейер",
-    ocr_flow_subtitle: "AIM Exam OCR кагаз сынактарды секунданын ичинде такталган Excel жыйынтыктарына кантип айландырат",
-    ocr_team_badge: "2 адамдан турган команда түзгөн • Ариет (Программа жана автоматташтыруу)",
-    ocr_s1_title: "Барактарды чогултуу",
-    ocr_s1_desc: "«ААЛАМ» тармагындагы 6 мектептен бүткөн тест баракчалары чогултулат.",
-    ocr_s2_title: "Ыкчам сканерлөө",
-    ocr_s2_desc: "Жооп баракчалары ылдам документ-сканер аркылуу санариптештирилет.",
-    ocr_s3_title: "Компьютерге өткөрүү",
-    ocr_s3_desc: "Сканерленген сүрөттөр AIM программасы орнотулган компьютерге өткөрүлөт.",
-    ocr_s4_title: "Компьютердик көрүү",
-    ocr_s4_desc: "Алгоритм барактын кыйшаюусун түздөп, боёлгон тегерекчелерди субпикселдик тактык менен кармайт (±15px).",
-    ocr_s5_title: "Баллды эсептөө",
-    ocr_s5_desc: "Жооптор туура ачкычтар менен салыштырылып, упайлар автоматтык түрдө эсептелет.",
-    ocr_s6_title: "Excel'ге экспорттоо",
-    ocr_s6_desc: "Акыркы баалар жана окуучулардын рейтинги мектеп жетекчилиги үчүн даяр Excel файлына чыгарылат.",
-    ocr_tag: "Колдонмо компьютердик көрүү",
-    ocr_status: "«ААЛАМ» мектептеринде колдонулууда",
-    ocr_h3: "Көйгөй жана инженердик чечим",
-    ocr_desc: "«ААЛАМ» мектептери кирүү сынактарын кагаз баракчаларында өткөрөт. 20,000ден ашык баракты текшерүү керек болгон. Мынчалык көп баракты кол менен текшерүү мугалимдердин көп убактысын алып, чарчоодон улам каталарга алып келмек.",
-    barrier_title: "Көйгөй",
-    barrier_desc: "6 мектепте 20,000ден ашуун баракча. Кол менен текшерүү жумаларды талап кылып, ката кетирүү коркунучу жогору эле.",
-    solution_title: "Инженердик чечим",
-    solution_desc: "Биздин 2 адамдан турган команда сканерден өткөн сүрөттөрдү түздөп, белгилерди таап, жыйынтыкты Excel'ге чыгарган программаны иштеп чыкты.",
-    ocr_stat1_label: "Масштаб:",
-    ocr_stat2_label: "Ишке киргизүү:",
-    omr_paper_title: "«ААЛАМ» МЕКТЕБИНИН КИРҮҮ СЫНАК БАРАКЧАСЫ",
-    omr_paper_sub: "ФОРМА №AALAM-2025 • OMR ТЕКШЕРҮҮ",
-    btn_run_omr: "Алгоритмди текшерүү",
-    btn_tilt_omr: "Баракты кыйшайтуу",
-    demo_initial_status: "Жоопторду белгилөө үчүн тегерекчелерди басыңыз же баракты кыйшайтыңыз",
-
-    // Flagship 2: AIM Exam Website
-    anticheat_eyebrow: "Онлайн сынак платформасы",
-    anticheat_title: "AIM — EXAM WEBSITE",
-    anticheat_lead: "«ААЛАМ» мектептери үчүн көчүрүүгө каршы коргоосу, браузер өтмөктөрүн көзөмөлдөө жана камера аркылуу бөтөн адамдарды аныктоо функциялары бар онлайн платформа.",
-    anticheat_cap_badge: "AIM Exam онлайн прокторинг интерфейси",
-    anticheat_cap_text: "Браузер өтмөгүн алмаштырууну көзөмөлдөө + Камера аркылуу адамдарды таануу",
-    feat_tab_title: "Өтмөктү алмаштыруудан коргоо (Anti Tab-Switch)",
-    feat_tab_desc: "Система окуучунун тест барагынан башка өтмөккө өтүшүн дароо каттайт. Эскертүү берилет, ал эми эреже бир нече жолу бузулса, система окуучуну сынактан чыгарып коё алат.",
-    feat_cam_title: "Камера көзөмөлү жана ЖИ аркылуу таануу",
-    feat_cam_desc: "Платформа камерадагы видеону компьютердик көрүү аркылуу текшерет. Эгерде кадрда экинчи адам пайда болсо, окуучуга дароо эскертүү берилет.",
-    sim_box_title: "Көчүрүүгө каршы симуляцияны байкап көрүңүз:",
-    sim_box_desc: "Өтмөк алмашканда же камерада бөтөн адам пайда болгондо система кандай иштээрин көрүңүз",
-    sim_btn_tab: "Өтмөк алмаштырууну симуляциялоо",
-    sim_btn_cam: "Экинчи адамды симуляциялоо",
-
-    // Projects Grid
-    projects_eyebrow: "Практикалык долбоорлор",
-    projects_title: "Веб-сайттар, логистика жана POS системалар",
-    projects_lead: "Чыныгы көйгөйлөрдү чечкен долбоорлор — билим берүү консалтингинен Кытай логистикасына жана ресторандарды автоматташтырууга чейин.",
-    consult_tag: "Веб-иштеп чыгуу жана консалтинг",
-    consult_title: "CONSULTTEAM — Чет өлкөдө билим алуу платформасы",
-    consult_desc: "Чет өлкөлүк ЖОЖдорго тапшырууга көмөктөшкөн билим берүү консалтинг компаниясы үчүн заманбап лендинг сайт иштеп чыктым. Компаниянын кызматтарын жана өнөктөш университеттерин заманбап интерфейс аркылуу тааныштырат.",
-    consult_meta1: "Домен: <strong>consulteam.edu.kg</strong>",
-    consult_meta2: "Ролу: <strong>Full-Stack веб-программист</strong>",
-    cargo_tag: "Логистика жана ишкердик",
-    cargo_title: "AIM CARGO — Кытайдан жүк жеткирүү бизнеси",
-    cargo_desc: "Кытай маркетплейстеринен (Taobao, 1688, Pinduoduo) Кыргызстандагы кардарларга посылкаларды жеткирүүчү чакан логистикалык бизнести негиздеп, иштеттим. Бир жылдын ичинде 500 кг ашык жүк ташылды.",
-    cargo_callout: "<strong>Практикалык бизнес тажрыйба:</strong> Кытайлык жеткирүүчүлөр менен иштөө, кардарлар менен баарлашуу, бажы, баа коюу, логистикалык процесстер жана жеке ишкердикти (ИП) каттоо.",
-    cargo_meta1: "Мөөнөт: <strong>1 жылдай иштеди</strong>",
-    cargo_meta2: "Көлөм: <strong>500+ кг жеткирилген жүк</strong>",
-    cosmic_tag: "B2B ресторандык технологиялар",
-    cosmic_title: "COSMIC TEAM — Ресторандар үчүн POS программалары",
-    cosmic_desc: "Эки досум менен биргеликте түзгөн команда. Биз Кыргызстандагы ресторандар үчүн POS программаларын иштеп чыгуу жана орнотуу боюнча технологиялык чечимдерди сунуштайбыз.",
-    cosmic_desc2: "Биздин иш кассалык программаны жазууну, залдагы үстөлдөрдүн схемасын түзүүнү, термопринтерлерди (ESC/POS) кошууну жана даяр чечимдерди ресторандарга орнотууну камтыйт. Cosmic Team — жеке программалоодон команда курууга жана чыныгы бизнес менен иштешүүгө карай чоң кадам.",
-    cosmic_meta1: "Негиздөөчүлөр: <strong>3 команда мүчөсү</strong>",
-    cosmic_meta2: "Базар: <strong>Кыргызстан боюнча ресторандар</strong>",
-
-    // AI Tools
-    ai_eyebrow: "Жаңы муундагы иштеп чыгуу куралдары",
-    ai_title: "AI-Assisted Development",
-    ai_lead: "Заманбап ЖИ куралдары менин күнүмдүк ишимдин маанилүү бөлүгү — өнүмдөрдү тезирээк чыгарууга, рутинаны автоматташтырууга жана софтту тез курууга шарт түзөт.",
-    ai_antigravity_role: "Агенттик өнүктүрүү жана татаал системалар",
-    ai_antigravity_desc: "Архитектураны пландаштыруу, кодду комплекстүү рефакторинг кылуу жана автоматташтырылган жупташып иштөө.",
-    ai_claude_role: "Терминалдык агент жана скрипттер",
-    ai_claude_desc: "Терминалдан тез оңдоо, логиканы терең талдоо жана сервердик скрипттерди өркүндөтүү.",
-    ai_codex_role: "Код жана алгоритм генерациясы",
-    ai_codex_desc: "Шаблондуу коддорду, API түзүмдөрүн жана компьютердик көрүү алгоритмдерин тез жазуу.",
-    ai_n8n_role: "Процесстерди жана API'лерди байланыштыруу",
-    ai_n8n_desc: "Визуалдык автоматташтыруу, вебхуктар, маалымат базалары жана кардарларга билдирүү жөнөтүү.",
-    ai_philosophy_quote: "«Менин мамилем — ЖИ менен технологияны түшүнүүнү алмаштыруу эмес, өзүмдүн программалоо жана ойлонуу жөндөмүмдү ЖИ куралдары менен күчөтүү.»",
-    chip1: "Идеяларды тез сынап көрүү",
-    chip2: "Кодду жазуу жана жакшыртуу",
-    chip3: "Каталарды табуу жана оңдоо",
-    chip4: "Бир өңчөй ишти автоматташтыруу",
-    chip5: "Жаңы технологияларды өздөштүрүү",
-    chip6: "Өнүмдөрдү тезирээк ишке киргизүү",
-    chip7: "ЖИни реалдуу ишке кошуу",
-
-    // Skills
-    comp_eyebrow: "Жөндөмдөр жана даярдык",
-    comp_title: "Техникалык жана ишкердик арсенал",
-    comp_lead: "Программалоо тилдеринин, компьютердик көрүүнүн, заманбап ЖИ куралдарынын жана бизнес ачуу тажрыйбасынын айкалышы.",
-    comp_c1_title: "Программалоо тилдери",
-    comp_c2_title: "Өнүктүрүү жана системалар",
-    comp_c3_title: "ЖИ жана ишкердик",
-
-    // Journey
-    journey_eyebrow: "Негизги этаптар",
-    journey_title: "Менин жолум (2023 – 2026)",
-    journey_lead: "Алгачкы коддон баштап мектептердин автоматташтырылган системаларына жана жеке компанияларды негиздөөгө чейин.",
-    j_item5_place: "Бишкек • Ресторандар",
-    j_item5_title: "Тең-негиздөөчү — Cosmic Team (Ресторандар үчүн POS)",
-    j_item5_desc: "Эки досум менен бирге түзгөн команда. Кыргызстан боюнча ресторандарга POS программаларын иштеп чыгып орнотуудабыз. Чыныгы B2B кардарлар менен иштешүү тажрыйбасы.",
-    j_item4_place: "Кытай → Кыргызстан",
-    j_item4_title: "Негиздөөчү — AIM Cargo логистикасы",
-    j_item4_desc: "Кытай маркетплейстеринен Кыргызстанга жүк жеткирүү бизнесин ачтым. 500 кг ашык жүктөрдү ташып, жеке ишкердикти каттап, чоң бизнес тажрыйбасына ээ болдум.",
-    j_item3_place: "«ААЛАМ» мектептери • Бишкек",
-    j_item3_title: "Инженер-программист — AIM Exam OCR системасы жана веб-платформасы",
-    j_item3_desc: "2 адамдан турган командада 6 «ААЛАМ» мектеби үчүн 20,000ден ашык баракты автоматтык текшерүү системасын жана көчүрүүгө каршы корголгон онлайн сынак сайтын түздүм.",
-    j_item2_place: "Кыргызстан",
-    j_item2_title: "Долбоорлорду куруу жана ЖИ куралдарын өздөштүрүү",
-    j_item2_desc: "Практикалык долбоорлорду жаратып, ар кандай технологиялар, бэкенд, API жана ЖИ-өнүктүрүү ыкмалары менен тажрыйба жүргүздүм.",
-    j_item1_place: "Башталышы",
-    j_item1_title: "Программалоо дүйнөсүнө кадам",
-    j_item1_desc: "Python тилин, веб-технологияларды жана алгоритмдерди үйрөнүп, программалоонун пайдубалын түптөдүм.",
-
-    // Vision
-    future_quote: "«Мен күчтүү технологиялык адис жана ишкер болгум келет. Менин максатым жөн гана код жазуу эмес. Чыныгы маанилүү көйгөйлөрдү таап, технологиялык чечимдерди түзүп, адамдар чындыгында колдонгон өнүмдөрдү кургум келет. Ал эми келечекте Кыргызстандын өнүгүүсүнө өз салымымды кошууну каалайм.»",
-    future_name: "Ариет",
-    future_role: "Бүгүн жаратып, күн сайын үйрөнүп, келечекке масштабдуу карайм.",
-
-    // Contact & Footer
-    contact_eyebrow: "Байланышуу",
-    contact_title: "ЖОЖго тапшыруу, долбоорлор жана кызматташуу боюнча байланыш",
-    contact_desc: "Университеттердин кабыл алуу өкүлдөрүнүн, насаатчылардын жана өнөктөштөрдүн суроолорун кубануу менен кабыл алам. Бишкек шаарындамын (UTC+6).",
-    contact_btn_email: "Email: <strong>ariet5656@gmail.com</strong>",
-    copy_hint: "Көчүрүү →",
-    contact_btn_tg: "Telegram: <strong>@thearchhe</strong>",
-    chat_hint: "Билдирүү жазуу →",
-    contact_btn_gh: "GitHub: <strong>github.com/Archezxxx</strong>",
-    repo_hint: "Коддорду көрүү →",
-    form_name_label: "Аты-жөнүңүз жана мекемеңиз",
-    form_email_label: "Электрондук дарегиңиз",
-    form_msg_label: "Билдирүү же сунуш",
-    form_submit_btn: "Билдирүү жөнөтүү",
-    footer_text: "© 2026 Ариет. AI & Automation Developer • Чыныгы өнүмдөрдү түзүү."
-  }
+    skip: "Долбоорлорго өтүү",
+    language: "Тил",
+    nav_work: "Долбоорлор",
+    nav_process: "Иш тартибим",
+    write: "Жазуу",
+    intro:
+      'Бишкектик иштеп чыгуучу. Татаал маселелерди<br class="desktop-break"> иштеген сайттарга, системаларга жана автоматташтырууга айлантам.',
+    view_work: "Долбоорлорду көрүү",
+    hero_location: "Бишкек, Кыргызстан",
+    pause_motion: "Кыймылды токтотуу",
+    resume_motion: "Кыймылды күйгүзүү",
+    work_title: "Менин иштерим",
+    work_note: "Мектеп сынактарынан<br> өз бизнесиме чейин.",
+    processed: "Иштетилди",
+    sheets: "сынактын жооп баракчасы",
+    six_schools: "6 мектеп",
+    try_demo: "Демону сынап көрүү",
+    see_project: "Долбоор тууралуу",
+    ocr_category: "Автоматташтыруу · Билим берүү",
+    ocr_short:
+      "20 000+ баракча. 6 мектеп. Мугалимдердин убактысын үнөмдөгөн сынак текшерүү системасы.",
+    exam_category: "Веб-иштеп чыгуу · Билим берүү",
+    exam_short:
+      "Өтмөктөрдү алмаштырууну жана камераны көзөмөлдөгөн онлайн сынактар.",
+    exam_question: "Алгоритмдин татаалдыгын эмне аныктайт?",
+    one_person: "Кадрда 1 адам",
+    exam_session: "Корголгон сессия",
+    cosmic_short: "Ресторандар үчүн POS-системалар",
+    consult_short: "Билим берүү консалтингинин сайты",
+    cargo_short: "Кытайдан Кыргызстанга логистика",
+    cargo_cover: "Идеядан жеткирүүгө чейин",
+    lab_title: "Кагаздан<br> жыйынтыкка.",
+    lab_intro:
+      "AALAM мектептер тармагы үчүн экөөбүз кагаз сынактарды Excel жыйынтыктарына айланткан система түздүк.",
+    lab_note:
+      "Бул — интерактивдүү модель: баракчадагы жоопторду өзгөртүп, текшерүүнү башта.",
+    case_details: "Долбоор кандай иштейт",
+    aalam_schools: "AALAM мектеби",
+    interactive_model: "Интерактивдүү модель",
+    answer_sheet: "Жооп баракчасы",
+    question: "Суроо",
+    evaluate: "Баракчаны текшерүү",
+    tilt: "Кыйшайтуу",
+    export: "CSV жүктөп алуу",
+    lab_ready: "Жоопторду белгилеп, текшерүүнү башта.",
+    lab_scanning: "Баракчаны түздөп, белгилерди таанып жатабыз…",
+    lab_result:
+      "Туура жооптор: 10 суроодон {score}. Жыйынтыкты жүктөп алсаң болот.",
+    answer_label: "{n}-суроо, {choice} жообу",
+    about_title: "Салам,<br> мен Ариет.",
+    about_location: "Бишкек, Кыргызстан<br> 2023-жылдан бери программалайм",
+    about_lead:
+      "11-класста окуйм, код жазам жана адамдар күнүмдүк жашоодо колдонгон өнүмдөрдү түзөм.",
+    about_body:
+      "Мага бардык жолду басып өтүү кызык: көйгөйдү табуу, түшүнүү, чечим түзүү жана аны адамдарга жеткирүү. Ошентип мектеп автоматташтыруусу, логистика бизнеси жана ресторандарга система түзгөн команда пайда болду.",
+    about_future:
+      "Алдыда — университет, жаңы өнүмдөр жана Кыргызстандын технологиялык өнүгүүсүнө салым кошуу.",
+    development: "Иштеп чыгуу",
+    ai_workflow: "ЖИ ишимде",
+    ai_note:
+      "Прототиптен мүчүлүштүктөрдү оңдоого чейин. Чечимдерди коддо жана чыныгы тапшырмаларда текшерем.",
+    beyond_code: "Коддон тышкары",
+    business_skills:
+      "Ишкердик, B2B, логистика, ишке киргизүү жана командада иштөө.",
+    languages: "Тилдер",
+    spoken_languages: "Кыргызча — эне тилим<br> Орусча — эркин<br> Англисче",
+    journey_summary: "2023-жылдан берки жолум",
+    journey_2023: "Коддун алгачкы саптары",
+    journey_2024: "Алгачкы пайдалуу өнүмдөр",
+    process_title: "Кантип иштейм",
+    process_note: "Маселеден баштайм.<br> Иштеген чечим менен аяктайм.",
+    p1_title: "Түшүнөм",
+    p1: "Өнүм кимге керек, эмне тоскоол болуп жатат жана кандай жыйынтык пайдалуу болот?",
+    p2_title: "Прототип түзөм",
+    p2: "Негизги идеяны чакан, иштеген чечим аркылуу текшерем.",
+    p3_title: "Иштеп чыгам",
+    p3: "Система түзөм, чыныгы сценарийлерде сынайм жана майда-чүйдөсүн тактайм.",
+    p4_title: "Ишке киргизем",
+    p4: "Өнүмдү ишке киргизүүгө, түшүнүүгө жана күнүмдүк колдонууга жардам берем.",
+    contact_title: "Идеяң барбы?",
+    contact_intro:
+      "Долбоор, кызматташтык же келечек тууралуу сүйлөшүү.<br> Таанышууга кубанычтамын.",
+    telegram_write: "Telegram аркылуу жазуу",
+    light_theme: "Жарык тема",
+    dark_theme: "Караңгы тема",
+    copied: "Электрондук дарек көчүрүлдү",
+    copy_failed: "Көчүрүлгөн жок. Дарек: ariet5656@gmail.com",
+    close: "Долбоорду жабуу",
+    open_menu: "Менюну ачуу",
+    close_menu: "Менюну жабуу",
+    copy_email: "Электрондук даректи көчүрүү",
+    stack: "Технологиялар",
+    role: "Менин ролум",
+    pipeline: "Кагаздан жыйынтыкка чейин",
+    model_explanation:
+      "Бул браузердик демо белгиленген жоопторду даяр ачкыч менен салыштырат. Чыныгы долбоор скандарды Python жана OpenCV аркылуу түздөп, белгилерди таанып, Excel файлына чыгарат.",
+    demo_link: "Демону сынап көрүү",
+    open_site: "Сайтты ачуу",
+    security_title: "Сценарийди сынап көрүү",
+    security_note:
+      "Платформанын жүрүм-турум модели. Бул жерде камера же чыныгы сынак колдонулбайт.",
+    tab_test: "Өтмөктү алмаштыруу",
+    camera_test: "Экинчи адам",
+    reset: "Кайра баштоо",
+    security_ready: "Платформанын реакциясын көрүү үчүн сценарийди танда.",
+    tab_warning: "Өтмөк алмаштырылды. 3 эскертүүнүн {count}-си.",
+    tab_blocked: "Үчүнчү бузуу: бул моделде сынак аяктады.",
+    camera_warning: "Кадрда экинчи адам табылды. Платформа эскертүү көрсөтөт.",
+    cosmic_facts: "3 негиздөөчү · Кыргызстан",
+    cargo_facts: "500+ кг · болжол менен 1 жыл",
+    consult_role: "Сайтты иштеп чыгуу",
+    export_question: "Суроо",
+    export_answer: "Жооп",
+    export_key: "Туура жооп",
+    export_correct: "Туура",
+  },
 };
-
-/* ==========================================================================
-   APP INITIALIZATION
-   ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  const inits = [
-    initLanguage,
-    initMobileNav,
-    initTheme,
-    initSoundEngine,
-    initAppleOmrDemo,
-    initAntiCheatSimulation,
-    initContactActions,
-    initLiquidGlassButtons,
-    initScrollAnimations,
-    initHeaderScrollEffect,
-    initActiveNavScrollspy
-  ];
-
-  inits.forEach(fn => {
-    try {
-      fn();
-    } catch (err) {
-      console.warn('Init failed in ' + fn.name + ':', err);
-    }
-  });
+Object.assign(additions.en, {
+  reel_note: "Five projects. Built to be used.",
+  reel_pause: "Pause gallery",
+  reel_resume: "Resume gallery",
+  choose_language: "Choose language",
 });
-
-/* ==========================================================================
-   1. MULTI-LANGUAGE SYSTEM
-   ========================================================================== */
-function initLanguage() {
-  const savedLang = safeGetStorage('ariet_lang', 'en');
-  setLanguage(savedLang);
-
-  document.querySelectorAll('.lang-pill-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetLang = btn.getAttribute('data-lang');
-      if (targetLang && i18n[targetLang]) {
-        setLanguage(targetLang);
-        playTastefulClick(560);
-      }
-    });
-  });
-}
-
-function setLanguage(lang) {
+Object.assign(additions.ru, {
+  reel_note: "Пять проектов. Для реальных задач.",
+  reel_pause: "Пауза галереи",
+  reel_resume: "Продолжить галерею",
+  choose_language: "Выбрать язык",
+});
+Object.assign(additions.ky, {
+  reel_note: "Чыныгы маселелер үчүн беш долбоор.",
+  reel_pause: "Галереяны токтотуу",
+  reel_resume: "Галереяны улантуу",
+  choose_language: "Тил тандоо",
+});
+for (const lang of Object.keys(additions))
+  Object.assign(i18n[lang], additions[lang]);
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const storage = {
+  get(k, f) {
+    try {
+      return localStorage.getItem(k) ?? f;
+    } catch {
+      return f;
+    }
+  },
+  set(k, v) {
+    try {
+      localStorage.setItem(k, v);
+    } catch {}
+  },
+};
+let currentLang = storage.get("ariet_language", "en");
+if (!i18n[currentLang]) currentLang = "en";
+const t = (key, vars = {}) =>
+  Object.entries(vars).reduce(
+    (s, [k, v]) => s.replaceAll(`{${k}}`, v),
+    i18n[currentLang][key] || i18n.en[key] || key,
+  );
+let theme = storage.get("ariet_theme", "dark");
+if (!["light", "dark"].includes(theme)) theme = "dark";
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+let motionPaused =
+  storage.get("ariet_motion_paused", "false") === "true" ||
+  reducedMotion.matches;
+let selectedProject = null,
+  updateLabLabels = () => {},
+  updateField = () => {},
+  updateReel = () => {},
+  updateLanguagePicker = () => {};
+function applyLanguage(lang) {
   if (!i18n[lang]) return;
   currentLang = lang;
-  safeSetStorage('ariet_lang', lang);
-
-  // Set html lang
-  document.documentElement.setAttribute('lang', lang === 'ky' ? 'ky' : (lang === 'ru' ? 'ru' : 'en'));
-
-  // Update active pill state
-  document.querySelectorAll('.lang-pill-btn').forEach(btn => {
-    if (btn.getAttribute('data-lang') === lang) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
+  document.documentElement.lang = lang;
+  storage.set("ariet_language", lang);
+  $$("[data-i18n]").forEach((el) => {
+    el.innerHTML = t(el.dataset.i18n);
   });
-
-  // Apply translations to all data-i18n elements
-  const dict = i18n[lang];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (dict[key]) {
-      el.innerHTML = dict[key];
-    }
-  });
-}
-
-/* ==========================================================================
-   1.1 MOBILE NAVIGATION DRAWER
-   ========================================================================== */
-function initMobileNav() {
-  const toggle = document.getElementById('mobile-menu-toggle');
-  const drawer = document.getElementById('mobile-nav-drawer');
-  if (!toggle || !drawer) return;
-
-  const openIcon = toggle.querySelector('.icon-menu-open');
-  const closeIcon = toggle.querySelector('.icon-menu-close');
-
-  function setDrawerState(open) {
-    if (open) {
-      drawer.classList.add('active');
-      drawer.setAttribute('aria-hidden', 'false');
-      toggle.setAttribute('aria-expanded', 'true');
-      if (openIcon) openIcon.style.display = 'none';
-      if (closeIcon) closeIcon.style.display = 'block';
-    } else {
-      drawer.classList.remove('active');
-      drawer.setAttribute('aria-hidden', 'true');
-      toggle.setAttribute('aria-expanded', 'false');
-      if (openIcon) openIcon.style.display = 'block';
-      if (closeIcon) closeIcon.style.display = 'none';
-    }
-  }
-
-  toggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isOpen = drawer.classList.contains('active');
-    setDrawerState(!isOpen);
-    playTastefulClick(isOpen ? 440 : 520);
-  });
-
-  drawer.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      setDrawerState(false);
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (drawer.classList.contains('active') && !drawer.contains(e.target) && !toggle.contains(e.target)) {
-      setDrawerState(false);
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && drawer.classList.contains('active')) {
-      setDrawerState(false);
-    }
-  });
-}
-
-/* ==========================================================================
-   2. APPLE THEME TOGGLE
-   ========================================================================== */
-function initTheme() {
-  const themeBtn = document.getElementById('theme-toggle');
-  const savedTheme = safeGetStorage('ariet_apple_theme', 'light');
-  document.documentElement.setAttribute('data-theme', savedTheme);
-
-  if (!themeBtn) return;
-
-  themeBtn.addEventListener('click', () => {
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    const nextTheme = isLight ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', nextTheme);
-    safeSetStorage('ariet_apple_theme', nextTheme);
-    playTastefulClick(isLight ? 420 : 540);
-  });
-}
-
-/* ==========================================================================
-   3. TASTEFUL INTERFACE AUDIO
-   ========================================================================== */
-let audioCtx = null;
-let soundEnabled = true;
-
-function initSoundEngine() {
-  const soundBtn = document.getElementById('sound-toggle');
-  const stored = safeGetStorage('ariet_sound_enabled');
-  if (stored !== null) {
-    soundEnabled = stored === 'true';
-  }
-  updateSoundIcon(soundBtn);
-
-  if (soundBtn) {
-    soundBtn.addEventListener('click', () => {
-      soundEnabled = !soundEnabled;
-      safeSetStorage('ariet_sound_enabled', soundEnabled);
-      updateSoundIcon(soundBtn);
-      if (soundEnabled) playTastefulClick(600);
-    });
-  }
-
-  document.querySelectorAll('button, .nav-item-link, .contact-pill-btn').forEach(el => {
-    el.addEventListener('click', () => {
-      if (soundEnabled) playTastefulClick(500);
-    });
-  });
-}
-
-function updateSoundIcon(btn) {
-  if (!btn) return;
-  btn.innerHTML = soundEnabled
-    ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>`
-    : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
-}
-
-function playTastefulClick(freq = 480) {
-  if (!soundEnabled) return;
-  try {
-    if (!audioCtx) {
-      const AudioClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioClass) audioCtx = new AudioClass();
-    }
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    if (!audioCtx) return;
-
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.04);
-  } catch (e) {}
-}
-
-/* ==========================================================================
-   4. APPLE-STYLE AIM.EXAM COMPUTER VISION LAB
-   ========================================================================== */
-function initAppleOmrDemo() {
-  const col1 = document.getElementById('sheet-col-1');
-  const col2 = document.getElementById('sheet-col-2');
-  const runBtn = document.getElementById('run-omr-demo');
-  const tiltBtn = document.getElementById('tilt-omr-demo');
-  const paper = document.getElementById('omr-paper');
-  const statusText = document.getElementById('demo-status-text');
-
-  if (!col1 || !col2 || !runBtn || !paper) return;
-
-  const answerKey = ['A', 'C', 'B', 'D', 'A', 'B', 'D', 'C', 'A', 'B'];
-  const userAnswers = ['A', 'C', 'B', 'D', 'A', 'A', 'D', 'C', 'A', 'B'];
-
-  let currentAngle = 0;
-  const tiltAngles = [0, -6, 8, -10, 5];
-  let tiltIndex = 0;
-
-  function renderSheet() {
-    col1.innerHTML = '';
-    col2.innerHTML = '';
-
-    for (let q = 1; q <= 10; q++) {
-      const targetCol = q <= 5 ? col1 : col2;
-      const row = document.createElement('div');
-      row.className = 'bubble-row';
-
-      const label = document.createElement('div');
-      label.className = 'q-label';
-      label.textContent = `${q}.`;
-
-      const group = document.createElement('div');
-      group.className = 'bubble-group';
-
-      ['A', 'B', 'C', 'D'].forEach(letter => {
-        const bubble = document.createElement('div');
-        bubble.className = 'apple-bubble';
-        bubble.textContent = letter;
-        bubble.dataset.q = q;
-        bubble.dataset.val = letter;
-
-        if (userAnswers[q - 1] === letter) {
-          bubble.classList.add('filled');
-        }
-
-        bubble.addEventListener('click', () => {
-          if (userAnswers[q - 1] === letter) {
-            userAnswers[q - 1] = null;
-            bubble.classList.remove('filled');
-          } else {
-            userAnswers[q - 1] = letter;
-            targetCol.querySelectorAll(`[data-q="${q}"]`).forEach(b => b.classList.remove('filled'));
-            bubble.classList.add('filled');
-          }
-          clearEvaluation();
-          playTastefulClick(520);
-        });
-
-        group.appendChild(bubble);
-      });
-
-      row.appendChild(label);
-      row.appendChild(group);
-      targetCol.appendChild(row);
-    }
-  }
-
-  renderSheet();
-
-  function clearEvaluation() {
-    document.querySelectorAll('.apple-bubble').forEach(b => {
-      b.classList.remove('eval-correct', 'eval-wrong');
-    });
-    if (statusText) {
-      if (currentLang === 'ky') {
-        statusText.textContent = 'Жооптор өзгөрдү. Баалоо үчүн "Алгоритмди текшерүү" баскычын басыңыз.';
-      } else if (currentLang === 'ru') {
-        statusText.textContent = 'Отметки изменены. Нажмите "Запустить проверку алгоритмом".';
-      } else {
-        statusText.textContent = 'Marks updated. Click "Run CV Evaluation" to test.';
-      }
-    }
-  }
-
-  tiltBtn.addEventListener('click', () => {
-    tiltIndex = (tiltIndex + 1) % tiltAngles.length;
-    currentAngle = tiltAngles[tiltIndex];
-    paper.style.transform = `rotate(${currentAngle}deg)`;
-    clearEvaluation();
-    if (statusText) {
-      if (currentLang === 'ky') {
-        statusText.textContent = `Барак ${currentAngle > 0 ? '+' : ''}${currentAngle}° кыйшайтылды (Сканердеги кагаздын бурулушу)`;
-      } else if (currentLang === 'ru') {
-        statusText.textContent = `Бланк наклонен на ${currentAngle > 0 ? '+' : ''}${currentAngle}° (Имитация перекоса сканера)`;
-      } else {
-        statusText.textContent = `Sheet tilted by ${currentAngle > 0 ? '+' : ''}${currentAngle}° (Simulating scanner tilt)`;
-      }
-    }
-    playTastefulClick(380);
-  });
-
-  let isEvaluating = false;
-  runBtn.addEventListener('click', () => {
-    if (isEvaluating) return;
-    isEvaluating = true;
-    runBtn.disabled = true;
-
-    const msgStep1 = currentLang === 'ky' ? '1/3-баскыч: Хаф алгоритми менен бурчтук белгилерди табуу...' : (currentLang === 'ru' ? 'Этап 1/3: Преобразование Хафа и поиск меток...' : 'Step 1/3: Hough Transform fiducial detection...');
-    const msgStep2 = currentLang === 'ky' ? '2/3-баскыч: 4 чекиттүү гомография менен баракты түздөө...' : (currentLang === 'ru' ? 'Этап 2/3: 4-точечная гомография и выравнивание листа...' : 'Step 2/3: Applying 4-point homography rectification...');
-    const msgStep3 = currentLang === 'ky' ? '3/3-баскыч: Субпикселдик тегерекчелерди кармоо (±15px)...' : (currentLang === 'ru' ? 'Этап 3/3: Динамический субпиксельный захват отметок (±15px)...' : 'Step 3/3: Dynamic subpixel bubble snapping (±15px)...');
-
-    statusText.textContent = msgStep1;
-    playTastefulClick(440);
-
-    setTimeout(() => {
-      statusText.textContent = msgStep2;
-      paper.style.transform = 'rotate(0deg)';
-      playTastefulClick(520);
-
-      setTimeout(() => {
-        statusText.textContent = msgStep3;
-        playTastefulClick(600);
-
-        setTimeout(() => {
-          let score = 0;
-
-          for (let q = 1; q <= 10; q++) {
-            const userChoice = userAnswers[q - 1];
-            const correctChoice = answerKey[q - 1];
-
-            if (userChoice) {
-              const bubbleEl = document.querySelector(`.apple-bubble[data-q="${q}"][data-val="${userChoice}"]`);
-              if (userChoice === correctChoice) {
-                score++;
-                if (bubbleEl) bubbleEl.classList.add('eval-correct');
-              } else {
-                if (bubbleEl) bubbleEl.classList.add('eval-wrong');
-              }
-            }
-          }
-
-          if (currentLang === 'ky') {
-            statusText.innerHTML = `<strong>Жыйынтык:</strong> ${score}/10 туура (${score * 10}%). Кыйшаюу ${currentAngle}° түздөлдү. Excel'ге даяр.`;
-          } else if (currentLang === 'ru') {
-            statusText.innerHTML = `<strong>Результат:</strong> ${score}/10 верно (${score * 10}%). Перекос ${currentAngle}° выровнен. Готово к выгрузке в Excel.`;
-          } else {
-            statusText.innerHTML = `<strong>Result:</strong> ${score}/10 correct (${score * 10}%). Rectified from ${currentAngle}°. Ready for Excel export.`;
-          }
-
-          runBtn.disabled = false;
-          isEvaluating = false;
-          playTastefulClick(720);
-        }, 400);
-      }, 400);
-    }, 400);
-  });
-}
-
-/* ==========================================================================
-   4.1 ANTI-CHEAT SIMULATION SANDBOX
-   ========================================================================== */
-function initAntiCheatSimulation() {
-  const btnTab = document.getElementById('btn-sim-tab');
-  const btnCam = document.getElementById('btn-sim-cam');
-
-  if (btnTab) {
-    btnTab.addEventListener('click', () => {
-      playTastefulClick(320);
-      showSecurityModal(
-        currentLang === 'ky' ? 'Өтмөк алмаштыруу эскертүүсү (1/3)' : (currentLang === 'ru' ? 'Предупреждение: Смена вкладки (1/3)' : 'Anti Tab-Switch Warning (1/3)'),
-        currentLang === 'ky' ? 'Сиз сынак барагынан башка терезеге өттүңүз. Прокторинг сервери бул аракетти каттады. Кайталанса сынак автоматтык түрдө токтотулат.' : (currentLang === 'ru' ? 'Зафиксирован уход с экзаменационной страницы. Сервер прокторинга зафиксировал нарушение. Повторные попытки приведут к снятию с экзамена.' : 'Candidate navigated away from the active examination window. Tab switching is logged on the proctor server. Further violations will trigger automatic disqualification.'),
-        '#FF9500'
-      );
-    });
-  }
-
-  if (btnCam) {
-    btnCam.addEventListener('click', () => {
-      playTastefulClick(300);
-      showSecurityModal(
-        currentLang === 'ky' ? 'Камера көзөмөлү: Бөтөн адам аныкталды' : (currentLang === 'ru' ? 'Контроль камеры: Обнаружен второй человек' : 'Camera Proctored Alert: Multiple Persons Detected'),
-        currentLang === 'ky' ? 'Камера кадрында бирден көп адам аныкталды. Сынактын таза өтүшү үчүн бөлмөдө жалгыз болушуңуз зарыл.' : (currentLang === 'ru' ? 'Система компьютерного зрения обнаружила более одного лица в кадре веб-камеры. Пожалуйста, убедитесь, что вы одни в комнате.' : 'The client-side computer vision detected more than 1 face in the camera frame. Please ensure you are alone in the room to maintain exam integrity.'),
-        '#FF3B30'
-      );
-    });
-  }
-}
-
-function showSecurityModal(title, message, accentColor = '#0071E3') {
-  const existing = document.getElementById('security-sim-modal');
-  if (existing) existing.remove();
-
-  const backdrop = document.createElement('div');
-  backdrop.id = 'security-sim-modal';
-  backdrop.style.cssText = `
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    animation: fadeInModal 0.2s ease forwards;
-  `;
-
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    background: var(--bg-card);
-    border: 1px solid var(--border-medium);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-    max-width: 440px;
-    width: 100%;
-    padding: 28px;
-    text-align: center;
-    position: relative;
-    transform: scale(0.95);
-    animation: scaleUpModal 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  `;
-
-  modal.innerHTML = `
-    <div style="width: 48px; height: 48px; border-radius: 50%; background: ${accentColor}1A; color: ${accentColor}; margin: 0 auto 16px; display: grid; place-items: center;">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-    </div>
-    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary);">${escapeHtml(title)}</h3>
-    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">${escapeHtml(message)}</p>
-    <button id="close-sec-modal" class="btn-apple-primary" style="width: 100%; justify-content: center;">
-      <span>${currentLang === 'ky' ? 'Түшүндүм, сынакка кайтуу' : (currentLang === 'ru' ? 'Понятно, вернуться к экзамену' : 'Acknowledge & Return')}</span>
-    </button>
-  `;
-
-  backdrop.appendChild(modal);
-  document.body.appendChild(backdrop);
-
-  const closeBtn = modal.querySelector('#close-sec-modal');
-  closeBtn.addEventListener('click', () => {
-    backdrop.remove();
-    playTastefulClick(560);
-  });
-
-  backdrop.addEventListener('click', (e) => {
-    if (e.target === backdrop) {
-      backdrop.remove();
-    }
-  });
-}
-
-/* ==========================================================================
-   5. CONTACT ACTIONS & TOAST NOTIFICATIONS
-   ========================================================================== */
-function initContactActions() {
-  document.querySelectorAll('[data-copy]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const text = btn.getAttribute('data-copy');
-      if (text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(() => {
-            const copiedMsg = currentLang === 'ky' ? `Көчүрүлдү: ${text}` : (currentLang === 'ru' ? `Скопировано: ${text}` : `Copied to clipboard: ${text}`);
-            showAppleToast(copiedMsg);
-            playTastefulClick(620);
-          }).catch(() => fallbackCopy(text));
-        } else {
-          fallbackCopy(text);
-        }
-      }
-    });
-  });
-
-  function fallbackCopy(text) {
-    try {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      const copiedMsg = currentLang === 'ky' ? `Көчүрүлдү: ${text}` : (currentLang === 'ru' ? `Скопировано: ${text}` : `Copied: ${text}`);
-      showAppleToast(copiedMsg);
-      playTastefulClick(620);
-    } catch (e) {
-      showAppleToast(text);
-    }
-  }
-
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('msg-name').value;
-      const email = document.getElementById('msg-email').value;
-      const text = document.getElementById('msg-text').value;
-
-      if (!name || !email || !text) {
-        const warnMsg = currentLang === 'ky' ? 'Бардык талааларды толтуруңуз.' : (currentLang === 'ru' ? 'Пожалуйста, заполните все поля.' : 'Please complete all message fields.');
-        showAppleToast(warnMsg);
-        return;
-      }
-
-      const mailto = `mailto:ariet5656@gmail.com?subject=Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(text + '\n\nFrom: ' + email)}`;
-      window.location.href = mailto;
-      const openMsg = currentLang === 'ky' ? 'Почта программасы ачылууда...' : (currentLang === 'ru' ? 'Открытие почтовой программы...' : 'Opening email client for dispatch...');
-      showAppleToast(openMsg);
-      form.reset();
-      playTastefulClick(640);
-    });
-  }
-}
-
-function showAppleToast(message) {
-  let container = document.getElementById('toast-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'toast-container';
-    container.className = 'toast-container';
-    document.body.appendChild(container);
-  }
-
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.innerHTML = `
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0071E3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"></polyline>
-    </svg>
-    <span>${escapeHtml(message)}</span>
-  `;
-
-  container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(10px) scale(0.96)';
-    toast.style.transition = 'all 0.2s ease';
-    setTimeout(() => toast.remove(), 250);
-  }, 3200);
-}
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>'"]/g, 
-    tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+  $("#language").value = lang;
+  updateLanguagePicker();
+  $(".menu-toggle").setAttribute(
+    "aria-label",
+    t(
+      $(".menu-toggle").getAttribute("aria-expanded") === "true"
+        ? "close_menu"
+        : "open_menu",
+    ),
+  );
+  $(".dialog-close").setAttribute("aria-label", t("close"));
+  $("#copy-email").setAttribute("aria-label", t("copy_email"));
+  document.title =
+    lang === "ru"
+      ? "Ариет — Разработка и автоматизация"
+      : lang === "ky"
+        ? "Ариет — Иштеп чыгуу жана автоматташтыруу"
+        : "Ariet — Development & Automation";
+  syncTheme();
+  syncMotion();
+  updateLabLabels();
+  if (selectedProject) renderProject(selectedProject);
+  document.dispatchEvent(
+    new CustomEvent("portfolio:language", { detail: { language: lang } }),
   );
 }
-
-/* ==========================================================================
-   6. AUTHENTIC APPLE LIQUID GLASS BUTTON INTERACTIONS
-   ========================================================================== */
-function initLiquidGlassButtons() {
-  const liquidSelectors = [
-    '.btn-apple-primary',
-    '.btn-apple-secondary',
-    '.btn-apple-icon',
-    '.btn-demo-run',
-    '.btn-demo-tilt',
-    '.sim-btn-trigger',
-    '.contact-pill-btn',
-    '.lang-pill-btn'
-  ];
-
-  const buttons = document.querySelectorAll(liquidSelectors.join(', '));
-
-  buttons.forEach(btn => {
-    btn.addEventListener('pointermove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      btn.style.setProperty('--mouse-x', `${x}px`);
-      btn.style.setProperty('--mouse-y', `${y}px`);
-      btn.style.setProperty('--glare-opacity', '1');
-    });
-
-    btn.addEventListener('pointerleave', () => {
-      btn.style.setProperty('--glare-opacity', '0');
-    });
-
-    btn.addEventListener('pointerdown', (e) => {
-      if (btn.disabled) return;
-
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const ripple = document.createElement('span');
-      ripple.className = 'liquid-glass-ripple';
-      ripple.style.left = `${x}px`;
-      ripple.style.top = `${y}px`;
-
-      btn.appendChild(ripple);
-
-      ripple.addEventListener('animationend', () => {
-        ripple.remove();
-      });
-    });
-  });
+function syncTheme() {
+  document.documentElement.dataset.theme = theme;
+  $("#theme-toggle").textContent = t(
+    theme === "dark" ? "light_theme" : "dark_theme",
+  );
+  $("#theme-toggle").setAttribute("aria-label", $("#theme-toggle").textContent);
+  document.documentElement.classList.toggle("dark", theme === "dark");
+  document.dispatchEvent(new CustomEvent("portfolio:theme"));
 }
-
-/* ==========================================================================
-   7. MINIMAL SCROLL REVEALS & APPLE MOTION DYNAMICS
-   ========================================================================== */
-function initScrollAnimations() {
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+function syncMotion() {
+  $("#motion-toggle").setAttribute("aria-pressed", String(motionPaused));
+  $("#motion-toggle span").textContent = t(
+    motionPaused ? "resume_motion" : "pause_motion",
+  );
+  $("#motion-toggle svg").innerHTML = motionPaused
+    ? '<path d="m5 3 7 5-7 5Z"/>'
+    : '<path d="M5.5 3v10M10.5 3v10"/>';
+  updateField();
+  updateReel();
+  document.dispatchEvent(
+    new CustomEvent("portfolio:motion", { detail: { paused: motionPaused } }),
+  );
+}
+$("#language").addEventListener("change", (e) => applyLanguage(e.target.value));
+$("#theme-toggle").addEventListener("click", () => {
+  theme = theme === "dark" ? "light" : "dark";
+  storage.set("ariet_theme", theme);
+  syncTheme();
+});
+$("#motion-toggle").addEventListener("click", () => {
+  motionPaused = !motionPaused;
+  storage.set("ariet_motion_paused", String(motionPaused));
+  syncMotion();
+});
+reducedMotion.addEventListener("change", (e) => {
+  motionPaused =
+    e.matches || storage.get("ariet_motion_paused", "false") === "true";
+  syncMotion();
+});
+$("#year").textContent = new Date().getFullYear();
+const menuToggle = $(".menu-toggle"),
+  mobileNav = $("#mobile-nav");
+function closeMenu(focus = false) {
+  menuToggle.setAttribute("aria-expanded", "false");
+  mobileNav.hidden = true;
+  menuToggle.setAttribute("aria-label", t("open_menu"));
+  if (focus) menuToggle.focus();
+}
+menuToggle.addEventListener("click", () => {
+  const open = menuToggle.getAttribute("aria-expanded") !== "true";
+  menuToggle.setAttribute("aria-expanded", String(open));
+  mobileNav.hidden = !open;
+  menuToggle.setAttribute("aria-label", t(open ? "close_menu" : "open_menu"));
+});
+$$("a", mobileNav).forEach((a) =>
+  a.addEventListener("click", () => closeMenu()),
+);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !mobileNav.hidden) closeMenu(true);
+});
+document.addEventListener("click", (e) => {
+  if (!mobileNav.hidden && !e.target.closest(".site-header")) closeMenu();
+});
+matchMedia("(min-width: 761px)").addEventListener("change", (e) => {
+  if (e.matches) closeMenu();
+});
+// Authored project-cover images are rendered in the cylinder component.
+const dialog = $("#project-dialog");
+function renderProject(id) {
+  const para = (k) => `<p>${t(k)}</p>`,
+    heading = (k) => `<h3>${t(k)}</h3>`,
+    facts = (a) =>
+      `<div class="dialog-facts">${a.map((v) => `<span>${v}</span>`).join("")}</div>`;
+  let html = "";
+  if (id === "ocr")
+    html =
+      '<h2 id="dialog-title">AIM OCR</h2>' +
+      para("ocr_lead") +
+      facts(["20 000+", t("six_schools"), "Python / OpenCV"]) +
+      heading("barrier_title") +
+      para("ocr_desc") +
+      heading("solution_title") +
+      para("solution_desc") +
+      heading("pipeline") +
+      "<ol>" +
+      [1, 2, 3, 4, 5, 6]
+        .map(
+          (n) =>
+            `<li><strong>${t(`ocr_s${n}_title`)}</strong> — ${t(`ocr_s${n}_desc`)}</li>`,
+        )
+        .join("") +
+      "</ol>" +
+      heading("role") +
+      para("ocr_team_badge") +
+      heading("stack") +
+      "<p>Python, OpenCV, NumPy, homography, subpixel snapping, OpenPyXL.</p>" +
+      para("model_explanation") +
+      `<a class="button" href="#flagship" id="dialog-demo-link">${t("demo_link")}</a>`;
+  if (id === "exam")
+    html =
+      '<h2 id="dialog-title">AIM Exam</h2>' +
+      para("anticheat_lead") +
+      heading("feat_tab_title") +
+      para("feat_tab_desc") +
+      heading("feat_cam_title") +
+      para("feat_cam_desc") +
+      heading("security_title") +
+      para("security_note") +
+      `<div class="security-controls"><button class="quiet-button" data-security="tab">${t("tab_test")}</button><button class="quiet-button" data-security="camera">${t("camera_test")}</button><button class="quiet-button" data-security="reset">${t("reset")}</button></div><p class="security-result" role="status" aria-live="polite">${t("security_ready")}</p>`;
+  if (id === "cosmic")
+    html =
+      '<h2 id="dialog-title">Cosmic Team</h2>' +
+      facts([t("cosmic_facts"), "ESC/POS"]) +
+      para("cosmic_desc") +
+      para("cosmic_desc2");
+  if (id === "consult")
+    html =
+      '<h2 id="dialog-title">Consulteam</h2>' +
+      facts([t("consult_role"), "consulteam.edu.kg"]) +
+      para("consult_desc") +
+      `<a class="button" href="https://consulteam.edu.kg" target="_blank" rel="noopener noreferrer">${t("open_site")}</a>`;
+  if (id === "cargo")
+    html =
+      '<h2 id="dialog-title">AIM Cargo</h2>' +
+      facts([t("cargo_facts"), "China / Kyrgyzstan"]) +
+      para("cargo_desc") +
+      heading("beyond_code") +
+      para("cargo_callout");
+  $("#dialog-content").innerHTML = html;
+  $("#dialog-demo-link")?.addEventListener("click", () => dialog.close());
+  let violations = 0;
+  $$("[data-security]", dialog).forEach((btn) =>
+    btn.addEventListener("click", () => {
+      const action = btn.dataset.security,
+        result = $(".security-result", dialog);
+      if (action === "reset") {
+        violations = 0;
+        result.textContent = t("security_ready");
+      }
+      if (action === "tab") {
+        violations = Math.min(3, violations + 1);
+        result.textContent = t(
+          violations === 3 ? "tab_blocked" : "tab_warning",
+          { count: violations },
+        );
+      }
+      if (action === "camera")
+        result.textContent = t(
+          violations === 3 ? "tab_blocked" : "camera_warning",
+        );
+    }),
+  );
+}
+$$("[data-project]").forEach((btn) =>
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    selectedProject = btn.dataset.project;
+    renderProject(selectedProject);
+    dialog.showModal();
+    document.body.classList.add("dialog-open");
+  }),
+);
+$(".dialog-close").addEventListener("click", () => dialog.close());
+dialog.addEventListener("click", (e) => {
+  if (e.target === dialog) {
+    const r = dialog.getBoundingClientRect();
+    if (
+      e.clientX < r.left ||
+      e.clientX > r.right ||
+      e.clientY < r.top ||
+      e.clientY > r.bottom
+    )
+      dialog.close();
+  }
+});
+dialog.addEventListener("close", () => {
+  selectedProject = null;
+  document.body.classList.remove("dialog-open");
+});
+function initLab() {
+  const key = ["A", "C", "B", "D", "A", "B", "D", "C", "A", "B"],
+    answers = ["A", "C", "B", "D", "A", "A", "D", "C", "A", "B"];
+  let evaluated = false,
+    evaluating = false;
+  const rows = $("#answer-rows"),
+    score = () => answers.reduce((s, a, i) => s + Number(a === key[i]), 0);
+  function labels() {
+    $$(".answer-row", rows).forEach((row, i) => {
+      row.setAttribute("aria-label", `${t("question")} ${i + 1}`);
+      $$("button", row).forEach((b) =>
+        b.setAttribute(
+          "aria-label",
+          t("answer_label", { n: i + 1, choice: b.dataset.choice }),
+        ),
+      );
+    });
+    $("#lab-status").textContent = evaluating
+      ? t("lab_scanning")
+      : evaluated
+        ? t("lab_result", { score: score() })
+        : t("lab_ready");
+  }
+  function invalidate() {
+    evaluated = false;
+    $("#export").hidden = true;
+    $$(".bubble", rows).forEach((b) => {
+      b.classList.remove("correct", "incorrect");
+      b.removeAttribute("data-result");
+    });
+    $("#lab-status").classList.remove("result");
+    labels();
+  }
+  for (let i = 0; i < 10; i++) {
+    const row = document.createElement("div");
+    row.className = "answer-row";
+    row.setAttribute("role", "radiogroup");
+    const n = document.createElement("span");
+    n.textContent = String(i + 1).padStart(2, "0");
+    row.append(n);
+    for (const choice of ["A", "B", "C", "D"]) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "bubble";
+      b.dataset.choice = choice;
+      b.setAttribute("role", "radio");
+      b.setAttribute("aria-checked", String(answers[i] === choice));
+      b.tabIndex = answers[i] === choice ? 0 : -1;
+      b.addEventListener("click", () => {
+        if (evaluating) return;
+        answers[i] = choice;
+        $$("button", row).forEach((x) => {
+          x.setAttribute("aria-checked", String(x === b));
+          x.tabIndex = x === b ? 0 : -1;
+        });
+        invalidate();
+      });
+      b.addEventListener("keydown", (e) => {
+        const moves = {
+          ArrowRight: 1,
+          ArrowDown: 1,
+          ArrowLeft: -1,
+          ArrowUp: -1,
+        };
+        if (!(e.key in moves)) return;
+        e.preventDefault();
+        const list = $$("button", row),
+          next = list[(list.indexOf(b) + moves[e.key] + 4) % 4];
+        next.click();
+        next.focus();
+      });
+      row.append(b);
+    }
+    rows.append(row);
+  }
+  $("#tilt").addEventListener("click", () =>
+    $("#answer-paper").classList.toggle("tilted"),
+  );
+  $("#evaluate").addEventListener("click", async () => {
+    if (evaluating) return;
+    evaluating = true;
+    evaluated = false;
+    $("#evaluate").disabled = true;
+    $("#tilt").disabled = true;
+    $("#export").hidden = true;
+    $$(".bubble", rows).forEach((b) => {
+      b.disabled = true;
+      b.classList.remove("correct", "incorrect");
+    });
+    $("#answer-paper").classList.add("scanning");
+    $("#answer-paper").classList.remove("tilted");
+    labels();
+    await new Promise((r) => setTimeout(r, reducedMotion.matches ? 100 : 1700));
+    $$(".answer-row", rows).forEach((row, i) => {
+      const b = $("[aria-checked=true]", row);
+      b.classList.add(answers[i] === key[i] ? "correct" : "incorrect");
+      b.dataset.result = answers[i] === key[i] ? "correct" : "incorrect";
+    });
+    evaluating = false;
+    evaluated = true;
+    $("#evaluate").disabled = false;
+    $("#tilt").disabled = false;
+    $("#export").hidden = false;
+    $$(".bubble", rows).forEach((b) => (b.disabled = false));
+    $("#answer-paper").classList.remove("scanning");
+    $("#lab-status").classList.add("result");
+    labels();
+  });
+  $("#export").addEventListener("click", () => {
+    if (!evaluated) return;
+    const data = [
+        [
+          t("export_question"),
+          t("export_answer"),
+          t("export_key"),
+          t("export_correct"),
+        ],
+        ...answers.map((a, i) => [i + 1, a, key[i], Number(a === key[i])]),
+      ],
+      blob = new Blob(["\uFEFF" + data.map((r) => r.join(",")).join("\r\n")], {
+        type: "text/csv;charset=utf-8",
+      }),
+      url = URL.createObjectURL(blob),
+      a = document.createElement("a");
+    a.href = url;
+    a.download = "aim-ocr-demo-results.csv";
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  updateLabLabels = labels;
+}
+let toastTimer;
+function toast(message) {
+  clearTimeout(toastTimer);
+  $("#toast").textContent = message;
+  $("#toast").classList.add("visible");
+  toastTimer = setTimeout(() => $("#toast").classList.remove("visible"), 3000);
+}
+$("#copy-email").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText("ariet5656@gmail.com");
+    toast(t("copied"));
+  } catch {
+    toast(t("copy_failed"));
+  }
+});
+// Pre-rendered field marks. Bounded frame rate and pixel ratio; pauses offscreen.
+function initField() {
+  const canvas = $("#field"),
+    ctx = canvas.getContext("2d", { alpha: false });
+  if (!ctx) {
+    $("#motion-toggle").hidden = true;
     return;
   }
-
-  const targets = document.querySelectorAll(`
-    .section-header-centered,
-    .metric-pill-card,
-    .vision-banner-card,
-    .apple-showcase-card,
-    .ocr-workflow-wrapper,
-    .anticheat-feature-card,
-    .ai-tool-card,
-    .ai-philosophy-banner,
-    .bento-box,
-    .skill-apple-card,
-    .timeline-card-apple,
-    .contact-apple-shell
-  `);
-
-  if (!targets.length) return;
-
-  targets.forEach((el) => {
-    el.classList.add('reveal-on-scroll');
-  });
-
-  const grids = document.querySelectorAll('.metrics-strip, .ocr-steps-grid, .apple-bento-grid, .skills-apple-grid, .ai-workflow-grid');
-  grids.forEach(grid => {
-    const children = grid.querySelectorAll('.metric-pill-card, .ocr-step-card, .bento-box, .skill-apple-card, .ai-tool-card');
-    children.forEach((child, i) => {
-      const delayClass = `reveal-delay-${(i % 4) + 1}`;
-      child.classList.add(delayClass);
-    });
-  });
-
-  if (!('IntersectionObserver' in window)) {
-    targets.forEach(el => el.classList.add('is-revealed'));
-    return;
+  const hero = $(".hero");
+  let width = 0,
+    height = 0,
+    frameId = 0,
+    visible = true,
+    last = 0,
+    time = 0,
+    pointerX = 0,
+    pointerY = 0,
+    cameraX = 0,
+    cameraY = 0,
+    seed = 813;
+  const random = () => {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 4294967296;
+  };
+  const points = Array.from({ length: 6500 }, () => ({
+    x: (random() - 0.5) * 90,
+    z: 5 + random() * 90,
+    size: 0.12 + random() * 0.12,
+    angle: random() * Math.PI,
+    phase: random() * 6.28,
+    tone: random(),
+  })).sort((a, b) => b.z - a.z);
+  const sprite = document.createElement("canvas");
+  sprite.width = sprite.height = 100;
+  const paint = sprite.getContext("2d");
+  paint.translate(50, 50);
+  paint.fillStyle = "#e9eee7";
+  for (let n = 0; n < 6; n++) {
+    paint.save();
+    paint.rotate((n * Math.PI) / 3);
+    paint.beginPath();
+    paint.ellipse(0, -18, 7.5, 19, 0, 0, Math.PI * 2);
+    paint.fill();
+    paint.restore();
   }
-
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
-        obs.unobserve(entry.target);
+  paint.fillStyle = "#aebbb0";
+  paint.beginPath();
+  paint.arc(0, 0, 5, 0, Math.PI * 2);
+  paint.fill();
+  function render(stamp = 0) {
+    frameId = 0;
+    if (stamp && stamp - last < 30) {
+      frameId = requestAnimationFrame(render);
+      return;
+    }
+    const delta = last && stamp ? Math.min((stamp - last) / 1000, 0.06) : 0;
+    last = stamp;
+    if (!motionPaused) time += delta;
+    cameraX += (pointerX - cameraX) * 0.035;
+    cameraY += (pointerY - cameraY) * 0.035;
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "#080a0b";
+    ctx.fillRect(0, 0, width, height);
+    const focal = width < 760 ? width * 1.1 : width * 0.94,
+      horizon = height * (width < 760 ? 0.48 : 0.43);
+    const copyRect = $(".hero-copy > p").getBoundingClientRect();
+    const heroRect = hero.getBoundingClientRect();
+    const copyX = copyRect.left + copyRect.width / 2;
+    const copyY = copyRect.top - heroRect.top + copyRect.height / 2;
+    for (const p of points) {
+      const s = focal / (p.z + 4),
+        wave =
+          Math.sin(p.x * 0.1 + p.z * 0.065 + time * 0.18) * 1.4 +
+          Math.cos(p.z * 0.13 - time * 0.14) * 0.65,
+        x =
+          width / 2 +
+          (p.x + cameraX * 0.9 + Math.sin(time * 0.12 + p.phase) * 0.1) * s,
+        y = horizon + (4.8 + wave + cameraY * 0.35) * s,
+        size = p.size * s * 2.1;
+      if (
+        x < -size ||
+        x > width + size ||
+        y < horizon - 30 ||
+        y > height + size
+      )
+        continue;
+      const edge = Math.min(1, (height - y) / (height * 0.19)),
+        distance = Math.max(0.15, 1 - p.z / 140),
+        copyShadeX = Math.max(
+          0,
+          Math.min(1, (copyRect.width / 2 + 32 - Math.abs(x - copyX)) / 32),
+        ),
+        copyShadeY = Math.max(
+          0,
+          Math.min(1, (copyRect.height / 2 + 32 - Math.abs(y - copyY)) / 32),
+        );
+      ctx.globalAlpha =
+        Math.max(0, edge) *
+        distance *
+        (0.65 + p.tone * 0.35) *
+        (1 - 0.96 * copyShadeX * copyShadeY);
+      if (size > 9) {
+        ctx.strokeStyle = "#253c30";
+        ctx.lineWidth = Math.max(1, size * 0.045);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + size * 0.1, y + size * 0.9);
+        ctx.stroke();
       }
-    });
-  }, {
-    threshold: 0.08,
-    rootMargin: '0px 0px -30px 0px'
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(p.angle + Math.sin(time * 0.25 + p.phase) * 0.08);
+      ctx.drawImage(sprite, -size / 2, -size / 2, size, size);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+    if (visible && !document.hidden && !motionPaused)
+      frameId = requestAnimationFrame(render);
+  }
+  function schedule() {
+    if (!frameId) frameId = requestAnimationFrame(render);
+  }
+  function resize() {
+    const r = hero.getBoundingClientRect();
+    width = r.width;
+    height = r.height;
+    const dpr = Math.min(devicePixelRatio || 1, 1.75);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    schedule();
+  }
+  new ResizeObserver(resize).observe(hero);
+  new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting;
+    last = 0;
+    if (visible) schedule();
+    else if (frameId) {
+      cancelAnimationFrame(frameId);
+      frameId = 0;
+    }
+  }).observe(hero);
+  hero.addEventListener("pointermove", (e) => {
+    if (e.pointerType === "touch" || motionPaused) return;
+    pointerX = (e.clientX / width - 0.5) * 2;
+    pointerY = (e.clientY / height - 0.5) * 2;
   });
-
-  targets.forEach(el => observer.observe(el));
-}
-
-/* ==========================================================================
-   8. STICKY HEADER DYNAMIC ELEVATION
-   ========================================================================== */
-function initHeaderScrollEffect() {
-  const header = document.querySelector('.site-header');
-  if (!header) return;
-
-  let ticking = false;
-  const updateHeader = () => {
-    if (window.scrollY > 20) {
-      header.classList.add('is-scrolled');
-    } else {
-      header.classList.remove('is-scrolled');
+  hero.addEventListener("pointerleave", () => {
+    pointerX = pointerY = 0;
+  });
+  document.addEventListener("visibilitychange", () => {
+    last = 0;
+    if (!document.hidden && visible) schedule();
+    else if (frameId) {
+      cancelAnimationFrame(frameId);
+      frameId = 0;
     }
-    ticking = false;
+  });
+  updateField = () => {
+    if (frameId) cancelAnimationFrame(frameId);
+    frameId = 0;
+    last = 0;
+    if (visible && !document.hidden) schedule();
   };
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateHeader);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  updateHeader();
+  resize();
 }
-
-/* ==========================================================================
-   9. ACTIVE NAVIGATION SCROLLSPY
-   ========================================================================== */
-function initActiveNavScrollspy() {
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-item-link');
-  const drawerLinks = document.querySelectorAll('.mobile-nav-link');
-  if (!sections.length || !navLinks.length) return;
-
-  let ticking = false;
-  const checkActiveSection = () => {
-    const scrollPos = window.scrollY + 140;
-    let currentId = '';
-
-    sections.forEach(sec => {
-      const top = sec.offsetTop;
-      const height = sec.offsetHeight;
-      if (scrollPos >= top && scrollPos < top + height) {
-        currentId = sec.getAttribute('id');
-      }
+function initLanguagePicker() {
+  const trigger = $("#language-toggle"),
+    panel = $("#language-options"),
+    options = $$("[data-language]", panel);
+  const fluid = new FlowerFluid($("#language-fluid"));
+  let sequence = 0;
+  const transitions = new Set();
+  function close(focus = false) {
+    panel.hidden = true;
+    trigger.setAttribute("aria-expanded", "false");
+    if (focus) trigger.focus();
+  }
+  function open() {
+    closeMenu();
+    panel.hidden = false;
+    trigger.setAttribute("aria-expanded", "true");
+    options.find((option) => option.dataset.language === currentLang).focus();
+  }
+  updateLanguagePicker = () => {
+    $("#language-code").textContent =
+      currentLang === "ky" ? "KG" : currentLang.toUpperCase();
+    trigger.setAttribute(
+      "aria-label",
+      `${t("choose_language")}: ${currentLang === "en" ? "English" : currentLang === "ru" ? "Русский" : "Кыргызча"}`,
+    );
+    options.forEach((option) => {
+      const selected = option.dataset.language === currentLang;
+      option.setAttribute("aria-selected", String(selected));
+      option.tabIndex = selected ? 0 : -1;
     });
-
-    if (currentId) {
-      navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === `#${currentId}`) {
-          link.classList.add('nav-active');
-        } else {
-          link.classList.remove('nav-active');
-        }
-      });
-
-      drawerLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === `#${currentId}`) {
-          link.style.fontWeight = '700';
-          link.style.color = 'var(--apple-blue)';
-        } else {
-          link.style.fontWeight = '500';
-          link.style.color = 'var(--text-primary)';
-        }
-      });
-    }
-    ticking = false;
   };
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(checkActiveSection);
-      ticking = true;
+  trigger.addEventListener("click", () => (panel.hidden ? open() : close()));
+  trigger.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      open();
     }
-  }, { passive: true });
-
-  checkActiveSection();
+  });
+  panel.addEventListener("keydown", (event) => {
+    const current = options.indexOf(document.activeElement);
+    let next = current;
+    if (event.key === "ArrowDown") next = (current + 1) % options.length;
+    else if (event.key === "ArrowUp")
+      next = (current - 1 + options.length) % options.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = options.length - 1;
+    else if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      close(true);
+      return;
+    } else if (event.key === "Tab") {
+      close();
+      return;
+    } else return;
+    event.preventDefault();
+    options[next].focus();
+  });
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".language-picker")) close();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !panel.hidden) close(true);
+  });
+  menuToggle.addEventListener("click", () => close());
+  options.forEach((option) =>
+    option.addEventListener("click", async () => {
+      const lang = option.dataset.language,
+        token = ++sequence,
+        rect = trigger.getBoundingClientRect();
+      close(true);
+      if (lang === currentLang) return;
+      transitions.forEach((animation) => animation.cancel());
+      transitions.clear();
+      if (reducedMotion.matches || motionPaused) {
+        applyLanguage(lang);
+        return;
+      }
+      fluid.launch({ x: rect.left + rect.width / 2, y: rect.bottom - 2 });
+      const visible = $$("[data-i18n]").filter((element) => {
+        const r = element.getBoundingClientRect();
+        return (
+          r.width &&
+          r.height &&
+          r.bottom > 0 &&
+          r.top < innerHeight &&
+          !element.closest(".language-options")
+        );
+      });
+      for (const element of visible) {
+        const animation = element.animate([{ opacity: 1 }, { opacity: 0.1 }], {
+          duration: 110,
+          easing: "ease-out",
+        });
+        transitions.add(animation);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 180));
+      if (token !== sequence) return;
+      applyLanguage(lang);
+      for (const element of visible) {
+        const animation = element.animate(
+          [
+            {
+              opacity: 0.15,
+              filter: "blur(2px)",
+              transform: "translateY(4px)",
+            },
+            { opacity: 1, filter: "blur(0)", transform: "translateY(0)" },
+          ],
+          {
+            duration: 850,
+            delay:
+              Math.max(0, element.getBoundingClientRect().top / innerHeight) *
+              400,
+            easing: "cubic-bezier(.16,1,.3,1)",
+          },
+        );
+        transitions.add(animation);
+        animation.finished
+          .then(() => transitions.delete(animation))
+          .catch(() => {});
+      }
+    }),
+  );
+  updateLanguagePicker();
 }
+
+initLab();
+applyLanguage(currentLang);
+initField();
+initLanguagePicker();
