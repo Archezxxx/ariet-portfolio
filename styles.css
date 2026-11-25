@@ -2716,13 +2716,15 @@ svg:not([width]) {
   pointer-events: none;
   z-index: 60;
   contain: strict;
-}
-.language-changing #field {
-  opacity: 0.32;
-  transition: opacity 0.4s;
+  transform: translateZ(0);
+  will-change: transform;
 }
 .hero #field {
-  transition: opacity 0.6s;
+  transition: opacity 0.4s ease-out;
+  will-change: opacity;
+}
+.language-changing #field {
+  opacity: 0.35;
 }
 .social-links {
   display: flex;
@@ -3262,9 +3264,6 @@ svg:not([width]) {
 }
 .language-chevron {
   width: 11px;
-}
-.language-changing #field {
-  opacity: 0.5;
 }
 .about {
   position: relative;

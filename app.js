@@ -819,6 +819,20 @@ function initField() {
   paint.beginPath();
   paint.arc(0, 0, 5, 0, Math.PI * 2);
   paint.fill();
+  let copyX = 0,
+    copyY = 0,
+    copyWidth = 0,
+    copyHeight = 0;
+  function updateCopyBounds() {
+    const copyEl = $(".hero-copy > p");
+    if (!copyEl) return;
+    const copyRect = copyEl.getBoundingClientRect();
+    const heroRect = hero.getBoundingClientRect();
+    copyWidth = copyRect.width;
+    copyHeight = copyRect.height;
+    copyX = copyRect.left + copyWidth / 2;
+    copyY = copyRect.top - heroRect.top + copyHeight / 2;
+  }
   function render(stamp = 0) {
     frameId = 0;
     if (stamp && stamp - last < 30) {
@@ -835,10 +849,7 @@ function initField() {
     ctx.fillRect(0, 0, width, height);
     const focal = width < 760 ? width * 1.1 : width * 0.94,
       horizon = height * (width < 760 ? 0.48 : 0.43);
-    const copyRect = $(".hero-copy > p").getBoundingClientRect();
-    const heroRect = hero.getBoundingClientRect();
-    const copyX = copyRect.left + copyRect.width / 2;
-    const copyY = copyRect.top - heroRect.top + copyRect.height / 2;
+    if (!copyWidth) updateCopyBounds();
     for (const p of points) {
       const s = focal / (p.z + 4),
         wave =
@@ -860,11 +871,11 @@ function initField() {
         distance = Math.max(0.15, 1 - p.z / 140),
         copyShadeX = Math.max(
           0,
-          Math.min(1, (copyRect.width / 2 + 32 - Math.abs(x - copyX)) / 32),
+          Math.min(1, (copyWidth / 2 + 32 - Math.abs(x - copyX)) / 32),
         ),
         copyShadeY = Math.max(
           0,
-          Math.min(1, (copyRect.height / 2 + 32 - Math.abs(y - copyY)) / 32),
+          Math.min(1, (copyHeight / 2 + 32 - Math.abs(y - copyY)) / 32),
         );
       ctx.globalAlpha =
         Math.max(0, edge) *
@@ -896,12 +907,16 @@ function initField() {
     const r = hero.getBoundingClientRect();
     width = r.width;
     height = r.height;
+    updateCopyBounds();
     const dpr = Math.min(devicePixelRatio || 1, 1.75);
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     schedule();
   }
+  document.addEventListener("portfolio:language", () => {
+    requestAnimationFrame(updateCopyBounds);
+  });
   new ResizeObserver(resize).observe(hero);
   new IntersectionObserver((entries) => {
     visible = entries[0].isIntersecting;
@@ -1015,47 +1030,48 @@ function initLanguagePicker() {
         return;
       }
       fluid.launch({ x: rect.left + rect.width / 2, y: rect.bottom - 2 });
-      const visible = $$("[data-i18n]").filter((element) => {
+      const visibleItems = [];
+      const vh = innerHeight || 800;
+      $$("[data-i18n]").forEach((element) => {
+        if (element.closest(".language-options")) return;
         const r = element.getBoundingClientRect();
-        return (
-          r.width &&
-          r.height &&
-          r.bottom > 0 &&
-          r.top < innerHeight &&
-          !element.closest(".language-options")
-        );
+        if (r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < vh) {
+          visibleItems.push({
+            element,
+            delay: Math.max(0, Math.min(1, r.top / vh)) * 140,
+          });
+        }
       });
-      for (const element of visible) {
-        const animation = element.animate([{ opacity: 1 }, { opacity: 0.1 }], {
-          duration: 110,
+      for (const { element } of visibleItems) {
+        const animation = element.animate([{ opacity: 1 }, { opacity: 0.2 }], {
+          duration: 90,
           easing: "ease-out",
+          fill: "forwards",
         });
         transitions.add(animation);
       }
-      await new Promise((resolve) => setTimeout(resolve, 180));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       if (token !== sequence) return;
       applyLanguage(lang);
-      for (const element of visible) {
+      for (const { element, delay } of visibleItems) {
         const animation = element.animate(
           [
-            {
-              opacity: 0.15,
-              filter: "blur(2px)",
-              transform: "translateY(4px)",
-            },
-            { opacity: 1, filter: "blur(0)", transform: "translateY(0)" },
+            { opacity: 0.2, transform: "translateY(3px)" },
+            { opacity: 1, transform: "translateY(0)" },
           ],
           {
-            duration: 850,
-            delay:
-              Math.max(0, element.getBoundingClientRect().top / innerHeight) *
-              400,
-            easing: "cubic-bezier(.16,1,.3,1)",
+            duration: 280,
+            delay,
+            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            fill: "both",
           },
         );
         transitions.add(animation);
         animation.finished
-          .then(() => transitions.delete(animation))
+          .then(() => {
+            transitions.delete(animation);
+            animation.cancel();
+          })
           .catch(() => {});
       }
     }),

@@ -1,11 +1,15 @@
 // Aerial flower transition: wind advection, drag, soft gravity, and finite life.
 // Petals fade in flight, so they never collect on the floor.
+// Optimized for 60-120fps with zero layout thrashing, in-place recycling, and bounded particle count.
 class FlowerFluid {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
     this.particles = [];
     this.frame = 0;
+    this.heroBottom = 0;
+    this.isLight = false;
+    this.maxParticles = 60;
     this.sprites = ["#f3f2eb", "#203329"].map((color) => {
       const image = document.createElement("canvas");
       image.width = image.height = 80;
@@ -28,12 +32,12 @@ class FlowerFluid {
     this.resize = () => {
       this.width = innerWidth;
       this.height = innerHeight;
-      const scale = Math.min(devicePixelRatio || 1, 1.5);
+      const scale = Math.min(devicePixelRatio || 1, 1.25);
       canvas.width = Math.round(this.width * scale);
       canvas.height = Math.round(this.height * scale);
       this.ctx?.setTransform(scale, 0, 0, scale, 0, 0);
     };
-    addEventListener("resize", this.resize);
+    addEventListener("resize", this.resize, { passive: true });
     this.resize();
     this.tick = this.tick.bind(this);
     document.addEventListener("visibilitychange", () => {
@@ -51,7 +55,13 @@ class FlowerFluid {
     this.origin = origin;
     this.emitted = 0;
     this.emitTime = 0;
+    this.maxParticles = this.width < 768 ? 38 : 58;
     this.last = performance.now();
+    const hero = document.getElementById("home");
+    this.heroBottom = hero
+      ? hero.getBoundingClientRect().bottom
+      : this.height * 0.9;
+    this.isLight = document.documentElement.dataset.theme === "light";
     this.canvas.hidden = false;
     this.canvas.dataset.active = "true";
     document.documentElement.classList.add("language-changing");
@@ -68,47 +78,46 @@ class FlowerFluid {
   }
   spawn() {
     const target = Math.random() * this.width;
-    const dispersed = this.emitted > 35;
+    const dispersed = this.emitted > this.maxParticles * 0.3;
     this.particles.push({
       x: dispersed ? target : this.origin.x + (Math.random() - 0.5) * 30,
       y: dispersed
-        ? Math.random() * this.height * 0.85 - 40
+        ? Math.random() * this.height * 0.7 - 30
         : this.origin.y + (Math.random() - 0.5) * 20,
       vx: dispersed
-        ? (Math.random() - 0.5) * 110
-        : (target - this.origin.x) * (0.7 + Math.random() * 0.35),
-      vy: 45 + Math.random() * 85,
-      radius: 4 + Math.random() * 7,
+        ? (Math.random() - 0.5) * 100
+        : (target - this.origin.x) * (0.6 + Math.random() * 0.3),
+      vy: 42 + Math.random() * 75,
+      radius: 4 + Math.random() * 6,
       angle: Math.random() * 6.28,
-      spin: (Math.random() - 0.5) * 2,
+      spin: (Math.random() - 0.5) * 1.8,
       phase: Math.random() * 6.28,
-      life: 1.7 + Math.random() * 2,
+      life: 1.4 + Math.random() * 1.4,
       age: 0,
     });
-    if (this.particles.length > 230) this.particles.shift();
   }
   tick(now) {
     const dt = Math.min((now - this.last) / 1000, 1 / 30);
     this.last = now;
     this.emitTime += dt;
-    const target = Math.min(190, Math.floor(this.emitTime * 170));
+    const target = Math.min(
+      this.maxParticles,
+      Math.floor(this.emitTime * (this.maxParticles * 1.6)),
+    );
     while (this.emitted < target) {
       this.spawn();
       this.emitted++;
     }
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.width, this.height);
-    const heroBottom = document
-      .getElementById("home")
-      .getBoundingClientRect().bottom;
-    const light = document.documentElement.dataset.theme === "light";
-    for (const p of this.particles) {
+    for (let i = 0; i < this.particles.length; i++) {
+      const p = this.particles[i];
       p.age += dt;
-      p.vx += Math.sin(p.y * 0.006 + now * 0.0004 + p.phase) * 35 * dt;
-      p.vx *= Math.exp(-0.55 * dt);
-      p.vy += 28 * dt;
+      p.vx += Math.sin(p.y * 0.006 + now * 0.0004 + p.phase) * 32 * dt;
+      p.vx *= 1 - 0.55 * dt;
+      p.vy += 26 * dt;
       p.x += p.vx * dt;
-      p.y += p.vy * dt + Math.sin(p.age * 1.5 + p.phase) * 13 * dt;
+      p.y += p.vy * dt + Math.sin(p.age * 1.5 + p.phase) * 12 * dt;
       p.angle += p.spin * dt;
       const progress = p.age / p.life;
       ctx.globalAlpha =
@@ -118,25 +127,28 @@ class FlowerFluid {
       ctx.save();
       ctx.translate(p.x, p.y);
       ctx.rotate(p.angle);
-      ctx.drawImage(
-        this.sprites[light && p.y > heroBottom ? 1 : 0],
-        -size / 2,
-        -size / 2,
-        size,
-        size,
-      );
+      const sprite =
+        this.sprites[this.isLight && p.y > this.heroBottom ? 1 : 0];
+      ctx.drawImage(sprite, -size / 2, -size / 2, size, size);
       ctx.restore();
     }
-    this.particles = this.particles.filter(
-      (p) =>
+    let alive = 0;
+    for (let i = 0; i < this.particles.length; i++) {
+      const p = this.particles[i];
+      if (
         p.age < p.life &&
         p.y < this.height + 40 &&
-        p.x > -100 &&
-        p.x < this.width + 100,
-    );
-    this.canvas.dataset.particles = this.particles.length;
-    if (this.particles.length || this.emitted < 190)
+        p.x > -80 &&
+        p.x < this.width + 80
+      ) {
+        this.particles[alive++] = p;
+      }
+    }
+    this.particles.length = alive;
+    if (this.particles.length || this.emitted < this.maxParticles) {
       this.frame = requestAnimationFrame(this.tick);
-    else this.stop();
+    } else {
+      this.stop();
+    }
   }
 }
