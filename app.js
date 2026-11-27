@@ -829,10 +829,10 @@ function initField() {
     return seed / 4294967296;
   };
   const DEPTH = 92;
-  const points = Array.from({ length: 4200 }, () => ({
+  const points = Array.from({ length: 1800 }, () => ({
     x: (random() - 0.5) * 105,
     z: random() * DEPTH,
-    size: 0.14 + random() * 0.15,
+    size: 0.16 + random() * 0.17,
     angle: random() * Math.PI * 2,
     phase: random() * 6.28,
     tone: random(),
@@ -929,7 +929,7 @@ function initField() {
   }
   function render(stamp = 0) {
     frameId = 0;
-    if (stamp && stamp - last < 30) {
+    if (stamp && stamp - last < 41) {
       frameId = requestAnimationFrame(render);
       return;
     }
@@ -984,7 +984,8 @@ function initField() {
           continue;
         const edge = Math.min(1, (height - y) / (height * 0.18)),
           nearFade = Math.min(1, (effZ - 4) / 7),
-          distance = Math.pow(Math.max(0.08, 1 - effZ / (DEPTH + 10)), 1.35),
+          distBase = Math.max(0.08, 1 - effZ / (DEPTH + 10)),
+          distance = distBase * Math.sqrt(distBase),
           copyShadeX = Math.max(
             0,
             Math.min(1, (copyWidth / 2 + 32 - Math.abs(x - copyX)) / 32),
@@ -1057,7 +1058,7 @@ function initField() {
     width = r.width;
     height = r.height;
     updateCopyBounds();
-    fieldDpr = Math.min(devicePixelRatio || 1, 1.5);
+    fieldDpr = 1;
     canvas.width = Math.round(width * fieldDpr);
     canvas.height = Math.round(height * fieldDpr);
     ctx.setTransform(fieldDpr, 0, 0, fieldDpr, 0, 0);
@@ -1232,12 +1233,12 @@ function initProjectIndexIcons() {
   const canvases = $$(".project-index-icon[data-pixel-icon]");
   if (!canvases.length || typeof PixelArtCovers !== "function") return;
   const ids = canvases.map((c) => c.dataset.pixelIcon);
-  const covers = new PixelArtCovers(ids);
-  let visible = true;
+  const covers = PixelArtCovers.getShared(ids);
+  let visible = false;
   const draw = () => {
     for (const c of canvases) {
       const src = covers.getCanvas(c.dataset.pixelIcon);
-      const ctx = c.getContext("2d", { alpha: false });
+      const ctx = c._ctx || (c._ctx = c.getContext("2d", { alpha: false }));
       if (!src || !ctx) continue;
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(src, 0, 0, c.width, c.height);
@@ -1246,7 +1247,10 @@ function initProjectIndexIcons() {
   draw();
   covers.subscribe(draw);
   const sync = () => {
-    covers.setPaused(motionPaused || reducedMotion.matches || !visible || document.hidden);
+    covers.setSourcePaused(
+      "index",
+      motionPaused || reducedMotion.matches || !visible || document.hidden,
+    );
   };
   const list = $(".project-index-list");
   if (list) {

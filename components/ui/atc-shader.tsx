@@ -6,7 +6,7 @@ precision highp float;
 layout(location=0) in vec2 a_pos;
 void main(){ gl_Position = vec4(a_pos,0.0,1.0); }`;
 const fragSrc = `#version 300 es
-precision highp float;
+precision mediump float;
 out vec4 fragColor;
 uniform vec2 u_res;
 uniform float u_time;
@@ -20,7 +20,7 @@ void main(){
   vec3 p=vec3(0.0);
   vec3 v=vec3(1.0,2.0,6.0);
   float i=0.0,z=1.0,d=1.0,f=1.0;
-  for(;i++<5e1;o.rgb+=(cos((p.x+z+v)*0.1)+1.0)/d/f/z){
+  for(;i++<36.0;o.rgb+=(cos((p.x+z+v)*0.1)+1.0)/d/f/z){
     p=z*normalize(FC*2.0-r.xyy);
     vec4 m=cos((p+sin(p)).y*0.4+vec4(0.0,33.0,11.0,0.0));
     p.xz=mat2(m)*p.xz;
@@ -94,10 +94,9 @@ export default function ShaderDemo_ATC() {
     const resize = () => {
       const w = canvas.clientWidth || innerWidth,
         h = canvas.clientHeight || innerHeight;
-      const pixelBudget = w < 760 ? 130000 : 320000;
+      const pixelBudget = w < 760 ? 75000 : 140000;
       const scale = Math.min(
-        devicePixelRatio || 1,
-        1.5,
+        1,
         Math.sqrt(pixelBudget / (w * h)),
       );
       canvas.width = Math.max(1, Math.floor(w * scale));
@@ -109,7 +108,7 @@ export default function ShaderDemo_ATC() {
     const render = (now: number) => {
       raf = 0;
       if (disposed) return;
-      if (now && now - last < 40) {
+      if (now && now - last < 50) {
         if (!paused()) raf = requestAnimationFrame(render);
         return;
       }

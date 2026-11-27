@@ -6,7 +6,26 @@ class PixelArtCovers {
   static COLS = 64;
   static ROWS = 36;
   static CELL = 5; // 64 * 5 = 320, 36 * 5 = 180
-  static FPS = 24;
+  static FPS = 15;
+  static _shared = null;
+
+  static getShared(ids) {
+    if (!PixelArtCovers._shared) {
+      PixelArtCovers._shared = new PixelArtCovers(ids);
+      PixelArtCovers._shared._pauseSources = new Map();
+    }
+    return PixelArtCovers._shared;
+  }
+
+  setSourcePaused(sourceKey, paused) {
+    if (!this._pauseSources) this._pauseSources = new Map();
+    this._pauseSources.set(sourceKey, Boolean(paused));
+    let anyActive = false;
+    this._pauseSources.forEach((isPaused) => {
+      if (!isPaused) anyActive = true;
+    });
+    this.setPaused(!anyActive);
+  }
 
   static THEMES = {
     ocr: {
