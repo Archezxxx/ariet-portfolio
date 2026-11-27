@@ -1,11 +1,11 @@
 import {useEffect,useRef} from 'react';
 import {usePortfolioLanguage,usePortfolioPaused} from '@/src/use-portfolio';
 const images=[
- {id:'ocr',src:'assets/project-icons/project-06.png'},
- {id:'exam',src:'assets/project-icons/project-02.png'},
- {id:'cosmic',src:'assets/project-icons/project-01.png'},
- {id:'consult',src:'assets/project-icons/project-05.png'},
- {id:'cargo',src:'assets/project-icons/project-03.png'}
+ {id:'ocr'},
+ {id:'exam'},
+ {id:'cosmic'},
+ {id:'consult'},
+ {id:'cargo'}
 ];
 export default function CurvedGallery(){
  const root=useRef<HTMLDivElement>(null);const controller=useRef<ReturnType<PortfolioRuntime['mountGallery']>|null>(null);

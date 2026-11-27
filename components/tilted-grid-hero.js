@@ -49,6 +49,7 @@ class TiltedGridHero {
       curve = 80,
       fade = 10,
       paused = false,
+      onSelect = null,
     } = {},
   ) {
     this.root = root;
@@ -61,10 +62,12 @@ class TiltedGridHero {
       axis,
       curve,
       fade,
+      onSelect,
     };
     this.shown = new Map();
     this.globalPaused = paused;
     this.userPaused = false;
+    this.dialogPaused = false;
     this.visible = false;
     this.reduced = matchMedia("(prefers-reduced-motion: reduce)");
     this.band = root.querySelector(".reel-band");
@@ -79,6 +82,16 @@ class TiltedGridHero {
     this.onVisibility = () => this.syncPause();
     document.addEventListener("visibilitychange", this.onVisibility);
     this.reduced.addEventListener("change", this.onVisibility);
+    this.onDialog = (e) => {
+      this.dialogPaused = Boolean(e.detail?.open);
+      this.syncPause();
+    };
+    document.addEventListener("portfolio:dialog", this.onDialog);
+    this.onPageShow = () => {
+      this.dialogPaused = false;
+      this.syncPause();
+    };
+    window.addEventListener("pageshow", this.onPageShow);
     this.resize = new ResizeObserver(([entry]) =>
       this.layout(entry.contentRect.width, entry.contentRect.height),
     );
@@ -88,11 +101,8 @@ class TiltedGridHero {
       this.syncPause();
     });
     this.intersection.observe(root);
-    this.preloaded = images.map(({ src }) => {
-      const image = new Image();
-      image.src = src;
-      return image;
-    });
+    this.covers = new PixelArtCovers(images.map((item) => item.id));
+    this.unsubCovers = this.covers.subscribe(() => this.drawAllTiles());
     root.dataset.ready = "true";
   }
 
@@ -102,8 +112,12 @@ class TiltedGridHero {
   }
 
   destroy(){
+    this.unsubCovers?.();
+    this.covers?.destroy();
     this.resize.disconnect();this.intersection.disconnect();
     document.removeEventListener('visibilitychange',this.onVisibility);
+    document.removeEventListener('portfolio:dialog',this.onDialog);
+    window.removeEventListener('pageshow',this.onPageShow);
     this.reduced.removeEventListener('change',this.onVisibility);
     this.toggle.removeEventListener('click',this.onToggle);
     this.style.remove();this.band.replaceChildren();
@@ -113,10 +127,12 @@ class TiltedGridHero {
     const paused =
       this.userPaused ||
       this.globalPaused ||
+      this.dialogPaused ||
       this.reduced.matches ||
       !this.visible ||
       document.hidden;
     this.root.dataset.paused = String(paused);
+    this.covers?.setPaused(paused);
     this.toggle.setAttribute("aria-pressed", String(this.userPaused));
     this.toggle.querySelector("span").textContent = t(
       this.userPaused ? "reel_resume" : "reel_pause",
@@ -126,14 +142,36 @@ class TiltedGridHero {
       : '<path d="M7 4v12M13 4v12"/>';
   }
 
+  drawTile(tile) {
+    const srcCanvas = this.covers?.getCanvas(tile.dataset.cover);
+    if (!srcCanvas) return;
+    const sw = PixelArtCovers.WIDTH / TiltedGridHero.SLICES;
+    const sh = PixelArtCovers.HEIGHT;
+    const canvases = tile.querySelectorAll("canvas");
+    for (let strip = 0; strip < canvases.length; strip++) {
+      const ctx = canvases[strip].getContext("2d", { alpha: false });
+      if (!ctx) continue;
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(srcCanvas, strip * sw, 0, sw, sh, 0, 0, sw, sh);
+    }
+  }
+
+  drawAllTiles() {
+    if (!this.band) return;
+    const tiles = this.band.children;
+    for (let i = 0; i < tiles.length; i++) {
+      this.drawTile(tiles[i]);
+    }
+  }
+
   setImage(tile, index) {
     const images = this.options.images;
     const image =
       images[((index % images.length) + images.length) % images.length];
     tile.dataset.cover = image.id;
-    tile.querySelectorAll("img").forEach((img) => {
-      if (img.getAttribute("src") !== image.src) img.src = image.src;
-    });
+    const label = PixelArtCovers.THEMES[image.id]?.label || image.id;
+    tile.setAttribute("aria-label", label);
+    this.drawTile(tile);
   }
 
   layout(width, height) {
@@ -171,18 +209,28 @@ class TiltedGridHero {
     for (let index = 0; index < columns; index++) {
       const tile = document.createElement("div");
       tile.className = "reel-tile";
+      tile.setAttribute("role", "button");
+      tile.tabIndex = 0;
       tile.style.cssText = `left:${width / 2 - tileWidth / 2}px;top:${(height * o.axis) / 100 - next.height / 2}px;width:${tileWidth}px;height:${next.height}px;animation:portfolio-orbit ${columns * o.speed}s linear ${-index * o.speed}s infinite both;`;
+      const activate = () => {
+        if (!tile.dataset.cover) return;
+        this.options.onSelect?.(tile.dataset.cover, tile.getBoundingClientRect());
+      };
+      tile.addEventListener("click", activate);
+      tile.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activate();
+        }
+      });
       for (let strip = 0; strip < TiltedGridHero.SLICES; strip++) {
         const slice = document.createElement("div");
         slice.className = "reel-slice";
         slice.style.cssText = `left:${((o.aspectRatio - share) / 2) * next.height}px;width:${share * next.height + (strip === TiltedGridHero.SLICES - 1 ? 0 : 1)}px;height:${next.height}px;transform:${turn((o.aspectRatio / 2 - (strip + 0.5) * share) * unit)};`;
-        const img = document.createElement("img");
-        img.alt = "";
-        img.draggable = false;
-        img.width = 960;
-        img.height = 540;
-        img.style.cssText = `left:${-strip * share * next.height}px;width:${tileWidth}px;height:${next.height}px;`;
-        slice.append(img);
+        const canvas = document.createElement("canvas");
+        canvas.width = PixelArtCovers.WIDTH / TiltedGridHero.SLICES;
+        canvas.height = PixelArtCovers.HEIGHT;
+        slice.append(canvas);
         tile.append(slice);
       }
       const first = columns - 1 - index;

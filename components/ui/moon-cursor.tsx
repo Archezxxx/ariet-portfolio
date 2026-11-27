@@ -4,7 +4,8 @@ export default function MoonCursor() {
   const flower = useRef<HTMLDivElement>(null);
   const [host, setHost] = useState<Element>(document.body);
   useEffect(() => {
-    const dialog = document.querySelector("#project-dialog")!;
+    const dialog = document.querySelector("#project-dialog");
+    if (!dialog) return;
     const observer = new MutationObserver(() =>
       setHost(document.querySelector("dialog[open]") || document.body),
     );

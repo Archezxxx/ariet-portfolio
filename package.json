@@ -10,7 +10,7 @@
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "build": "tsc --noEmit && vite build",
     "deploy": "npm run build && gh-pages -d dist --dotfiles",
-    "check": "tsc --noEmit && node --check app.js && node --check locales.js && node --check components/flower-fluid.js"
+    "check": "tsc --noEmit && node --check app.js && node --check locales.js && node --check components/pixel-art-covers.js && node --check components/flower-fluid.js"
   },
   "author": "Ariet <ariet5656@gmail.com>",
   "license": "MIT",

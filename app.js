@@ -99,6 +99,7 @@ const additions = {
     model_explanation:
       "В этом браузерном демо ответы сравниваются с заданным ключом. В рабочем проекте сканы обрабатываются Python и OpenCV: выравнивание по меткам, гомография, распознавание отметок и экспорт в Excel.",
     demo_link: "Перейти к демо",
+    full_case_study: "Открыть страницу проекта →",
     open_site: "Открыть сайт",
     security_title: "Попробовать сценарий",
     security_note:
@@ -217,6 +218,7 @@ const additions = {
     model_explanation:
       "This browser demo compares selected answers with a fixed key. The production project processes scans with Python and OpenCV: fiducial alignment, homography, mark recognition, and Excel export.",
     demo_link: "Try the demo",
+    full_case_study: "Open full project page →",
     open_site: "Visit website",
     security_title: "Try a scenario",
     security_note:
@@ -335,6 +337,7 @@ const additions = {
     model_explanation:
       "Бул браузердик демо белгиленген жоопторду даяр ачкыч менен салыштырат. Чыныгы долбоор скандарды Python жана OpenCV аркылуу түздөп, белгилерди таанып, Excel файлына чыгарат.",
     demo_link: "Демону сынап көрүү",
+    full_case_study: "Долбоордун барагын ачуу →",
     open_site: "Сайтты ачуу",
     security_title: "Сценарийди сынап көрүү",
     security_note:
@@ -571,6 +574,7 @@ function renderProject(id) {
       para("cargo_desc") +
       heading("beyond_code") +
       para("cargo_callout");
+  html += `<div class="dialog-actions"><a class="button" href="project.html?id=${id}">${t("full_case_study")}</a></div>`;
   $("#dialog-content").innerHTML = html;
   $("#dialog-demo-link")?.addEventListener("click", () => dialog.close());
   let violations = 0;
@@ -596,13 +600,40 @@ function renderProject(id) {
     }),
   );
 }
+let pixelTransitionActive = false;
+window.addEventListener("pageshow", () => {
+  pixelTransitionActive = false;
+  document
+    .querySelectorAll(".pixel-assemble-overlay")
+    .forEach((el) => el.remove());
+  document.dispatchEvent(
+    new CustomEvent("portfolio:dialog", { detail: { open: false } }),
+  );
+});
+function openProjectWithPixels(id, sourceRect) {
+  if (!id || pixelTransitionActive) return;
+  const targetUrl = `project.html?id=${encodeURIComponent(id)}`;
+  document.dispatchEvent(
+    new CustomEvent("portfolio:dialog", { detail: { open: true } }),
+  );
+  if (
+    !sourceRect ||
+    matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    typeof PixelArtCovers?.animateToDialog !== "function"
+  ) {
+    window.location.href = targetUrl;
+    return;
+  }
+  pixelTransitionActive = true;
+  PixelArtCovers.animateToDialog(id, sourceRect, () => {
+    pixelTransitionActive = false;
+    window.location.href = targetUrl;
+  });
+}
 $$("[data-project]").forEach((btn) =>
   btn.addEventListener("click", (e) => {
     e.preventDefault();
-    selectedProject = btn.dataset.project;
-    renderProject(selectedProject);
-    dialog.showModal();
-    document.body.classList.add("dialog-open");
+    openProjectWithPixels(btn.dataset.project, null);
   }),
 );
 $(".dialog-close").addEventListener("click", () => dialog.close());
@@ -621,6 +652,9 @@ dialog.addEventListener("click", (e) => {
 dialog.addEventListener("close", () => {
   selectedProject = null;
   document.body.classList.remove("dialog-open");
+  document.dispatchEvent(
+    new CustomEvent("portfolio:dialog", { detail: { open: false } }),
+  );
 });
 function initLab() {
   const key = ["A", "C", "B", "D", "A", "B", "D", "C", "A", "B"],
@@ -770,7 +804,7 @@ $("#copy-email").addEventListener("click", async () => {
     toast(t("copy_failed"));
   }
 });
-// Pre-rendered field marks. Bounded frame rate and pixel ratio; pauses offscreen.
+// Pre-rendered detailed botanical flower sprites + smooth slow camera flight over a black field.
 function initField() {
   const canvas = $("#field"),
     ctx = canvas.getContext("2d", { alpha: false });
@@ -794,31 +828,91 @@ function initField() {
     seed = (seed * 1664525 + 1013904223) >>> 0;
     return seed / 4294967296;
   };
-  const points = Array.from({ length: 6500 }, () => ({
-    x: (random() - 0.5) * 90,
-    z: 5 + random() * 90,
-    size: 0.12 + random() * 0.12,
-    angle: random() * Math.PI,
+  const DEPTH = 92;
+  const points = Array.from({ length: 4200 }, () => ({
+    x: (random() - 0.5) * 105,
+    z: random() * DEPTH,
+    size: 0.14 + random() * 0.15,
+    angle: random() * Math.PI * 2,
     phase: random() * 6.28,
     tone: random(),
+    variant: Math.floor(random() * 3),
+    leafSide: random() > 0.5 ? 1 : -1,
   })).sort((a, b) => b.z - a.z);
-  const sprite = document.createElement("canvas");
-  sprite.width = sprite.height = 100;
-  const paint = sprite.getContext("2d");
-  paint.translate(50, 50);
-  paint.fillStyle = "#e9eee7";
-  for (let n = 0; n < 6; n++) {
-    paint.save();
-    paint.rotate((n * Math.PI) / 3);
-    paint.beginPath();
-    paint.ellipse(0, -18, 7.5, 19, 0, 0, Math.PI * 2);
-    paint.fill();
-    paint.restore();
+  let fieldDpr = 1;
+
+  function createFlowerSprite(variant) {
+    const sp = document.createElement("canvas");
+    sp.width = sp.height = 160;
+    const p = sp.getContext("2d");
+    p.translate(80, 80);
+
+    const outerCount = variant === 0 ? 6 : variant === 1 ? 8 : 5;
+    const innerCount = variant === 2 ? 5 : 6;
+    const outerLen = variant === 1 ? 36 : 38;
+    const outerW = variant === 0 ? 13 : variant === 1 ? 10 : 15;
+
+    // Outer petal layer with soft radial shading and delicate midrib vein
+    for (let n = 0; n < outerCount; n++) {
+      p.save();
+      p.rotate((n * Math.PI * 2) / outerCount);
+      const grad = p.createRadialGradient(0, -10, 4, 0, -outerLen, outerLen + 6);
+      grad.addColorStop(0, "#7f9184");
+      grad.addColorStop(0.45, "#d8e2d8");
+      grad.addColorStop(1, "#f4f6f0");
+      p.fillStyle = grad;
+      p.beginPath();
+      p.moveTo(0, -6);
+      p.bezierCurveTo(-outerW, -18, -outerW * 0.85, -outerLen * 1.45, 0, -outerLen * 1.68);
+      p.bezierCurveTo(outerW * 0.85, -outerLen * 1.45, outerW, -18, 0, -6);
+      p.fill();
+
+      p.strokeStyle = "rgba(32, 46, 38, 0.22)";
+      p.lineWidth = 1.2;
+      p.beginPath();
+      p.moveTo(0, -10);
+      p.lineTo(0, -outerLen * 1.32);
+      p.stroke();
+      p.restore();
+    }
+
+    // Inner offset petal layer for botanical depth
+    for (let n = 0; n < innerCount; n++) {
+      p.save();
+      p.rotate((n * Math.PI * 2) / innerCount + Math.PI / innerCount);
+      const grad = p.createRadialGradient(0, -6, 2, 0, -24, 26);
+      grad.addColorStop(0, "#9ab0a0");
+      grad.addColorStop(1, "#eef2eb");
+      p.fillStyle = grad;
+      p.beginPath();
+      p.moveTo(0, -4);
+      p.bezierCurveTo(-7.5, -14, -6, -30, 0, -35);
+      p.bezierCurveTo(6, -30, 7.5, -14, 0, -4);
+      p.fill();
+      p.restore();
+    }
+
+    // Textured floral core & stamen ring
+    const coreGrad = p.createRadialGradient(0, 0, 1, 0, 0, 12);
+    coreGrad.addColorStop(0, "#2b382f");
+    coreGrad.addColorStop(0.65, "#596c5e");
+    coreGrad.addColorStop(1, "rgba(174, 187, 176, 0.35)");
+    p.fillStyle = coreGrad;
+    p.beginPath();
+    p.arc(0, 0, 11, 0, Math.PI * 2);
+    p.fill();
+
+    p.fillStyle = "#e6dec6";
+    for (let s = 0; s < 10; s++) {
+      const a = (s * Math.PI * 2) / 10;
+      p.beginPath();
+      p.arc(Math.cos(a) * 7.2, Math.sin(a) * 7.2, 1.5, 0, Math.PI * 2);
+      p.fill();
+    }
+    return sp;
   }
-  paint.fillStyle = "#aebbb0";
-  paint.beginPath();
-  paint.arc(0, 0, 5, 0, Math.PI * 2);
-  paint.fill();
+
+  const sprites = [0, 1, 2].map(createFlowerSprite);
   let copyX = 0,
     copyY = 0,
     copyWidth = 0,
@@ -842,60 +936,115 @@ function initField() {
     const delta = last && stamp ? Math.min((stamp - last) / 1000, 0.06) : 0;
     last = stamp;
     if (!motionPaused) time += delta;
-    cameraX += (pointerX - cameraX) * 0.035;
-    cameraY += (pointerY - cameraY) * 0.035;
+    cameraX += (pointerX - cameraX) * 0.025;
+    cameraY += (pointerY - cameraY) * 0.025;
+
+    // Gentle, unhurried forward flight + soft lateral drift
+    const flyZ = time * 2.1;
+    const wrap = ((flyZ % DEPTH) + DEPTH) % DEPTH;
+    const driftX = Math.sin(time * 0.13) * 3.2 + Math.cos(time * 0.07) * 1.6;
+    const driftY = Math.sin(time * 0.17) * 0.4;
+
+    // Binary search split index in pre-sorted descending points (O(log N), zero sort!)
+    let lo = 0,
+      hi = points.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (points[mid].z > wrap) lo = mid + 1;
+      else hi = mid;
+    }
+
+    ctx.setTransform(fieldDpr, 0, 0, fieldDpr, 0, 0);
     ctx.globalAlpha = 1;
     ctx.fillStyle = "#080a0b";
     ctx.fillRect(0, 0, width, height);
     const focal = width < 760 ? width * 1.1 : width * 0.94,
       horizon = height * (width < 760 ? 0.48 : 0.43);
     if (!copyWidth) updateCopyBounds();
-    for (const p of points) {
-      const s = focal / (p.z + 4),
-        wave =
-          Math.sin(p.x * 0.1 + p.z * 0.065 + time * 0.18) * 1.4 +
-          Math.cos(p.z * 0.13 - time * 0.14) * 0.65,
-        x =
-          width / 2 +
-          (p.x + cameraX * 0.9 + Math.sin(time * 0.12 + p.phase) * 0.1) * s,
-        y = horizon + (4.8 + wave + cameraY * 0.35) * s,
-        size = p.size * s * 2.1;
-      if (
-        x < -size ||
-        x > width + size ||
-        y < horizon - 30 ||
-        y > height + size
-      )
-        continue;
-      const edge = Math.min(1, (height - y) / (height * 0.19)),
-        distance = Math.max(0.15, 1 - p.z / 140),
-        copyShadeX = Math.max(
-          0,
-          Math.min(1, (copyWidth / 2 + 32 - Math.abs(x - copyX)) / 32),
-        ),
-        copyShadeY = Math.max(
-          0,
-          Math.min(1, (copyHeight / 2 + 32 - Math.abs(y - copyY)) / 32),
-        );
-      ctx.globalAlpha =
-        Math.max(0, edge) *
-        distance *
-        (0.65 + p.tone * 0.35) *
-        (1 - 0.96 * copyShadeX * copyShadeY);
-      if (size > 9) {
-        ctx.strokeStyle = "#253c30";
-        ctx.lineWidth = Math.max(1, size * 0.045);
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + size * 0.1, y + size * 0.9);
-        ctx.stroke();
+
+    const drawFlowerRange = (start, end) => {
+      for (let i = start; i < end; i++) {
+        const p = points[i];
+        const effZ = (((p.z - wrap) % DEPTH) + DEPTH) % DEPTH + 4;
+        const s = focal / (effZ + 4),
+          size = p.size * s * 2.35;
+        if (size < 1.2) continue;
+        const wave =
+            Math.sin(p.x * 0.09 + p.z * 0.065 + time * 0.24) * 1.25 +
+            Math.cos(p.z * 0.12 - time * 0.18) * 0.55,
+          sway = Math.sin(time * 0.45 + p.phase) * 0.12,
+          x = width / 2 + (p.x + driftX + cameraX * 1.1 + sway) * s,
+          y = horizon + (4.8 + wave + driftY + cameraY * 0.4) * s;
+        if (
+          x < -size ||
+          x > width + size ||
+          y < horizon - 30 ||
+          y > height + size
+        )
+          continue;
+        const edge = Math.min(1, (height - y) / (height * 0.18)),
+          nearFade = Math.min(1, (effZ - 4) / 7),
+          distance = Math.pow(Math.max(0.08, 1 - effZ / (DEPTH + 10)), 1.35),
+          copyShadeX = Math.max(
+            0,
+            Math.min(1, (copyWidth / 2 + 32 - Math.abs(x - copyX)) / 32),
+          ),
+          copyShadeY = Math.max(
+            0,
+            Math.min(1, (copyHeight / 2 + 32 - Math.abs(y - copyY)) / 32),
+          );
+        const alpha =
+          Math.max(0, edge) *
+          nearFade *
+          distance *
+          (0.68 + p.tone * 0.32) *
+          (1 - 0.96 * copyShadeX * copyShadeY);
+        if (alpha < 0.015) continue;
+        ctx.globalAlpha = alpha;
+
+        if (size > 8.5) {
+          ctx.setTransform(fieldDpr, 0, 0, fieldDpr, 0, 0);
+          const stemEndX = x + sway * size * 0.8 + size * 0.08 * p.leafSide;
+          const stemEndY = y + size * 0.95;
+          ctx.strokeStyle = "#22382c";
+          ctx.lineWidth = Math.max(1, size * 0.042);
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.quadraticCurveTo(
+            x + size * 0.14 * p.leafSide,
+            y + size * 0.48,
+            stemEndX,
+            stemEndY,
+          );
+          ctx.stroke();
+
+          if (size > 15) {
+            ctx.fillStyle = "#1d3126";
+            ctx.beginPath();
+            ctx.ellipse(
+              x + size * 0.16 * p.leafSide,
+              y + size * 0.48,
+              size * 0.14,
+              size * 0.055,
+              p.leafSide * 0.45,
+              0,
+              Math.PI * 2,
+            );
+            ctx.fill();
+          }
+        }
+
+        const rot = p.angle + Math.sin(time * 0.28 + p.phase) * 0.1;
+        const cos = Math.cos(rot) * fieldDpr;
+        const sin = Math.sin(rot) * fieldDpr;
+        ctx.setTransform(cos, sin, -sin, cos, x * fieldDpr, y * fieldDpr);
+        ctx.drawImage(sprites[p.variant], -size / 2, -size / 2, size, size);
       }
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(p.angle + Math.sin(time * 0.25 + p.phase) * 0.08);
-      ctx.drawImage(sprite, -size / 2, -size / 2, size, size);
-      ctx.restore();
-    }
+    };
+
+    drawFlowerRange(lo, points.length);
+    drawFlowerRange(0, lo);
+    ctx.setTransform(fieldDpr, 0, 0, fieldDpr, 0, 0);
     ctx.globalAlpha = 1;
     if (visible && !document.hidden && !motionPaused)
       frameId = requestAnimationFrame(render);
@@ -908,10 +1057,10 @@ function initField() {
     width = r.width;
     height = r.height;
     updateCopyBounds();
-    const dpr = Math.min(devicePixelRatio || 1, 1.75);
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    fieldDpr = Math.min(devicePixelRatio || 1, 1.5);
+    canvas.width = Math.round(width * fieldDpr);
+    canvas.height = Math.round(height * fieldDpr);
+    ctx.setTransform(fieldDpr, 0, 0, fieldDpr, 0, 0);
     schedule();
   }
   document.addEventListener("portfolio:language", () => {
@@ -1079,7 +1228,40 @@ function initLanguagePicker() {
   updateLanguagePicker();
 }
 
+function initProjectIndexIcons() {
+  const canvases = $$(".project-index-icon[data-pixel-icon]");
+  if (!canvases.length || typeof PixelArtCovers !== "function") return;
+  const ids = canvases.map((c) => c.dataset.pixelIcon);
+  const covers = new PixelArtCovers(ids);
+  let visible = true;
+  const draw = () => {
+    for (const c of canvases) {
+      const src = covers.getCanvas(c.dataset.pixelIcon);
+      const ctx = c.getContext("2d", { alpha: false });
+      if (!src || !ctx) continue;
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(src, 0, 0, c.width, c.height);
+    }
+  };
+  draw();
+  covers.subscribe(draw);
+  const sync = () => {
+    covers.setPaused(motionPaused || reducedMotion.matches || !visible || document.hidden);
+  };
+  const list = $(".project-index-list");
+  if (list) {
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    }).observe(list);
+  }
+  document.addEventListener("visibilitychange", sync);
+  document.addEventListener("portfolio:motion", sync);
+  sync();
+}
+
 initLab();
 applyLanguage(currentLang);
 initField();
 initLanguagePicker();
+initProjectIndexIcons();
